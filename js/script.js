@@ -1,7 +1,6 @@
 // Initial array of movies
-var movies = ["The Matrix", "The Notebook", "Mr. Nobody", "The Lion King"];
 
-let zipLocation = $("#movie-input").val().trim();
+let zipLocation = $("#zip-input").val().trim();
 
 
 // displayMovieInfo function re-renders the HTML to display the appropriate content
