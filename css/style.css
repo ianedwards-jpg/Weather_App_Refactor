@@ -13,5 +13,19 @@
 }
 
 .currentWeatherView{
+    width: 14rem;
     max-width: 18rem;
+}
+
+.zipCodeMessage {
+    height: 30px;
+    width: 100%;
+    color: red;
+    text-align: center;
+    /* margin-top: 10px; */
+}
+
+.msgSpan {
+    margin-top: 10px;
+
 }

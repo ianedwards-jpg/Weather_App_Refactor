@@ -6,18 +6,9 @@ const zipInputBar = document.querySelector("#zip-input")
 
 let defaultLocation = new String()
 
-
-// let zipInput = $("#zip-input").val().trim();
-
-
 // Intialize variable for searched zip, whether it is default location or inputted by user
 let zipSearch = new String()
 
-
-// let zipSearch = $("#zip-input").val().trim();
-
-
-// let defaultLocation = $("#zip-input").val().trim();
 
 function searchNewZip () {
   let zipInput = $("#zip-input").val().trim();
@@ -25,43 +16,38 @@ function searchNewZip () {
   let weatherCard = document.getElementsByClassName("weatherCard")
   let currentWeatherView = document.querySelector("#weather-view")
   let fiveDayView = document.querySelector("#fiveDayView")
+  let zipCodeMessage = "Must Enter Valid Zip Code!"
+  // let zipCodeMessage = document.querySelector(".zipCodeMessage")
+  // let zipCodeFailure = $("<p>").text("Must Enter Valid Zip Code!");
+  
 
 
   
-  if ( weatherCard ) {
-    // console.log("toBeDeleted")
-    // weatherCard.forEach(weatherCard.remove());
-    // console.log(weatherCard)
-    // for(var i = 0; i < weatherCard.length; i++){
-    //   // weatherCard[i].removeChild(weatherCard[i]);
-    //   // console.log(weatherCard[i])
-    //   // console.log(fiveDayView.childNodes[i])
-    //   fiveDayView.removeChild(fiveDayView.firstChild)
 
-    // }
+  if (!( zipInput.length === 5) ) {
+    console.log("5")
+    // zipCodeMessage.append(zipCodeFailure);
+    // zipCodeMessage.innertext = "Must Enter Valid Zip Code!"
+    document.querySelector('.zipCodeMessage').innerText=zipCodeMessage;
+    return
+  } else {
+    if ( weatherCard ) {
 
-    currentWeatherView.innerHTML = '';
-    fiveDayView.innerHTML = '';
-
-    // while (fiveDayView)
+      currentWeatherView.innerHTML = '';
+      fiveDayView.innerHTML = '';
+    }
+    document.querySelector('.zipCodeMessage').innerText='';  
+    displayCurrentWeather(); 
+    fiveDayForecast();
   }
 
+  
+
   console.log(fiveDayView.childNodes)
-  // fiveDayView.removeChild(fiveDayView.childNodes[i])
-
-  // if (!(zipInput.length === 0)) {
-    console.log ("zipInput not empty")
-    console.log ("zipInput:", zipInput)
-    console.log(weatherCard.length)
-
- //}
-
-  displayCurrentWeather(); 
-  fiveDayForecast();
+  console.log ("zipInput not empty")
+  console.log ("zipInput:", zipInput)
+  console.log(weatherCard.length)
 }
-
-
-
 
 function displayCurrentWeather() {
 
@@ -191,7 +177,7 @@ function fiveDayForecast() {
            // Creating a div to hold the current weather
           var colDiv= $("<div class='col'>");
 
-          var weatherCard= $("<div class='card bg-primary text-white mb-4 weatherCard'>");
+          var weatherCard= $("<div class='card bg-light text-black mb-4 weatherCard'>");
 
           // Storing the weather data
           var weather = day.weather[0].main;
@@ -242,8 +228,6 @@ function fiveDayForecast() {
 }
 
 // Adding a click event listener to all elements with a class of "movie-btn"
-// $(document).one("click", "#searchWeather", displayCurrentWeather);
-// $(document).one("click", "#searchWeather", fiveDayForecast);
 $(document).on("click", "#searchWeather", searchNewZip);
 $(document).keypress(function(e) {
   if(e.which == 13) {
@@ -286,47 +270,5 @@ $( document ).ready(function() {
 });
 
 
-// Function for displaying movie data
-// function renderButtons() {
 
-//   // Deleting the movies prior to adding new movies
-//   // (this is necessary otherwise you will have repeat buttons)
-//   $("#buttons-view").empty();
-
-//   // Looping through the array of movies
-//   for (var i = 0; i < movies.length; i++) {
-
-//     // Then dynamicaly generating buttons for each movie in the array
-//     // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
-//     var a = $("<button>");
-//     // Adding a class of movie-btn to our button
-//     a.addClass("movie-btn");
-//     // Adding a data-attribute
-//     a.attr("data-name", movies[i]);
-//     // Providing the initial button text
-//     a.text(movies[i]);
-//     // Adding the button to the buttons-view div
-//     $("#buttons-view").append(a);
-//   }
-// }
-
-// // This function handles events where a movie button is clicked
-// $("#add-movie").on("click", function(event) {
-//   event.preventDefault();
-//   // This line grabs the input from the textbox
-//   var movie = $("#movie-input").val().trim();
-
-//   // Adding movie from the textbox to our array
-//   movies.push(movie);
-
-//   // Calling renderButtons which handles the processing of our movie array
-//   renderButtons();
-// });
-
-
-
-      // Calling the renderButtons function to display the initial buttons
-      //renderButtons();
-
-      // var queryURL = "api.openweathermap.org/data/2.5/weather?zip=" + zipLocation + "&appid=cee88101192942cc1ddef8fb37f11635";
 
