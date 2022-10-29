@@ -21,6 +21,7 @@ function searchNewZip () {
   let zipInput = $("#zip-input").val().trim();
   // let weatherCard = document.querySelector(".weatherCard")
   let weatherCard = document.getElementsByClassName("weatherCard")
+  let currentWeatherView = document.querySelector("#weather-view")
   let fiveDayView = document.querySelector("#fiveDayView")
 
 
@@ -37,7 +38,9 @@ function searchNewZip () {
 
     // }
 
+    currentWeatherView.innerHTML = '';
     fiveDayView.innerHTML = '';
+
     // while (fiveDayView)
   }
 
@@ -50,6 +53,9 @@ function searchNewZip () {
     console.log(weatherCard.length)
 
  //}
+
+  displayCurrentWeather(); 
+  fiveDayForecast();
 }
 
 
@@ -78,7 +84,7 @@ function displayCurrentWeather() {
     console.log(response);
     // Creating a div to hold the current weather
     // var weatherDiv = $("<div class='weatherInfo'>");
-    var weatherDiv = $("<div class='weatherInfo card bg-light mb-3'>");
+    var weatherDiv = $("<div id='currentWeatherView' class='currentWeatherView card bg-light mb-3 weatherCard'>");
 
   //  class="" style="max-width: 18rem;">
 
