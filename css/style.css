@@ -1,0 +1,17 @@
+#todayWeatherCol, #fiveDayWeatherCol {
+    padding-left: 0rem;
+    padding-right: 0rem;
+}
+
+#fiveDayView {
+    display: inline-flex;
+}
+
+.card {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.weatherInfo{
+    max-width: 18rem;
+}
