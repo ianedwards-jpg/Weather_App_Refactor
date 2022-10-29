@@ -1,17 +1,29 @@
-// Initial array of movies
+// Set variable for zip-location
 
-let zipLocation = $("#zip-input").val().trim();
+// Initialize empty string for a default location set by the user. Until set, will use 10001 (Manhattan, NY)
+let defaultLocation = new String()
+
+let zipInput = $("#zip-input").val().trim();
+
+// Intialize variable for searched zip, whether it is default location or inputted by user
+let zipSearch = $("#zip-input").val().trim();
+
+// let zipSearch = $("#zip-input").val().trim();
 
 
-// displayMovieInfo function re-renders the HTML to display the appropriate content
+// let defaultLocation = $("#zip-input").val().trim();
+
+
+
+
 function displayCurrentWeather() {
 
   //var zipLocation = $("#data-name").val();
   // var zipLocation = $("#movie-input").val().trim();
-  console.log(zipLocation)
+  console.log(zipSearch)
   // if (zipLocation.val() === 0)
   //var queryURL = "https://api.openweathermap.org/data/2.5/weather?zip=06804,us&appid=cee88101192942cc1ddef8fb37f11635";
-  var queryURL = "https://api.openweathermap.org/data/2.5/weather?zip=" + zipLocation + ",us&appid=cee88101192942cc1ddef8fb37f11635";
+  var queryURL = "https://api.openweathermap.org/data/2.5/weather?zip=" + zipSearch + ",us&appid=cee88101192942cc1ddef8fb37f11635";
   // Creating an AJAX call for the current weather 
   $.ajax({
     url: queryURL,
@@ -76,7 +88,7 @@ function fiveDayForecast() {
   //var zipLocation = $("#data-name").val();
   // var zipLocation = $("#movie-input").val().trim();
   //var queryURL = "https://api.openweathermap.org/data/2.5/weather?zip=" + zipLocation + ",us&appid=cee88101192942cc1ddef8fb37f11635";
-  var fiveDayURL = "https://api.openweathermap.org/data/2.5/forecast?zip=" + zipLocation + ",us&appid=cee88101192942cc1ddef8fb37f11635";
+  var fiveDayURL = "https://api.openweathermap.org/data/2.5/forecast?zip=" + zipSearch + ",us&appid=cee88101192942cc1ddef8fb37f11635";
   // Creating an AJAX call for the 5 day firecast
   $.ajax({
     url: fiveDayURL,
@@ -147,6 +159,32 @@ function fiveDayForecast() {
 
 }
 
+// Adding a click event listener to all elements with a class of "movie-btn"
+$(document).one("click", "#searchWeather", displayCurrentWeather);
+$(document).one("click", "#searchWeather", fiveDayForecast);
+
+$( document ).ready(function() {
+  
+  // console.log(zipLocation)
+  if ( (zipInput.length === 0) & (defaultLocation.length  === 0) ){
+    console.log ("bothEmpty")
+    zipSearch = "10001"
+  }
+
+
+  
+  console.log( "ready!" );
+
+  console.log( "Default Zip Location:", defaultLocation );
+  console.log( "Zip Input", zipInput );
+  console.log( "Zip Searched", zipSearch );
+
+
+  displayCurrentWeather(); 
+  fiveDayForecast();
+});
+
+
 // Function for displaying movie data
 // function renderButtons() {
 
@@ -184,23 +222,6 @@ function fiveDayForecast() {
 //   renderButtons();
 // });
 
-// Adding a click event listener to all elements with a class of "movie-btn"
-$(document).one("click", "#searchWeather", displayCurrentWeather);
-$(document).one("click", "#searchWeather", fiveDayForecast);
-
-$( document ).ready(function() {
-  
-  console.log(zipLocation)
-  if (zipLocation.length ===0) {
-    console.log("zipempty")
-    zipLocation = "10001"
-  }
-  console.log( "ready!" );
-  console.log( "zip value", zipLocation );
-
-  displayCurrentWeather(); 
-  fiveDayForecast();
-});
 
 
       // Calling the renderButtons function to display the initial buttons
