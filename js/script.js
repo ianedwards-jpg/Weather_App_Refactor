@@ -2,6 +2,8 @@
 
 // Initialize empty string for a default location set by the user. Until set, will use 10001 (Manhattan, NY)
 // let defaultLocation = new String()
+const zipInputBar = document.querySelector("#zip-input")
+
 let defaultLocation = new String()
 
 
@@ -27,7 +29,7 @@ function searchNewZip () {
 
   
   if ( weatherCard ) {
-    console.log("toBeDeleted")
+    // console.log("toBeDeleted")
     // weatherCard.forEach(weatherCard.remove());
     // console.log(weatherCard)
     // for(var i = 0; i < weatherCard.length; i++){
@@ -65,11 +67,27 @@ function displayCurrentWeather() {
 
   let zipInput = $("#zip-input").val().trim();
 
+  if (defaultLocation.length  === 0) {
+    console.log("Default Location Empty: Set as 10001")
+    defaultLocation = "10001"
+    zipSearch = defaultLocation 
+  } else {
+    zipSearch = zipInput 
+  }
+
 
   //var zipLocation = $("#data-name").val();
   // var zipLocation = $("#movie-input").val().trim();
   console.log(zipInput)
   console.log(zipSearch)
+
+  // if ( !(zipSearch.length === 0 ) ){
+  //   console.log("ToBeSearched:", zipInput)
+  //   zipSearch = zipInput
+  // } else {
+  //   zipSearch = defaultLocation
+  // }
+
   // if (zipLocation.val() === 0)
   //var queryURL = "https://api.openweathermap.org/data/2.5/weather?zip=06804,us&appid=cee88101192942cc1ddef8fb37f11635";
 
@@ -141,6 +159,12 @@ function fiveDayForecast() {
   // if ( document.querySelector(".weatherCard") ) {
   //   console.log("toBeDeleted")
   // }
+
+  if (defaultLocation.length  === 0) {
+    console.log("Default Location Empty: Set as 10001")
+    defaultLocation = "10001"
+    zipSearch = defaultLocation 
+  }
 
   //var zipLocation = $("#data-name").val();
   // var zipLocation = $("#movie-input").val().trim();
@@ -221,18 +245,28 @@ function fiveDayForecast() {
 // $(document).one("click", "#searchWeather", displayCurrentWeather);
 // $(document).one("click", "#searchWeather", fiveDayForecast);
 $(document).on("click", "#searchWeather", searchNewZip);
+$(document).keypress(function(e) {
+  if(e.which == 13) {
+    console.log("enter")
+    e.preventDefault()
+
+    searchNewZip();
+    // displayCurrentWeather(); 
+    // fiveDayForecast();
+  }
+});
 
 
 $( document ).ready(function() {
   
   // console.log(zipLocation)
   // if (zipInput.length === 0){
-    console.log ("zipInput Empty")
-  if (defaultLocation.length  === 0) {
-    console.log("Default Location Empty: Set as 10001")
-    defaultLocation = "10001"
-    zipSearch = defaultLocation 
-  }
+    // console.log ("zipInput Empty")
+  // if (defaultLocation.length  === 0) {
+  //   console.log("Default Location Empty: Set as 10001")
+  //   defaultLocation = "10001"
+  //   zipSearch = defaultLocation 
+  // }
 
   // } 
 
@@ -242,11 +276,13 @@ $( document ).ready(function() {
 
   console.log( "Default Zip Location:", defaultLocation );
   // console.log( "Zip Input", zipInput );
-  console.log( "Zip Searched", zipSearch );
+  // console.log( "Zip Searched", zipSearch );
+  zipInputBar.value = '';
 
 
   displayCurrentWeather(); 
   fiveDayForecast();
+  
 });
 
 

@@ -34,9 +34,10 @@
                         <br>
                         <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
                             <div class="input-group">
-                                <input class="form-control" type="text" id="zip-input"
+                                <input class="form-control" type="text" id="zip-input" 
                                     placeholder="Search by zip code..." aria-label="Search"
-                                    aria-describedby="basic-addon2" />
+                                    aria-describedby="basic-addon2" maxlength="5"
+                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
                                 <div class="input-group-append">
                                     <button class="btn btn-primary" type="button" id="searchWeather"><i
                                             class="fas fa-search"></i></button>
