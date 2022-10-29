@@ -1,28 +1,73 @@
 // Set variable for zip-location
 
 // Initialize empty string for a default location set by the user. Until set, will use 10001 (Manhattan, NY)
+// let defaultLocation = new String()
 let defaultLocation = new String()
 
-let zipInput = $("#zip-input").val().trim();
+
+// let zipInput = $("#zip-input").val().trim();
+
 
 // Intialize variable for searched zip, whether it is default location or inputted by user
-let zipSearch = $("#zip-input").val().trim();
+let zipSearch = new String()
+
 
 // let zipSearch = $("#zip-input").val().trim();
 
 
 // let defaultLocation = $("#zip-input").val().trim();
 
+function searchNewZip () {
+  let zipInput = $("#zip-input").val().trim();
+  // let weatherCard = document.querySelector(".weatherCard")
+  let weatherCard = document.getElementsByClassName("weatherCard")
+  let fiveDayView = document.querySelector("#fiveDayView")
+
+
+  
+  if ( weatherCard ) {
+    console.log("toBeDeleted")
+    // weatherCard.forEach(weatherCard.remove());
+    // console.log(weatherCard)
+    // for(var i = 0; i < weatherCard.length; i++){
+    //   // weatherCard[i].removeChild(weatherCard[i]);
+    //   // console.log(weatherCard[i])
+    //   // console.log(fiveDayView.childNodes[i])
+    //   fiveDayView.removeChild(fiveDayView.firstChild)
+
+    // }
+
+    fiveDayView.innerHTML = '';
+    // while (fiveDayView)
+  }
+
+  console.log(fiveDayView.childNodes)
+  // fiveDayView.removeChild(fiveDayView.childNodes[i])
+
+  // if (!(zipInput.length === 0)) {
+    console.log ("zipInput not empty")
+    console.log ("zipInput:", zipInput)
+    console.log(weatherCard.length)
+
+ //}
+}
+
 
 
 
 function displayCurrentWeather() {
 
+  let zipInput = $("#zip-input").val().trim();
+
+
   //var zipLocation = $("#data-name").val();
   // var zipLocation = $("#movie-input").val().trim();
+  console.log(zipInput)
   console.log(zipSearch)
   // if (zipLocation.val() === 0)
   //var queryURL = "https://api.openweathermap.org/data/2.5/weather?zip=06804,us&appid=cee88101192942cc1ddef8fb37f11635";
+
+  // API call: Current Weather 
   var queryURL = "https://api.openweathermap.org/data/2.5/weather?zip=" + zipSearch + ",us&appid=cee88101192942cc1ddef8fb37f11635";
   // Creating an AJAX call for the current weather 
   $.ajax({
@@ -84,6 +129,12 @@ function displayCurrentWeather() {
 }
 
 function fiveDayForecast() {
+  let zipInput = $("#zip-input").val().trim();
+
+
+  // if ( document.querySelector(".weatherCard") ) {
+  //   console.log("toBeDeleted")
+  // }
 
   //var zipLocation = $("#data-name").val();
   // var zipLocation = $("#movie-input").val().trim();
@@ -103,20 +154,21 @@ function fiveDayForecast() {
         days[day] = item
       }
 
-    } console.log(Object.values(days))
-      console.log(days)
+    } 
+    console.log(Object.values("objectValueDays", days))
+      console.log("Days", days)
         Object.values(days).forEach(day=>{
            // Creating a div to hold the current weather
           var colDiv= $("<div class='col'>");
 
-          var weatherCard= $("<div class='card bg-primary text-white mb-4'>");
+          var weatherCard= $("<div class='card bg-primary text-white mb-4 weatherCard'>");
 
           // Storing the weather data
           var weather = day.weather[0].main;
 
           // Creating an element to have weather displayed
           var pOne = $("<p>").text("Weather: " + weather);
-          console.log(pOne)
+          // console.log(pOne)
 
           // Displaying the rating
           weatherCard.append(pOne);
@@ -160,23 +212,30 @@ function fiveDayForecast() {
 }
 
 // Adding a click event listener to all elements with a class of "movie-btn"
-$(document).one("click", "#searchWeather", displayCurrentWeather);
-$(document).one("click", "#searchWeather", fiveDayForecast);
+// $(document).one("click", "#searchWeather", displayCurrentWeather);
+// $(document).one("click", "#searchWeather", fiveDayForecast);
+$(document).on("click", "#searchWeather", searchNewZip);
+
 
 $( document ).ready(function() {
   
   // console.log(zipLocation)
-  if ( (zipInput.length === 0) & (defaultLocation.length  === 0) ){
-    console.log ("bothEmpty")
-    zipSearch = "10001"
+  // if (zipInput.length === 0){
+    console.log ("zipInput Empty")
+  if (defaultLocation.length  === 0) {
+    console.log("Default Location Empty: Set as 10001")
+    defaultLocation = "10001"
+    zipSearch = defaultLocation 
   }
+
+  // } 
 
 
   
-  console.log( "ready!" );
+  console.log( "Document OnLoad" );
 
   console.log( "Default Zip Location:", defaultLocation );
-  console.log( "Zip Input", zipInput );
+  // console.log( "Zip Input", zipInput );
   console.log( "Zip Searched", zipSearch );
 
 
