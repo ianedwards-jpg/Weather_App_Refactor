@@ -27,5 +27,16 @@
 
 .msgSpan {
     margin-top: 10px;
+}
 
+.sectiontitles {
+    padding-left: 10px;
+}
+
+.weatherCard {
+    padding-left: 10px;
+}
+
+.weatherCard p {
+    margin-bottom: 5px;
 }
