@@ -33,10 +33,23 @@
     padding-left: 10px;
 }
 
-.weatherCard {
+/* .weatherCard {
     padding-left: 10px;
-}
+} */
 
 .weatherCard p {
     margin-bottom: 5px;
+}
+
+.currentWeatherTemp {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.currentWeatherValue{
+    text-align: center;
+}
+.currentWeatherValue, .currentHumidityValue {
+    font-size: 15px;
+    font-weight: bold;
 }

@@ -67,8 +67,8 @@ function displayCurrentWeather() {
 
   //var zipLocation = $("#data-name").val();
   // var zipLocation = $("#movie-input").val().trim();
-  console.log(zipInput)
-  console.log(zipSearch)
+  // console.log(zipInput)
+  // console.log(zipSearch)
 
   // if ( !(zipSearch.length === 0 ) ){
   //   console.log("ToBeSearched:", zipInput)
@@ -89,9 +89,20 @@ function displayCurrentWeather() {
   }).then(function (response) {
 
     console.log(response);
+    console.log("Response.name", response.name)
     // Creating a div to hold the current weather
     // var weatherDiv = $("<div class='weatherInfo'>");
     var weatherDiv = $("<div id='currentWeatherView' class='currentWeatherView card bg-light mb-3 weatherCard'>");
+    // var weatherIcon = $("<div id='currentWeatherIcon' class='currentWeatherIcon'>");
+    var weatherIconValue = response.weather[0].icon
+
+    var weatherIcon = $('<img />', {
+      id: 'currentWeatherIcon',
+      class: 'currentWeatherIcon',
+      src: 'assets/icons/' + weatherIconValue + '.png',
+      alt: 'Alt text'
+   });
+
 
   //  class="" style="max-width: 18rem;">
 
@@ -99,22 +110,40 @@ function displayCurrentWeather() {
     var weather = response.weather[0].main;
 
     // Creating an element to have weather displayed
-    // var pOne = $("<p>").text("Weather: " + weather);
-    var pOne = $("<p>").text(weather);
+    // var weatherValue = $("<p>").text("Weather: " + weather);
+    var weatherValue = $("<p>").text(weather);
+    weatherValue.attr('class', 'currentWeatherValue');
 
-    console.log(pOne)
+
+
+    console.log(weatherValue)
 
     // Displaying the rating
-    weatherDiv.append(pOne);
+    weatherDiv.append(weatherIcon)
+    weatherDiv.append(weatherValue);
 
     // Storing the release year
     var humidity = response.main.humidity;
 
     // Creating an element to hold the release year
-    var pTwo = $("<p>").text("Humidity: " + humidity + "%");
+    var humidityValue = $("<p>").text(" " + humidity + "%");
+    humidityValue.attr('class', 'currentHumidityValue');
+
 
     // Displaying the release year
-    weatherDiv.append(pTwo);
+    weatherDiv.append(humidityValue);
+
+    // var humidityIcon = $('<img id="dynamic">'); //Equivalent: $(document.createElement('img'))
+
+    var humidityIcon = $('<img />', {
+      id: 'id1',
+      src: 'assets/icons/humidity.svg',
+      alt: 'Alt text'
+   });
+
+    // $(document.createElement(humidityIcon));
+    // humidityIcon.attr('src', './assets/icons/humidity.svg');
+    humidityValue.prepend(humidityIcon);
 
     // Storing the plot
     // var temperature = ((response.main.temp * 1.8) - 459.67);
@@ -124,7 +153,9 @@ function displayCurrentWeather() {
 
     // Creating an element to hold the plot
     // var tempDisplay = $("<p>").text("Temp. (F°):"  + temperature.toFixed(1) + "  deg.");
-    var tempDisplay = $("<p>").text("Temp. "  + temperature + "°F");
+    var tempDisplay = $("<p>").text(temperature + " °F");
+    tempDisplay.attr('class', 'currentWeatherTemp');
+
 
     // Appending the plot
     weatherDiv.append(tempDisplay);
@@ -153,7 +184,7 @@ function fiveDayForecast() {
   // }
 
   if (defaultLocation.length  === 0) {
-    console.log("Default Location Empty: Set as 10001")
+    // console.log("Default Location Empty: Set as 10001")
     defaultLocation = "10001"
     zipSearch = defaultLocation 
   }
@@ -177,8 +208,8 @@ function fiveDayForecast() {
       }
 
     } 
-    console.log(Object.values("objectValueDays", days))
-      console.log("Days", days)
+    // console.log(Object.values("objectValueDays", days))
+      // console.log("Days", days)
         Object.values(days).forEach(day=>{
            // Creating a div to hold the current weather
           var colDiv= $("<div class='col'>");
@@ -189,22 +220,31 @@ function fiveDayForecast() {
           var weather = day.weather[0].main;
 
           // Creating an element to have weather displayed
-          var pOne = $("<p>").text("Weather: " + weather);
-          // console.log(pOne)
+          var weatherValue = $("<p>").text("Weather: " + weather);
+          // console.log(weatherValue)
 
-          // Displaying the rating
-          weatherCard.append(pOne);
+          // Displaying the weather
+          weatherCard.append(weatherValue);
 
-          // Storing the release year
+          // Storing the humidity value
           var humidity = day.main.humidity;
 
           humidity.toFixed(2);
 
           // Creating an element to hold the release year
-          var pTwo = $("<p>").text("Humidity: " + humidity + "%");
+          var humidityValue = $("<p>").text(" " + humidity + "%");
 
           // Displaying the release year
-          weatherCard.append(pTwo);
+          weatherCard.append(humidityValue);
+
+          var humidityIcon = $('<img />', {
+            id: 'id1',
+            src: 'assets/icons/humidity.svg',
+            alt: 'Alt text'
+         });
+
+         humidityValue.prepend(humidityIcon);
+
 
           // Storing the plot
           // var temperature = ((day.main.temp * 1.8) - 459.67);
@@ -242,7 +282,7 @@ function fiveDayForecast() {
 $(document).on("click", "#searchWeather", searchNewZip);
 $(document).keypress(function(e) {
   if(e.which == 13) {
-    console.log("enter")
+    // console.log("enter")
     e.preventDefault()
 
     searchNewZip();
@@ -267,9 +307,9 @@ $( document ).ready(function() {
 
 
   
-  console.log( "Document OnLoad" );
+  // console.log( "Document OnLoad" );
 
-  console.log( "Default Zip Location:", defaultLocation );
+  // console.log( "Default Zip Location:", defaultLocation );
 
   // console.log( "Zip Input", zipInput );
   // console.log( "Zip Searched", zipSearch );
@@ -280,9 +320,9 @@ $( document ).ready(function() {
   fiveDayForecast();
   getState(); 
 
-  console.log( "Document OnLoad" );
+  // console.log( "Document OnLoad" );
 
-  console.log( "Default Zip Location:", defaultLocation );
+  // console.log( "Default Zip Location:", defaultLocation );
   console.log("getState", getState())
   
 });
