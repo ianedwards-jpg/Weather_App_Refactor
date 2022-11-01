@@ -1,15 +1,15 @@
-// Set variable for zip-location
-
-// Initialize empty string for a default location set by the user. Until set, will use 10001 (Manhattan, NY)
-// let defaultLocation = new String()
+// Weather Application
+// Technologies Used: OpenWeather API/Icon Pack, BootStrap, jQuery
+// Set variable for zip-location input 
 const zipInputBar = document.querySelector("#zip-input")
 
+// Initialize empty string for a default location set by the user. Until set, will use 10001 (Manhattan, NY)
 let defaultLocation = new String()
 
 // Intialize variable for searched zip, whether it is default location or inputted by user
 let zipSearch = new String()
 
-
+// Searches a new zip code inputted by the user
 function searchNewZip () {
   let zipInput = $("#zip-input").val().trim();
   // let weatherCard = document.querySelector(".weatherCard")
@@ -17,11 +17,6 @@ function searchNewZip () {
   let currentWeatherView = document.querySelector("#weather-view")
   let fiveDayView = document.querySelector("#fiveDayView")
   let zipCodeMessage = "Must Enter Valid Zip Code!"
-  // let zipCodeMessage = document.querySelector(".zipCodeMessage")
-  // let zipCodeFailure = $("<p>").text("Must Enter Valid Zip Code!");
-  
-
-
   
 
   if (!( zipInput.length === 5) ) {
@@ -42,16 +37,14 @@ function searchNewZip () {
     getState(); 
   }
 
-  
-
   console.log(fiveDayView.childNodes)
   console.log ("zipInput not empty")
   console.log ("zipInput:", zipInput)
   console.log(weatherCard.length)
-
   console.log("getState", getState())
 }
 
+// Display Current Weather
 function displayCurrentWeather() {
 
   let zipInput = $("#zip-input").val().trim();
@@ -64,22 +57,6 @@ function displayCurrentWeather() {
     zipSearch = zipInput 
   }
 
-
-  //var zipLocation = $("#data-name").val();
-  // var zipLocation = $("#movie-input").val().trim();
-  // console.log(zipInput)
-  // console.log(zipSearch)
-
-  // if ( !(zipSearch.length === 0 ) ){
-  //   console.log("ToBeSearched:", zipInput)
-  //   zipSearch = zipInput
-  // } else {
-  //   zipSearch = defaultLocation
-  // }
-
-  // if (zipLocation.val() === 0)
-  //var queryURL = "https://api.openweathermap.org/data/2.5/weather?zip=06804,us&appid=cee88101192942cc1ddef8fb37f11635";
-
   // API call: Current Weather 
   var queryURL = "https://api.openweathermap.org/data/2.5/weather?zip=" + zipSearch + ",us&appid=cee88101192942cc1ddef8fb37f11635";
   // Creating an AJAX call for the current weather 
@@ -90,12 +67,18 @@ function displayCurrentWeather() {
 
     console.log(response);
     console.log("Response.name", response.name)
-    // Creating a div to hold the current weather
-    // var weatherDiv = $("<div class='weatherInfo'>");
-    var weatherDiv = $("<div id='currentWeatherView' class='currentWeatherView card bg-light mb-3 weatherCard'>");
-    // var weatherIcon = $("<div id='currentWeatherIcon' class='currentWeatherIcon'>");
-    var weatherIconValue = response.weather[0].icon
 
+  // Storing the weather data
+    var weather = response.weather[0].main;
+
+  // Creating a div card to hold the current weather properties
+    var weatherDiv = $("<div id='currentWeatherView' class='currentWeatherView card bg-light mb-3 weatherCard'>");
+  
+  // Current Weather icon 
+  // Initalize variable for icon value from API response and select appropriate icon from /assets/icons
+    let weatherIconValue = response.weather[0].icon
+
+  // Initalize variable for current weather icon div
     var weatherIcon = $('<img />', {
       id: 'currentWeatherIcon',
       class: 'currentWeatherIcon',
@@ -103,38 +86,42 @@ function displayCurrentWeather() {
       alt: 'Alt text'
    });
 
-
-  //  class="" style="max-width: 18rem;">
-
-    // Storing the weather data
-    var weather = response.weather[0].main;
-
-    // Creating an element to have weather displayed
-    // var weatherValue = $("<p>").text("Weather: " + weather);
+  // Creating an element to display current weather property (clear, clouds, etc.)
     var weatherValue = $("<p>").text(weather);
     weatherValue.attr('class', 'currentWeatherValue');
 
-
-
     console.log(weatherValue)
 
-    // Displaying the rating
+  // Attach weather property and icon divs to current weather card. 
     weatherDiv.append(weatherIcon)
     weatherDiv.append(weatherValue);
 
-    // Storing the release year
-    var humidity = response.main.humidity;
+  // Temperature Section 
+  // Storing the plot
+    // var temperature = ((response.main.temp * 1.8) - 459.67);
 
-    // Creating an element to hold the release year
+    var temperature = Math.round( ((response.main.temp * 1.8) - 459.67) );
+
+
+    // Creating an element to hold the plot
+    var tempDisplay = $("<p>").text(temperature + " °F");
+    tempDisplay.attr('class', 'currentWeatherTemp');
+
+
+    // Appending the plot
+    weatherDiv.append(tempDisplay);
+
+
+    // Humidity Section 
+  // Initalize variable for current weather humidity and set data from API call
+  var humidity = response.main.humidity;
+
+  
+  // Creating an element to hold the current weather humidity value
     var humidityValue = $("<p>").text(" " + humidity + "%");
     humidityValue.attr('class', 'currentHumidityValue');
 
-
-    // Displaying the release year
-    weatherDiv.append(humidityValue);
-
-    // var humidityIcon = $('<img id="dynamic">'); //Equivalent: $(document.createElement('img'))
-
+  // Attach humidity icon to humidity value (prepend so icon is in front of value)
     var humidityIcon = $('<img />', {
       id: 'id1',
       src: 'assets/icons/humidity.svg',
@@ -145,20 +132,10 @@ function displayCurrentWeather() {
     // humidityIcon.attr('src', './assets/icons/humidity.svg');
     humidityValue.prepend(humidityIcon);
 
-    // Storing the plot
-    // var temperature = ((response.main.temp * 1.8) - 459.67);
-
-    var temperature = Math.round( ((response.main.temp * 1.8) - 459.67) );
 
 
-    // Creating an element to hold the plot
-    // var tempDisplay = $("<p>").text("Temp. (F°):"  + temperature.toFixed(1) + "  deg.");
-    var tempDisplay = $("<p>").text(temperature + " °F");
-    tempDisplay.attr('class', 'currentWeatherTemp');
-
-
-    // Appending the plot
-    weatherDiv.append(tempDisplay);
+  // Attach humidity value to current weather card
+    tempDisplay.append(humidityValue);
 
     // Retrieving the URL for the image
     var imgURL = response.Poster;
@@ -209,30 +186,70 @@ function fiveDayForecast() {
 
     } 
     // console.log(Object.values("objectValueDays", days))
-      // console.log("Days", days)
+      console.log("Days", days)
         Object.values(days).forEach(day=>{
            // Creating a div to hold the current weather
           var colDiv= $("<div class='col'>");
 
           var weatherCard= $("<div class='card bg-light text-black mb-4 weatherCard'>");
 
+          let weatherIconValue = day.weather[0].icon
+
+        // Initalize variable for current weather icon div
+          var weatherIcon = $('<img />', {
+            id: 'currentWeatherIcon',
+            class: 'currentWeatherIcon',
+            src: 'assets/icons/' + weatherIconValue + '.png',
+            alt: 'Alt text'
+            });
+
           // Storing the weather data
           var weather = day.weather[0].main;
 
           // Creating an element to have weather displayed
-          var weatherValue = $("<p>").text("Weather: " + weather);
+          var weatherValue = $("<p>").text(weather);
+          weatherValue.attr('class', 'fiveDayWeatherValue');
+
           // console.log(weatherValue)
 
           // Displaying the weather
+          weatherCard.append(weatherIcon)
           weatherCard.append(weatherValue);
+
+        // Storing the plot
+        // var temperature = ((day.main.temp * 1.8) - 459.67);
+
+        var temperature = Math.round( ((day.main.temp * 1.8) - 459.67) );
+
+
+        // Creating an element to hold the plot
+        // var tempDisplay = $("<p>").text("Temperature (F): " + temperature.toFixed(1) + "  deg.");
+        let tempDisplay = $("<p>").text(" " + temperature + "°F");
+        tempDisplay.attr('class', 'fiveDayForecastValue');
+
+        var temperatureIcon = $('<img />', {
+          id: 'fiveDaytemperatureIcon',
+          src: 'assets/icons/thermometer-half.svg',
+          alt: 'Alt text'
+       });
+    
+        // $(document.createElement(humidityIcon));
+        // humidityIcon.attr('src', './assets/icons/humidity.svg');
+        tempDisplay.prepend(temperatureIcon);
+    
+
+        // Appending the plot
+        weatherCard.append(tempDisplay);
 
           // Storing the humidity value
           var humidity = day.main.humidity;
 
-          humidity.toFixed(2);
+          // humidity.toFixed(2);
 
           // Creating an element to hold the release year
           var humidityValue = $("<p>").text(" " + humidity + "%");
+          humidityValue.attr('class', 'fiveDayForecastValue');
+          
 
           // Displaying the release year
           weatherCard.append(humidityValue);
@@ -244,22 +261,6 @@ function fiveDayForecast() {
          });
 
          humidityValue.prepend(humidityIcon);
-
-
-          // Storing the plot
-          // var temperature = ((day.main.temp * 1.8) - 459.67);
-
-          var temperature = Math.round( ((day.main.temp * 1.8) - 459.67) );
-
-
-
-          // Creating an element to hold the plot
-          // var tempDisplay = $("<p>").text("Temperature (F): " + temperature.toFixed(1) + "  deg.");
-          var tempDisplay = $("<p>").text(temperature + "°F");
-
-
-          // Appending the plot
-          weatherCard.append(tempDisplay);
 
           // Retrieving the URL for the image
           var imgURL = day.Poster;
@@ -516,3 +517,31 @@ function getState() {
 }
 
 
+
+
+  // var humidityIcon = $('<img id="dynamic">'); //Equivalent: $(document.createElement('img'))
+  // var tempDisplay = $("<p>").text("Temp. (F°):"  + temperature.toFixed(1) + "  deg.");
+
+  //var zipLocation = $("#data-name").val();
+  // var zipLocation = $("#movie-input").val().trim();
+  // console.log(zipInput)
+  // console.log(zipSearch)
+
+  // if ( !(zipSearch.length === 0 ) ){
+  //   console.log("ToBeSearched:", zipInput)
+  //   zipSearch = zipInput
+  // } else {
+  //   zipSearch = defaultLocation
+  // }
+
+  // if (zipLocation.val() === 0)
+  //var queryURL = "https://api.openweathermap.org/data/2.5/weather?zip=06804,us&appid=cee88101192942cc1ddef8fb37f11635";
+
+  // let zipCodeMessage = document.querySelector(".zipCodeMessage")
+  // let zipCodeFailure = $("<p>").text("Must Enter Valid Zip Code!");
+      // var weatherDiv = $("<div class='weatherInfo'>");
+ //  class="" style="max-width: 18rem;">
+     // var weatherValue = $("<p>").text("Weather: " + weather);
+
+
+  

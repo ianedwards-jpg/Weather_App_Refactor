@@ -44,12 +44,47 @@
 .currentWeatherTemp {
     font-size: 30px;
     font-weight: bold;
+    padding-left: 10px;
+    display: inline-flex;
+    position: relative;
 }
 
-.currentWeatherValue{
-    text-align: center;
+.currentWeatherValue  {
+    font-size: 20px;
+    font-weight: bold;
 }
-.currentWeatherValue, .currentHumidityValue {
+
+.fiveDayWeatherValue {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.fiveDayForecastValue {
     font-size: 15px;
     font-weight: bold;
 }
+
+.currentWeatherValue, .fiveDayWeatherValue {
+    text-align: center;
+}
+
+.currentHumidityValue {
+    padding-left: 25px;
+    height: 45px;
+    /* padding-top: 5px; */
+    position: absolute;
+    font-size: 25px;
+    font-weight: bold;
+    height: 45px;
+    right: 0;
+    top: 7px;
+}
+
+/* .searchHistory {
+    background-color:#212529 !important; 
+    color: white !important;
+} */
+
+/* .accordion-button::after {
+    background-image: url(/weather_app_revamp/weather_app_refactor/assets/img/solid_white.svg) !important;
+} */
