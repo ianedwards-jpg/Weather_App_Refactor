@@ -246,7 +246,7 @@ function displayCurrentWeather() {
 }
 
 function fiveDayForecast() {
-  let zipInput = $("#zip-input").val().trim();
+  // let zipInput = $("#zip-input").val().trim();
 
 
   // if ( document.querySelector(".weatherCard") ) {
@@ -258,6 +258,7 @@ function fiveDayForecast() {
     defaultLocation = "10001"
     zipSearch = defaultLocation 
   }
+  
 
   //var zipLocation = $("#data-name").val();
   // var zipLocation = $("#movie-input").val().trim();
@@ -278,6 +279,8 @@ function fiveDayForecast() {
       let month = new Date(item.dt_txt).getMonth()
 
       console.log("Month", month)
+      // console.log("Response.list.length", days[day].length)
+
       if (!days[day]) {
         days[day] = item
       }
@@ -309,11 +312,16 @@ function fiveDayForecast() {
     } 
     // console.log(Object.values("objectValueDays", days))
       console.log("Days", days)
+
+      // let daySize = Object.keys(days).length
+      // console.log("daySize", daySize)
+      // let daysMinusOne = days.pop()
+      // console.log("DaysMinus1", daysMinusOne)
         Object.values(days).forEach(day=>{
            // Creating a div to hold the current weather
           var colDiv= $("<div class='col'>");
 
-          var weatherCard= $("<div class='card bg-light text-black mb-4 weatherCard'>");
+          var weatherCard= $("<div class='fiveDayCards card bg-light text-black mb-4 weatherCard'>");
 
           let weatherIconValue = day.weather[0].icon
 
