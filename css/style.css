@@ -1,3 +1,13 @@
+@media (min-width: 768px) {
+    /* .mr-md-3, .mx-md-3 {
+        margin-left: 1rem !important;
+    } */
+    .searchInput {
+        margin-left: 1rem !important;
+    }
+}
+
+
 #todayWeatherCol, #fiveDayWeatherCol {
     padding-left: 0rem;
     padding-right: 0rem;
@@ -113,3 +123,5 @@
 .fiveDayCards:last-child {
     display: none !important;
 }
+
+
