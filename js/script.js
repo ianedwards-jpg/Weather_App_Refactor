@@ -2,8 +2,8 @@
 // Technologies Used: OpenWeather API/Icon Pack, BootStrap, jQuery
 // Set variable for zip-location input 
 const zipInputBar = document.querySelector("#zip-input")
-const globalDay = new Number;
-const globalMonth = new Number;
+// const globalDay = new Number;
+// const globalMonth = new Number;
 
 const monthsMap = [
   {month: 1, value: "January"},
@@ -19,6 +19,7 @@ const monthsMap = [
   {month: 11, value: "November"},
   {month: 12, value: "December"}
 ]
+
 const daysMap = [
   {day: 0, value: "Sunday"},
   {day: 1, value: "Monday"},
@@ -27,6 +28,13 @@ const daysMap = [
   {day: 4, value: "Thursday"},
   {day: 5, value: "Friday"},
   {day: 6, value: "Saturday"}
+]
+
+const affixMap = [
+  {day: 1, value: "st"},
+  {day: 2, value: "nd"},
+  {day: 3, value: "rd"}
+  // {day: 4, value: "th"}
 ]
 
 
@@ -96,24 +104,62 @@ function displayCurrentWeather() {
     // console.log(response);
     // console.log("Response.name", response.name)
 
-    let getLocalDateAndTime = new Date(response.dt * 1000).toLocaleString();
-    let month = new Date(response.dt * 1000).getMonth()
-    let day = new Date(response.dt * 1000).getDay()
+    let todayWeatherTitle = document.querySelector('#todayWeatherTitle')
 
+    // Get day, month, date to render for Current Weather
+    // let getLocalDateAndTime = new Date(response.dt * 1000).toLocaleString();
+    let currentMonth = new Date(response.dt * 1000).getMonth()
+    let currentDay = new Date(response.dt * 1000).getDay()
+    let currentDate = new Date(response.dt * 1000).getUTCDate()
+    let currentDateAffixString = String(currentDate).slice(-1)
+    let currentDateAffixNumber = Number(currentDateAffixString)
+    let monthTitle, dateTitle, currentDateAffix; 
+
+    // Get Month for current date
     for(let i = 0; i < monthsMap.length;  i++) {
-        if (monthsMap.month = month) {
+        if (monthsMap.month = currentMonth) {
           // console.log(monthsMap[month].value)
-          console.log("Current Month", monthsMap[month].value)
+          console.log("Current Month", monthsMap[currentMonth].value)
+          monthTitle = monthsMap[currentMonth].value
         }
       }
 
+    // Get Week Day for current date
+    for(let i = 0; i < daysMap.length;  i++) {
 
+        if (daysMap.day = currentDay) {
+          // console.log("Day", day)
+          console.log("Current Day", daysMap[currentDay].value)
+          dateTitle = daysMap[currentDay].value
 
-    console.log("Get Local Date and Time", getLocalDateAndTime)
-    console.log("Current Month", month)
-    console.log("currentDay", day)
+        }
+      }
+    
+    // Slice month value to last digit and assign suffix depending on value
+    for(let i = 0; i < affixMap.length;  i++) {
 
+        if (affixMap.day = currentDateAffixNumber) {
+          console.log("Day", currentDateAffixNumber)
+          // console.log("Current Date Affix", affixMap[1].value)
+          // console.log("Current Date Affix", affixMap[currentDateAffixNumber - 1].value)
+          currentDateAffix = affixMap[currentDateAffixNumber - 1].value
+        } 
+        else {
+          currentDateAffix = "th"
+        }
+      }
 
+    // Grab the current weather title element and assign the date
+    todayWeatherTitle.innerText = dateTitle + ", " + monthTitle + " " + currentDate + currentDateAffix;
+    
+
+    // console.log("Get Local Date and Time", getLocalDateAndTime)
+    // console.log("Current Month", currentMonth)
+    // console.log("currentDay", currentDay)
+    // console.log("UTC Date", currentDate)
+    // console.log("Month Test", )
+    // console.log("Date Test", dateTest + ", " + monthTest + " " + currentDate)
+    console.log("Date Affix Value", currentDateAffix)
 
   // Storing the weather data
     var weather = response.weather[0].main;
@@ -373,17 +419,7 @@ $(document).keypress(function(e) {
 
 $( document ).ready(function() {
   
-  // console.log(zipLocation)
-  // if (zipInput.length === 0){
-    // console.log ("zipInput Empty")
-  // if (defaultLocation.length  === 0) {
-  //   console.log("Default Location Empty: Set as 10001")
-  //   defaultLocation = "10001"
-  //   zipSearch = defaultLocation 
-  // }
-
-  // } 
-
+  
 
   
   // console.log( "Document OnLoad" );
@@ -596,60 +632,6 @@ function getState() {
 }
 
 
-
-
-  // var humidityIcon = $('<img id="dynamic">'); //Equivalent: $(document.createElement('img'))
-  // var tempDisplay = $("<p>").text("Temp. (F°):"  + temperature.toFixed(1) + "  deg.");
-
-  //var zipLocation = $("#data-name").val();
-  // var zipLocation = $("#movie-input").val().trim();
-  // console.log(zipInput)
-  // console.log(zipSearch)
-
-  // if ( !(zipSearch.length === 0 ) ){
-  //   console.log("ToBeSearched:", zipInput)
-  //   zipSearch = zipInput
-  // } else {
-  //   zipSearch = defaultLocation
-  // }
-
-  // if (zipLocation.val() === 0)
-  //var queryURL = "https://api.openweathermap.org/data/2.5/weather?zip=06804,us&appid=cee88101192942cc1ddef8fb37f11635";
-
-  // let zipCodeMessage = document.querySelector(".zipCodeMessage")
-  // let zipCodeFailure = $("<p>").text("Must Enter Valid Zip Code!");
-      // var weatherDiv = $("<div class='weatherInfo'>");
- //  class="" style="max-width: 18rem;">
-     // var weatherValue = $("<p>").text("Weather: " + weather);
-
-
-
-// function calculateMonth () {
-//   let months = [
-//     {month: 1, value: "January"},
-//     {month: 2, value: "February"},
-//     {month: 3, value: "March"},
-//     {month: 4, value: "April"},
-//     {month: 5, value: "May"},
-//     {month: 6, value: "June"},
-//     {month: 7, value: "July"},
-//     {month: 8, value: "August"},
-//     {month: 9, value: "September"},
-//     {month: 10, value: "October"},
-//     {month: 11, value: "November"},
-//     {month: 12, value: "December"}
-//   ]
-//   let month = new Date.getMonth()
-//   let day = new Date.getDay()
-
-
-//   console.log("Month:", month)
-//   console.log("Day:", day)
-
-
- 
-    
-// }
 
 
   
