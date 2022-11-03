@@ -64,6 +64,10 @@
     font-weight: bold;
 }
 
+.fiveDayTemperatureIcon, .fiveHumidityIcon  {
+    padding-left: 10px;
+}
+
 .currentWeatherValue, .fiveDayWeatherValue {
     text-align: center;
 }

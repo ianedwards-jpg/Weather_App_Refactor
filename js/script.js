@@ -2,6 +2,34 @@
 // Technologies Used: OpenWeather API/Icon Pack, BootStrap, jQuery
 // Set variable for zip-location input 
 const zipInputBar = document.querySelector("#zip-input")
+const globalDay = new Number;
+const globalMonth = new Number;
+
+const monthsMap = [
+  {month: 1, value: "January"},
+  {month: 2, value: "February"},
+  {month: 3, value: "March"},
+  {month: 4, value: "April"},
+  {month: 5, value: "May"},
+  {month: 6, value: "June"},
+  {month: 7, value: "July"},
+  {month: 8, value: "August"},
+  {month: 9, value: "September"},
+  {month: 10, value: "October"},
+  {month: 11, value: "November"},
+  {month: 12, value: "December"}
+]
+const daysMap = [
+  {day: 0, value: "Sunday"},
+  {day: 1, value: "Monday"},
+  {day: 2, value: "Tuesday"},
+  {day: 3, value: "Wednesday"},
+  {day: 4, value: "Thursday"},
+  {day: 5, value: "Friday"},
+  {day: 6, value: "Saturday"}
+]
+
+
 
 // Initialize empty string for a default location set by the user. Until set, will use 10001 (Manhattan, NY)
 let defaultLocation = new String()
@@ -65,8 +93,27 @@ function displayCurrentWeather() {
     method: "GET"
   }).then(function (response) {
 
-    console.log(response);
-    console.log("Response.name", response.name)
+    // console.log(response);
+    // console.log("Response.name", response.name)
+
+    let getLocalDateAndTime = new Date(response.dt * 1000).toLocaleString();
+    let month = new Date(response.dt * 1000).getMonth()
+    let day = new Date(response.dt * 1000).getDay()
+
+    for(let i = 0; i < monthsMap.length;  i++) {
+        if (monthsMap.month = month) {
+          // console.log(monthsMap[month].value)
+          console.log("Current Month", monthsMap[month].value)
+        }
+      }
+
+
+
+    console.log("Get Local Date and Time", getLocalDateAndTime)
+    console.log("Current Month", month)
+    console.log("currentDay", day)
+
+
 
   // Storing the weather data
     var weather = response.weather[0].main;
@@ -176,14 +223,43 @@ function fiveDayForecast() {
     method: "GET"
   }).then(function (response) {
     // Iterate over response 5 times for 5-day forecast
+
+    console.log("fiveDayResponse", response)
     const days = {}
     for (var i = 0; i < response.list.length; i++) {
       let item = response.list[i]
       let day = new Date(item.dt_txt).getDay()
+      let month = new Date(item.dt_txt).getMonth()
+
+      console.log("Month", month)
       if (!days[day]) {
         days[day] = item
       }
 
+
+      // console.log("day:", day)
+
+      
+
+      // for(let i = 0; i < monthsMap.length;  i++) {
+      //   if (monthsMap.month = month) {
+      //     console.log(monthsMap[month].value)
+      //   }
+      // }
+
+      // for(let i = 0; i < daysMap.length;  i++) {
+
+      //   if (daysMap.day = day) {
+      //     console.log("Day", day)
+      //     console.log(daysMap[day].value)
+      //   }
+      // }
+
+      // console.log(months.length)
+      
+      // if(day = 4) {
+      //   console.log("Wednesday")
+      // }
     } 
     // console.log(Object.values("objectValueDays", days))
       console.log("Days", days)
@@ -197,8 +273,8 @@ function fiveDayForecast() {
 
         // Initalize variable for current weather icon div
           var weatherIcon = $('<img />', {
-            id: 'currentWeatherIcon',
-            class: 'currentWeatherIcon',
+            id: 'fiveDayWeatherIcon',
+            class: 'fiveDayWeatherIcon',
             src: 'assets/icons/' + weatherIconValue + '.png',
             alt: 'Alt text'
             });
@@ -228,7 +304,8 @@ function fiveDayForecast() {
         tempDisplay.attr('class', 'fiveDayForecastValue');
 
         var temperatureIcon = $('<img />', {
-          id: 'fiveDaytemperatureIcon',
+          id: 'fiveDayTemperatureIcon',
+          class: 'fiveDayTemperatureIcon',
           src: 'assets/icons/thermometer-half.svg',
           alt: 'Alt text'
        });
@@ -255,7 +332,8 @@ function fiveDayForecast() {
           weatherCard.append(humidityValue);
 
           var humidityIcon = $('<img />', {
-            id: 'id1',
+            id: 'fiveHumidityIcon',
+            class: 'fiveHumidityIcon',
             src: 'assets/icons/humidity.svg',
             alt: 'Alt text'
          });
@@ -320,6 +398,7 @@ $( document ).ready(function() {
   displayCurrentWeather(); 
   fiveDayForecast();
   getState(); 
+  // calculateMonth(); 
 
   // console.log( "Document OnLoad" );
 
@@ -542,6 +621,35 @@ function getState() {
       // var weatherDiv = $("<div class='weatherInfo'>");
  //  class="" style="max-width: 18rem;">
      // var weatherValue = $("<p>").text("Weather: " + weather);
+
+
+
+// function calculateMonth () {
+//   let months = [
+//     {month: 1, value: "January"},
+//     {month: 2, value: "February"},
+//     {month: 3, value: "March"},
+//     {month: 4, value: "April"},
+//     {month: 5, value: "May"},
+//     {month: 6, value: "June"},
+//     {month: 7, value: "July"},
+//     {month: 8, value: "August"},
+//     {month: 9, value: "September"},
+//     {month: 10, value: "October"},
+//     {month: 11, value: "November"},
+//     {month: 12, value: "December"}
+//   ]
+//   let month = new Date.getMonth()
+//   let day = new Date.getDay()
+
+
+//   console.log("Month:", month)
+//   console.log("Day:", day)
+
+
+ 
+    
+// }
 
 
   
