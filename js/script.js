@@ -60,6 +60,7 @@ function searchNewZip () {
     // zipCodeMessage.append(zipCodeFailure);
     // zipCodeMessage.innertext = "Must Enter Valid Zip Code!"
     document.querySelector('.zipCodeMessage').innerText=zipCodeMessage;
+    document.querySelector('#zipCodeMessage').classList.remove('hideZipCodeMessage');
     return
   } else {
     if ( weatherCard ) {
@@ -67,7 +68,8 @@ function searchNewZip () {
       currentWeatherView.innerHTML = '';
       fiveDayView.innerHTML = '';
     }
-    document.querySelector('.zipCodeMessage').innerText='';  
+    document.querySelector('.zipCodeMessage').innerText='';
+    document.querySelector('#zipCodeMessage').classList.add('hideZipCodeMessage'); 
     displayCurrentWeather(); 
     fiveDayForecast();
     getState(); 
