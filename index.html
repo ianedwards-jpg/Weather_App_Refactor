@@ -24,8 +24,29 @@
 <body class="sb-nav-fixed">
     <!-- Navbar-->
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand">Search Options:</a><button class="btn btn-link btn-sm order-1 order-lg-0"
-            id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+        <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+        <a class="navbar-brand">Search Options:</a>
+        <div id="searchBarWrapper" class="searchBarWrapper">
+          <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0 searchBarForm">
+            <div class="input-group searchInput">
+                <input class="form-control" type="text" id="zip-input" 
+                    placeholder="Search zip code..." aria-label="Search"
+                    aria-describedby="basic-addon2" maxlength="5"
+                    onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" id="searchWeather"><i
+                            class="fas fa-search"></i></button>
+                </div>
+                <!-- <div class="zipCodeMessage hideZipCodeMessage" id="zipCodeMessage"> <span class="msgSpan"></span></div>     -->
+            </div>
+            <!-- <div class="zipCodeMessage hideZipCodeMessage" id="zipCodeMessage"> <span class="msgSpan"></span></div>     -->
+          </form>
+          <div class="zipCodeMessage hideZipCodeMessage" id="zipCodeMessage"> <span class="msgSpan"></span></div>    
+
+        </div>
+        
+
+
     </nav>
     <!-- Sidebar-->
     <div id="layoutSidenav">
@@ -35,7 +56,7 @@
                     <div class="nav">
                         <!-- Sidebar Search-->
                         <br>
-                        <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                        <!-- <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
                             <div class="input-group searchInput">
                                 <input class="form-control" type="text" id="zip-input" 
                                     placeholder="Search zip code..." aria-label="Search"
@@ -48,7 +69,7 @@
                                 <div class="zipCodeMessage hideZipCodeMessage" id="zipCodeMessage"> <span class="msgSpan"></span></div>    
                             </div>
 
-                        </form>
+                        </form> -->
 
                         <!-- Sidebar-->
 
@@ -135,7 +156,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid">
-                    <h1 class="mt-4 text-center">Weather Dashboard</h1>
+                    <!-- <h1 class="mt-4 text-center">Weather Dashboard</h1> -->
                     <div class="row" id="todayWeather">
                         <div class="col-6" id ="todayWeatherCol">
                             <h2 class="sectiontitles" id="todayWeatherTitle">Today's Weather:</h2>

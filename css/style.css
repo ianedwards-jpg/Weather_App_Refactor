@@ -28,11 +28,13 @@
 }
 
 .zipCodeMessage {
-    height: 30px;
-    width: 100%;
+    height: 38px;
+    width: 210px;
     color: red;
     text-align: center;
-    margin-top: 10px;
+    position: absolute;
+    top: 17px;
+        /* margin-top: 10px; */
 }
 
 .hideZipCodeMessage {
@@ -123,5 +125,17 @@
 .fiveDayCards:last-child {
     display: none !important;
 }
+
+.searchBarWrapper {
+    display: inline-flex;
+    width: 525px;
+    margin-left: 39%;
+
+}
+/* .searchBarForm {
+    margin-left: 1rem !important;
+} */
+
+
 
 
