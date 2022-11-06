@@ -118,38 +118,36 @@ function displayCurrentWeather() {
     let monthTitle, dateTitle, currentDateAffix; 
 
     // Get Month for current date
-    for(let i = 0; i < monthsMap.length;  i++) {
-        if (monthsMap.month = currentMonth) {
-          // console.log(monthsMap[month].value)
-          console.log("Current Month", monthsMap[currentMonth].value)
-          monthTitle = monthsMap[currentMonth].value
-        }
-      }
+      monthTitle = monthsMap[currentMonth].value
 
     // Get Week Day for current date
-    for(let i = 0; i < daysMap.length;  i++) {
+      dateTitle = daysMap[currentDay].value
 
-        if (daysMap.day = currentDay) {
-          // console.log("Day", day)
-          console.log("Current Day", daysMap[currentDay].value)
-          dateTitle = daysMap[currentDay].value
-
-        }
-      }
-    
     // Slice month value to last digit and assign suffix depending on value
-    for(let i = 0; i < affixMap.length;  i++) {
+    // for(let i = 0; i < affixMap.length;  i++) {
 
-        if (affixMap.day = currentDateAffixNumber) {
-          console.log("Day", currentDateAffixNumber)
-          // console.log("Current Date Affix", affixMap[1].value)
-          // console.log("Current Date Affix", affixMap[currentDateAffixNumber - 1].value)
-          currentDateAffix = affixMap[currentDateAffixNumber - 1].value
-        } 
-        else {
-          currentDateAffix = "th"
-        }
+      // console.log("affixMap.day", affixMap.length)
+      console.log("Day", currentDateAffixNumber - 1)
+
+
+    // if (affixMap.day = currentDateAffixNumber) {
+      if (currentDateAffixNumber = affixMap.day) {
+
+      console.log("Day", currentDateAffixNumber)
+      // console.log("Current Date Affix", affixMap[1].value)
+      // console.log("Current Date Affix", affixMap[currentDateAffixNumber - 1].value)
+      currentDateAffix = affixMap[currentDateAffixNumber - 1].value
+      // currentDateAffix = affixMap[currentDateAffixNumber - 1].value
+      // console.log("currentDateAffix", affixMap[currentDateAffixNumber - 1])
+
+      } 
+      else {
+        console.log("th")
+        currentDateAffix = "th"
       }
+
+      console.log("CurrentDateAffix", currentDateAffix)
+     // }
 
     // Grab the current weather title element and assign the date
     todayWeatherTitle.innerText = dateTitle + ", " + monthTitle + " " + currentDate + currentDateAffix;
