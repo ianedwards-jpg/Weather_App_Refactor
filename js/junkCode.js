@@ -82,5 +82,27 @@
     // })
 
 
+    // Get Month for current date
+    // for(let i = 0; i < monthsMap.length;  i++) {
+    //     // if (monthsMap.month = currentMonth) 
+    //     if (monthsMap.month = currentMonth) {
+    //       // console.log(monthsMap[month].value)
+    //       console.log("Current Month", monthsMap[currentMonth].value)
+    //       monthTitle = monthsMap[currentMonth].value
+    //     }
+    //   }
+
+
+    // Get Week Day for current date
+    // for(let i = 0; i < daysMap.length;  i++) {
+    //   console.log("currentDay", daysMap[currentDay].value)
+
+    //     if (daysMap.day = currentDay) {
+    //       // console.log("Day", day)
+    //       console.log("Current Day", daysMap[currentDay].value)
+    //       dateTitle = daysMap[currentDay].value
+
+    //     }
+    //   }
 
   
