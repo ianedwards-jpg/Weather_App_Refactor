@@ -105,4 +105,57 @@
     //     }
     //   }
 
+
+
+
+    // function greet(user) {
+    //   return `hello ${user}`
+    // }
+
+
+
+    // let user = "navin"
+
+    // let str = greet(user)
+
+    // console.log(str)
   
+
+
+    // console.log( .sort())
+      // console.log("day:", day)
+
+      // console.log("Item", item)
+
+      
+
+      // for(let i = 0; i < monthsMap.length;  i++) {
+      //   if (monthsMap.month = month) {
+      //     console.log(monthsMap[month].value)
+      //   }
+      // }
+
+      // for(let i = 0; i < daysMap.length;  i++) {
+
+      //   if (daysMap.day = day) {
+      //     console.log("Day", day)
+      //     console.log(daysMap[day].value)
+      //   }
+      // }
+
+      // console.log(months.length)
+      
+      // if(day = 4) {
+      //   console.log("Wednesday")
+      // }
+
+
+      // console.log(Object.values("objectValueDays", days))
+    // days.sort((a,b) => Date.parse(b) - Date.parse(a))
+      // console.log("Days", days.dt)
+
+      // let daySize = Object.keys(days).length
+      // console.log("daySize", daySize)
+      // let daysMinusOne = days.pop()
+      // console.log("DaysMinus1", daysMinusOne)
+      // Object.values(days).sort((a, b) => (a.day > b.day) ? 1 : -1); 
