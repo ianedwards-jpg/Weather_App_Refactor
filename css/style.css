@@ -49,6 +49,10 @@
     padding-left: 10px;
 }
 
+.currentCityTitle {
+    color: white;
+}
+
 /* .weatherCard {
     padding-left: 10px;
 } */
@@ -128,13 +132,27 @@
 
 .searchBarWrapper {
     display: inline-flex;
-    width: 525px;
-    margin-left: 39%;
+    width: 100%;
+    /* width: 525px; */
+    /* margin-left: 39%; */
 
 }
-/* .searchBarForm {
-    margin-left: 1rem !important;
-} */
+
+.bufferBarRight {
+    position: absolute;
+    right: 0px;
+    height: 100%;
+    width: 200px;
+    background-color: black;
+}
+
+.footerClass {
+    width: calc(100% - 200px);
+}
+.searchBarForm {
+    /* margin-left: 1rem !important; */
+    padding-right: 235px;
+}
 
 
 

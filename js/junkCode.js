@@ -105,4 +105,18 @@
     //     }
     //   }
 
+
+
+
+    function greet(user) {
+      return `hello ${user}`
+    }
+
+
+
+    let user = "navin"
+
+    let str = greet(user)
+
+    console.log(str)
   

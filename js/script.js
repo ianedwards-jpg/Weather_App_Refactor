@@ -103,10 +103,13 @@ function displayCurrentWeather() {
     method: "GET"
   }).then(function (response) {
 
-    // console.log(response);
+    console.log(response);
     // console.log("Response.name", response.name)
 
     let todayWeatherTitle = document.querySelector('#todayWeatherTitle')
+    let currentCityTitle = document.querySelector(".currentCityTitle")
+    let currentCity = response.name; 
+    let currentState = getState(); 
 
     // Get day, month, date to render for Current Weather
     // let getLocalDateAndTime = new Date(response.dt * 1000).toLocaleString();
@@ -151,6 +154,8 @@ function displayCurrentWeather() {
 
     // Grab the current weather title element and assign the date
     todayWeatherTitle.innerText = dateTitle + ", " + monthTitle + " " + currentDate + currentDateAffix;
+
+    currentCityTitle.innerText = currentCity + ", " + currentState; 
     
 
     // console.log("Get Local Date and Time", getLocalDateAndTime)
@@ -183,7 +188,7 @@ function displayCurrentWeather() {
     var weatherValue = $("<p>").text(weather);
     weatherValue.attr('class', 'currentWeatherValue');
 
-    console.log(weatherValue)
+    // console.log(weatherValue)
 
   // Attach weather property and icon divs to current weather card. 
     weatherDiv.append(weatherIcon)
