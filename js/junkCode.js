@@ -159,3 +159,10 @@
       // let daysMinusOne = days.pop()
       // console.log("DaysMinus1", daysMinusOne)
       // Object.values(days).sort((a, b) => (a.day > b.day) ? 1 : -1); 
+
+
+      // console.log("Day", currentDateAffixNumber)
+      // console.log("Current Date Affix", affixMap[1].value)
+      // console.log("Current Date Affix", affixMap[currentDateAffixNumber - 1].value)
+      // currentDateAffix = affixMap[currentDateAffixNumber - 1].value
+      // console.log("currentDateAffix", affixMap[currentDateAffixNumber - 1])

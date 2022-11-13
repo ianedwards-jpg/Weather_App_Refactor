@@ -37,6 +37,8 @@ const affixMap = [
   // {day: 4, value: "th"}
 ]
 
+const searchHistory = []
+
 
 
 // Initialize empty string for a default location set by the user. Until set, will use 10001 (Manhattan, NY)
@@ -102,8 +104,7 @@ function displayCurrentWeather() {
     url: queryURL,
     method: "GET"
   }).then(function (response) {
-
-    console.log(response);
+    // console.log(response);
     // console.log("Response.name", response.name)
 
     let todayWeatherTitle = document.querySelector('#todayWeatherTitle')
@@ -127,30 +128,16 @@ function displayCurrentWeather() {
     dateTitle = daysMap[currentDay].value
 
     // Slice month value to last digit and assign suffix depending on value
-    // for(let i = 0; i < affixMap.length;  i++) {
+    
+      if (currentDateAffixNumber = affixMap.day) {
+        currentDateAffix = affixMap[currentDateAffixNumber - 1].value 
+      }
+      else {
+        console.log("th")
+        currentDateAffix = "th"
+      }
 
-    // console.log("affixMap.day", affixMap.length)
-    console.log("Day", currentDateAffixNumber - 1)
-
-
-    // if (affixMap.day = currentDateAffixNumber) {
-    if (currentDateAffixNumber = affixMap.day) {
-
-      console.log("Day", currentDateAffixNumber)
-      // console.log("Current Date Affix", affixMap[1].value)
-      // console.log("Current Date Affix", affixMap[currentDateAffixNumber - 1].value)
-      currentDateAffix = affixMap[currentDateAffixNumber - 1].value
-      // currentDateAffix = affixMap[currentDateAffixNumber - 1].value
-      // console.log("currentDateAffix", affixMap[currentDateAffixNumber - 1])
-
-    }
-    else {
-      console.log("th")
-      currentDateAffix = "th"
-    }
-
-    console.log("CurrentDateAffix", currentDateAffix)
-    // }
+    // console.log("CurrentDateAffix", currentDateAffix)
 
     // Grab the current weather title element and assign the date
     todayWeatherTitle.innerText = dateTitle + ", " + monthTitle + " " + currentDate + currentDateAffix;
@@ -164,7 +151,6 @@ function displayCurrentWeather() {
     // console.log("UTC Date", currentDate)
     // console.log("Month Test", )
     // console.log("Date Test", dateTest + ", " + monthTest + " " + currentDate)
-    console.log("Date Affix Value", currentDateAffix)
 
     // Storing the weather data
     var weather = response.weather[0].main;
@@ -195,7 +181,6 @@ function displayCurrentWeather() {
     weatherDiv.append(weatherValue);
 
     // Temperature Section 
-    // Storing the plot
     // var temperature = ((response.main.temp * 1.8) - 459.67);
 
     var temperature = Math.round(((response.main.temp * 1.8) - 459.67));
@@ -227,10 +212,8 @@ function displayCurrentWeather() {
     });
 
     // $(document.createElement(humidityIcon));
-    // humidityIcon.attr('src', './assets/icons/humidity.svg');
+    // Attach humidity icon in front of humidity value
     humidityValue.prepend(humidityIcon);
-
-
 
     // Attach humidity value to current weather card
     tempDisplay.append(humidityValue);
@@ -246,6 +229,10 @@ function displayCurrentWeather() {
 
     // Putting the entire movie above the previous movies
     $("#weather-view").prepend(weatherDiv);
+
+    searchHistory.push({city: currentCity, state: currentState, zip: zipSearch})
+
+    console.log("Search History", searchHistory)
   });
 
 }
@@ -330,15 +317,6 @@ function fiveDayForecast() {
 
       console.log("Day", daysMap[forecastDays].value  )
 
-
-
-
-
-      // console.log("Sorted Days", days)
-
-      // console.log("UTC Date", date)
-
-
       // Initalize variable for current weather icon div
       var weatherIcon = $('<img />', {
         id: 'fiveDayWeatherIcon',
@@ -360,9 +338,6 @@ function fiveDayForecast() {
       let fiveDayDate = $("<p>").text(fiveDayDateResponse.slice(0, 5));
       fiveDayDateContainer.append(fiveDayDay)
       fiveDayDateContainer.append(fiveDayDate)
-
-
-
 
       console.log("Five Day Date Test", (fiveDayDay + " " + fiveDayDate ))
 
