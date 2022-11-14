@@ -37,7 +37,12 @@ const affixMap = [
   // {day: 4, value: "th"}
 ]
 
-const searchHistory = []
+// const searchHistory = []
+
+
+// window.addEventListener('load', () => {
+// searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+// })
 
 
 
@@ -230,9 +235,15 @@ function displayCurrentWeather() {
     // Putting the entire movie above the previous movies
     $("#weather-view").prepend(weatherDiv);
 
-    searchHistory.push({city: currentCity, state: currentState, zip: zipSearch})
+    if( zipSearch != defaultLocation) {
+      searchHistory.push({city: currentCity, state: currentState, zip: zipSearch})
+      localStorage.setItem('searchHistory', JSON.stringify(searchHistory ))
+
+    }
+
 
     console.log("Search History", searchHistory)
+    console.log("Search History Length", searchHistory.length)
   });
 
 }
@@ -444,6 +455,8 @@ $(document).ready(function () {
   displayCurrentWeather();
   fiveDayForecast();
   getState();
+  searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+
   // calculateMonth(); 
 
   // console.log( "Document OnLoad" );
