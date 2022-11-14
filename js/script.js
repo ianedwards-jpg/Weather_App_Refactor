@@ -80,6 +80,7 @@ function searchNewZip() {
     displayCurrentWeather();
     fiveDayForecast();
     getState();
+    populateSearchHistory();
   }
 
   console.log(fiveDayView.childNodes)
@@ -138,7 +139,7 @@ function displayCurrentWeather() {
         currentDateAffix = affixMap[currentDateAffixNumber - 1].value 
       }
       else {
-        console.log("th")
+        // console.log("th")
         currentDateAffix = "th"
       }
 
@@ -244,6 +245,10 @@ function displayCurrentWeather() {
 
     console.log("Search History", searchHistory)
     console.log("Search History Length", searchHistory.length)
+
+    // for(i=0; i < searchHistory.length; i++){
+
+    // }
   });
 
 }
@@ -274,13 +279,13 @@ function fiveDayForecast() {
   }).then(function (response) {
     // Iterate over response 5 times for 5-day forecast
 
-    console.log("fiveDayResponse", response)
+    // console.log("fiveDayResponse", response)
     // const days = {}
 
     const days = {}
 
 
-    console.log("Days", days)
+    // console.log("Days", days)
 
 
     for (var i = 0; i < response.list.length; i++) {
@@ -288,7 +293,7 @@ function fiveDayForecast() {
       let day = new Date(item.dt_txt).getDay()
       let month = new Date(item.dt_txt).getMonth()
       // let date = new Date(item.dt_txt).getUTCDate()
-      console.log("Month", month)
+      // console.log("Month", month)
       // console.log("UTC Date", date)
       // console.log("Response.list.length", days[day].length)
 
@@ -305,7 +310,7 @@ function fiveDayForecast() {
 
     }
     )
-    console.log("Sorted Days", sortedDays)
+    // console.log("Sorted Days", sortedDays)
 
     sortedDays.forEach(day => {
 
@@ -324,9 +329,9 @@ function fiveDayForecast() {
       let weatherIconValue = day.weather[0].icon
 
 
-      console.log("Forecast Days", forecastDays)
+      // console.log("Forecast Days", forecastDays)
 
-      console.log("Day", daysMap[forecastDays].value  )
+      // console.log("Day", daysMap[forecastDays].value  )
 
       // Initalize variable for current weather icon div
       var weatherIcon = $('<img />', {
@@ -350,7 +355,7 @@ function fiveDayForecast() {
       fiveDayDateContainer.append(fiveDayDay)
       fiveDayDateContainer.append(fiveDayDate)
 
-      console.log("Five Day Date Test", (fiveDayDay + " " + fiveDayDate ))
+      // console.log("Five Day Date Test", (fiveDayDay + " " + fiveDayDate ))
 
       // console.log(weatherValue)
 
@@ -438,10 +443,15 @@ $(document).keypress(function (e) {
 });
 
 
+
+// Do this when the document loads. 
 $(document).ready(function () {
+  // Reset zipInputBar to '' to eliminate any characters leftover from previous searches. 
+  zipInputBar.value = '';
 
-
-
+  // Assign global search history variable as localStorage instance of 'searchHistory' or empty array and parse into JSON. 
+  // searchHistory is set by newZipSearch as it only concerns locations manually searched by the user. 
+  searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
 
   // console.log( "Document OnLoad" );
 
@@ -449,22 +459,78 @@ $(document).ready(function () {
 
   // console.log( "Zip Input", zipInput );
   // console.log( "Zip Searched", zipSearch );
-  zipInputBar.value = '';
+  
 
-
-  displayCurrentWeather();
-  fiveDayForecast();
-  getState();
-  searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+  
 
   // calculateMonth(); 
 
   // console.log( "Document OnLoad" );
 
   // console.log( "Default Zip Location:", defaultLocation );
-  console.log("getState", getState())
+  // console.log("getState", getState())
+
+  displayCurrentWeather();
+  fiveDayForecast();
+  getState();
+
+  populateSearchHistory()
 
 });
+
+function populateSearchHistory() { 
+  console.log("populateSearchHistory")
+
+  let searchHistoryContainer = document.querySelector('#searchHistoryContainer')
+  // let searchHistoryItem = $("<div class='searchHistoryItem'>");
+
+
+
+  let searchHistoryFiltered = searchHistory.filter(
+    (person, index) => index === searchHistory.findIndex(
+      other => person.city === other.city
+        && person.state === other.state
+    ));
+
+
+    // let objects = JSON.stringify(searchHistoryFiltered)
+
+    // console.log("objects", objects)
+
+  // searchHistoryFiltered.forEach( item => {
+
+  //   console.log(searchHistoryFiltered)
+
+  //     //   // let searchHistoryText = $("<p>").text(searchHistoryFiltered[i].city + " " + searchHistoryFiltered[i].state);
+  //       //   searchHistoryItem.append(searchHistoryText)
+  // //   searchHistoryContainer.append(searchHistoryItem)
+
+
+
+  // })
+    
+  for(i = 0; i < searchHistoryFiltered.length; i++) {
+    let searchHistoryItem = document.createElement("div")
+    // let searchHistoryText = $("<p>").text(searchHistoryFiltered[i].city + " " + searchHistoryFiltered[i].state);
+    // let searchHistoryText = document.createTextNode(JSON.stringify(searchHistoryFiltered));
+
+    // searchHistoryItem.innerHTML = searchHistoryFiltered[i].city + ", " + searchHistoryFiltered[i].state
+
+    searchHistoryItem.textContent = searchHistoryFiltered[i].city + ", " + searchHistoryFiltered[i].state
+
+
+    // let searchHistoryText = $("<p>").text(searchHistoryFiltered[i].city );
+
+
+    // searchHistoryItem.append(searchHistoryText)
+    searchHistoryContainer.append(searchHistoryItem)
+
+    // console.log("result", searchHistoryFiltered.toString());
+
+  // End for loop 
+
+  }
+}
 
 // Determine the state of the searched zip code
 function getState() {
