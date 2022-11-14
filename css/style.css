@@ -7,6 +7,12 @@
     }
 }
 
+.sideNavTitle {
+    font-size: 18px;
+}
+.accordion-button {
+    font-size: 18px;
+}
 
 #todayWeatherCol, #fiveDayWeatherCol {
     padding-left: 0rem;

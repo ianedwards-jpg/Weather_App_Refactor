@@ -159,3 +159,32 @@
       // let daysMinusOne = days.pop()
       // console.log("DaysMinus1", daysMinusOne)
       // Object.values(days).sort((a, b) => (a.day > b.day) ? 1 : -1); 
+
+
+      // console.log("Day", currentDateAffixNumber)
+      // console.log("Current Date Affix", affixMap[1].value)
+      // console.log("Current Date Affix", affixMap[currentDateAffixNumber - 1].value)
+      // currentDateAffix = affixMap[currentDateAffixNumber - 1].value
+      // console.log("currentDateAffix", affixMap[currentDateAffixNumber - 1])
+
+      // for(i = 0; i < searchHistory.length; i++) {
+    
+    // console.log(searchHistory[i])
+    // let searchHistoryDisplay = [];
+
+    // const filterSearchHistory = searchHistory.filter(element => {
+    //   const isDuplicate = searchHistoryDisplay.includes(element.zip);
+    //    console.log(isDuplicate)
+    //   if (!isDuplicate) {
+    //     console.log("Not Duplicate")
+    //     searchHistoryDisplay.push({city: searchHistory[i].city, state: searchHistory[i].state, zip: searchHistory[i].zip});
+
+    //     return true;
+    //   }
+
+    //   return false;
+    // });
+    // console.log("Filtered Search History Object", filterSearchHistory[i])
+
+      
+      // console.log(searchHistoryDisplay.length)
