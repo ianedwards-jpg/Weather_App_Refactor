@@ -57,6 +57,7 @@ function searchNewZip() {
   let zipInput = $("#zip-input").val().trim();
   // let weatherCard = document.querySelector(".weatherCard")
   let weatherCard = document.getElementsByClassName("weatherCard")
+  
   let currentWeatherView = document.querySelector("#weather-view")
   let fiveDayView = document.querySelector("#fiveDayView")
   let zipCodeMessage = "Must Enter Valid Zip Code!"
@@ -80,7 +81,9 @@ function searchNewZip() {
     displayCurrentWeather();
     fiveDayForecast();
     getState();
-    populateSearchHistory();
+    setTimeout(() => {
+      populateSearchHistory();
+    }, 1000)
   }
 
   console.log(fiveDayView.childNodes)
@@ -92,9 +95,19 @@ function searchNewZip() {
 
 // Display Current Weather
 function displayCurrentWeather() {
+// function displayCurrentWeather(zipHistorySearch) {
+
 
   let zipInput = $("#zip-input").val().trim();
 
+  // let zipInput;  
+
+  // if(zipHistorySearch !== 'undefined'){
+  //   zipInput = zipHistorySearch
+  // } else {
+  //   zipInput = $("#zip-input").val().trim();
+  // }
+  
   if (defaultLocation.length === 0) {
     console.log("Default Location Empty: Set as 10001")
     defaultLocation = "10001"
@@ -244,7 +257,7 @@ function displayCurrentWeather() {
 
 
     console.log("Search History", searchHistory)
-    console.log("Search History Length", searchHistory.length)
+    console.log("Search History Length Function End", searchHistory.length)
 
     // for(i=0; i < searchHistory.length; i++){
 
@@ -478,20 +491,43 @@ $(document).ready(function () {
 
 });
 
-function populateSearchHistory() { 
+async function populateSearchHistory() { 
+  // await displayCurrentWeather()
   console.log("populateSearchHistory")
 
-  let searchHistoryContainer = document.querySelector('#searchHistoryContainer')
-  // let searchHistoryItem = $("<div class='searchHistoryItem'>");
+  let searchHistoryItems = document.getElementsByClassName("searchHistoryItem")
+  let searchHistoryContainer = document.querySelector("#searchHistoryContainer")
+  searchHistoryContainer.innerHTML = '';
 
 
-
+  console.log("searchHistory", searchHistory)
   let searchHistoryFiltered = searchHistory.filter(
     (person, index) => index === searchHistory.findIndex(
       other => person.city === other.city
         && person.state === other.state
     ));
 
+  for(i = 0; i < searchHistoryFiltered.length; i++) {
+    let searchHistoryItem = document.createElement("div")
+    searchHistoryItem.classList.add("searchHistoryItem")
+
+    searchHistoryItem.textContent = searchHistoryFiltered[i].city + ", " + searchHistoryFiltered[i].state
+
+    searchHistoryItem.addEventListener("click", displayCurrentWeather(zipInput))
+
+
+    searchHistoryContainer.append(searchHistoryItem)
+
+    console.log("Search History Filtered", searchHistoryFiltered);
+
+  // End for loop 
+  }
+
+  // if(searchHistoryItems) {
+  //   console.log("searcHhistoryHitems")
+  // }
+
+  // let searchHistoryItem = $("<div class='searchHistoryItem'>");
 
     // let objects = JSON.stringify(searchHistoryFiltered)
 
@@ -504,32 +540,8 @@ function populateSearchHistory() {
   //     //   // let searchHistoryText = $("<p>").text(searchHistoryFiltered[i].city + " " + searchHistoryFiltered[i].state);
   //       //   searchHistoryItem.append(searchHistoryText)
   // //   searchHistoryContainer.append(searchHistoryItem)
-
-
-
   // })
     
-  for(i = 0; i < searchHistoryFiltered.length; i++) {
-    let searchHistoryItem = document.createElement("div")
-    // let searchHistoryText = $("<p>").text(searchHistoryFiltered[i].city + " " + searchHistoryFiltered[i].state);
-    // let searchHistoryText = document.createTextNode(JSON.stringify(searchHistoryFiltered));
-
-    // searchHistoryItem.innerHTML = searchHistoryFiltered[i].city + ", " + searchHistoryFiltered[i].state
-
-    searchHistoryItem.textContent = searchHistoryFiltered[i].city + ", " + searchHistoryFiltered[i].state
-
-
-    // let searchHistoryText = $("<p>").text(searchHistoryFiltered[i].city );
-
-
-    // searchHistoryItem.append(searchHistoryText)
-    searchHistoryContainer.append(searchHistoryItem)
-
-    // console.log("result", searchHistoryFiltered.toString());
-
-  // End for loop 
-
-  }
 }
 
 // Determine the state of the searched zip code
