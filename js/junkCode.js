@@ -223,4 +223,43 @@
   //       //   searchHistoryItem.append(searchHistoryText)
   // //   searchHistoryContainer.append(searchHistoryItem)
   // })
-    
+    // let zipInput;  
+
+  // if(zipHistorySearch !== 'undefined'){
+  //   zipInput = zipHistorySearch
+  // } else {
+  //   zipInput = $("#zip-input").val().trim();
+  // }
+
+  // if(zipInput === 'undefined'){
+  //   zipInput = "10001"
+  // } else {
+  //   zipInput = $("#zip-input").val().trim();
+  // }
+
+  // console.log("Zip Input Length", zipInput.length)
+
+
+
+
+  // console.log("getState", getState())
+
+  // console.log( "Document OnLoad" );
+
+  // console.log( "Default Zip Location:", defaultLocation );
+
+  // console.log( "Zip Input", zipInput );
+  // console.log( "Zip Searched", zipSearch );
+  
+
+  // calculateMonth(); 
+
+  // console.log( "Document OnLoad" );
+
+  // console.log( "Default Zip Location:", defaultLocation );
+  // console.log("getState", getState())
+
+
+  // function testSearchHistory(zipInput) {
+  //   console.log("TestSearchHistoryZipInput", zipInput)
+  // }
