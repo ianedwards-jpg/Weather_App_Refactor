@@ -56,7 +56,7 @@ let defaultLocation = new String()
 let zipSearch = new String()
 
 // Searches a new zip code inputted by the user
-function searchNewZip() {
+function searchNewZip(zipInputTest) {
   let zipInput = $("#zip-input").val().trim();
   // let weatherCard = document.querySelector(".weatherCard")
   let weatherCard = document.getElementsByClassName("weatherCard")
@@ -64,6 +64,8 @@ function searchNewZip() {
   let currentWeatherView = document.querySelector("#weather-view")
   let fiveDayView = document.querySelector("#fiveDayView")
   let zipCodeMessage = "Must Enter Valid Zip Code!"
+
+  console.log("zipInputTest", zipInputTest)
 
 
   if (!(zipInput.length === 5)) {
@@ -81,8 +83,8 @@ function searchNewZip() {
     }
     document.querySelector('.zipCodeMessage').innerText = '';
     document.querySelector('#zipCodeMessage').classList.add('hideZipCodeMessage');
-    displayCurrentWeather();
-    fiveDayForecast();
+    // displayCurrentWeather("06804");
+    // fiveDayForecast();
     getState();
     setTimeout(() => {
       populateSearchHistory();
@@ -99,6 +101,7 @@ function searchNewZip() {
 // Display Current Weather
 function displayCurrentWeather(zipInput) {
 // function displayCurrentWeather(zipHistorySearch) {
+  console.log("ZipInput", zipInput)
 
 
   // let zipInput = $("#zip-input").val().trim();
@@ -124,13 +127,15 @@ function displayCurrentWeather(zipInput) {
     defaultLocation = "10001"
     zipSearch = defaultLocation
   } else {
-    if(zipInput === 'undefined'){
+  if(zipInput === 'undefined'){
       zipInput = "10001"
+      console.log("Fired")
     } else {
       zipInput = $("#zip-input").val().trim();
     }
     zipSearch = zipInput
   }
+  console.log(zipSearch)
 
   // API call: Current Weather 
   var queryURL = "https://api.openweathermap.org/data/2.5/weather?zip=" + zipSearch + ",us&appid=cee88101192942cc1ddef8fb37f11635";
@@ -499,8 +504,8 @@ $(document).ready(function () {
   // console.log( "Default Zip Location:", defaultLocation );
   // console.log("getState", getState())
 
-  displayCurrentWeather();
-  fiveDayForecast();
+  // displayCurrentWeather();
+  // fiveDayForecast();
   getState();
 
   populateSearchHistory()
@@ -529,7 +534,9 @@ async function populateSearchHistory() {
 
     searchHistoryItem.href = "#";
 
+    searchHistoryDiv.classList.add("searchHistoryDiv")
     searchHistoryItem.classList.add("searchHistoryItem")
+
 
     searchHistoryItem.textContent = searchHistoryFiltered[i].city + ", " + searchHistoryFiltered[i].state
     searchHistoryItem.value = searchHistoryFiltered[i].zip
@@ -537,7 +544,8 @@ async function populateSearchHistory() {
 
     searchHistoryItem.addEventListener("click", () => {console.log("clicked", searchHistoryItem.value)})
 
-    // searchHistoryItem.addEventListener("click", displayCurrentWeather(zipInput))
+
+    searchHistoryItem.addEventListener("click",testSearchHistory(searchHistoryItem.value))
 
 
     searchHistoryDiv.append(searchHistoryItem)
@@ -547,6 +555,19 @@ async function populateSearchHistory() {
 
   // End for loop 
   }
+
+  // searchHistoryItems.forEach(item => {
+  //   console.log(item)
+  // })
+  console.log(searchHistoryItems)
+
+  let arry = [... searchHistoryItems] 
+  console.log("arry", arry)
+  // console.log(searchHistoryItems)
+  // searchHistoryItems.forEach(item => {
+  //   item.addEventListener("click", testSearchHistory(searchHistoryFiltered[i].zip))
+
+  // })
 
   // if(searchHistoryItems) {
   //   console.log("searcHhistoryHitems")
@@ -568,7 +589,9 @@ async function populateSearchHistory() {
   // })
     
 }
-
+function testSearchHistory(zipInput) {
+  console.log("TestSearchHistoryZipInput", zipInput)
+}
 // Determine the state of the searched zip code
 function getState() {
 
