@@ -508,15 +508,22 @@ async function populateSearchHistory() {
     ));
 
   for(i = 0; i < searchHistoryFiltered.length; i++) {
-    let searchHistoryItem = document.createElement("div")
+    let searchHistoryDiv = document.createElement("div");
+    let searchHistoryItem = document.createElement("a");
+
+    searchHistoryItem.href = "#";
+
     searchHistoryItem.classList.add("searchHistoryItem")
 
     searchHistoryItem.textContent = searchHistoryFiltered[i].city + ", " + searchHistoryFiltered[i].state
 
-    searchHistoryItem.addEventListener("click", displayCurrentWeather(zipInput))
+    searchHistoryItem.addEventListener("click", () => {console.log("clicked")})
+
+    // searchHistoryItem.addEventListener("click", displayCurrentWeather(zipInput))
 
 
-    searchHistoryContainer.append(searchHistoryItem)
+    searchHistoryDiv.append(searchHistoryItem)
+    searchHistoryContainer.append(searchHistoryDiv)
 
     console.log("Search History Filtered", searchHistoryFiltered);
 
