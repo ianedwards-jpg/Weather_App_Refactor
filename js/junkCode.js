@@ -188,3 +188,39 @@
 
       
       // console.log(searchHistoryDisplay.length)
+
+        // searchHistoryItems.forEach(item => {
+  //   console.log(item)
+  // })
+    // console.log(searchHistoryItems)
+
+  // console.log("arry", searchHistoryLinks)
+
+    
+
+  
+  // console.log(searchHistoryItems)
+  // searchHistoryItems.forEach(item => {
+  //   item.addEventListener("click", testSearchHistory(searchHistoryFiltered[i].zip))
+
+  // })
+
+  // if(searchHistoryItems) {
+  //   console.log("searcHhistoryHitems")
+  // }
+
+  // let searchHistoryItem = $("<div class='searchHistoryItem'>");
+
+    // let objects = JSON.stringify(searchHistoryFiltered)
+
+    // console.log("objects", objects)
+
+  // searchHistoryFiltered.forEach( item => {
+
+  //   console.log(searchHistoryFiltered)
+
+  //     //   // let searchHistoryText = $("<p>").text(searchHistoryFiltered[i].city + " " + searchHistoryFiltered[i].state);
+  //       //   searchHistoryItem.append(searchHistoryText)
+  // //   searchHistoryContainer.append(searchHistoryItem)
+  // })
+    

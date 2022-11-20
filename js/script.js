@@ -66,9 +66,11 @@ function searchNewZip(zipInputTest) {
   let zipCodeMessage = "Must Enter Valid Zip Code!"
 
   console.log("zipInputTest", zipInputTest)
+  console.log("zipInputTest.length", zipInputTest.length)
 
 
-  if (!(zipInput.length === 5)) {
+
+  if (!(zipInput.length === 5) && (zipInputTest == null)) {
     console.log("5")
     // zipCodeMessage.append(zipCodeFailure);
     // zipCodeMessage.innertext = "Must Enter Valid Zip Code!"
@@ -83,8 +85,8 @@ function searchNewZip(zipInputTest) {
     }
     document.querySelector('.zipCodeMessage').innerText = '';
     document.querySelector('#zipCodeMessage').classList.add('hideZipCodeMessage');
-    // displayCurrentWeather("06804");
-    // fiveDayForecast();
+    displayCurrentWeather(zipInputTest);
+    fiveDayForecast();
     getState();
     setTimeout(() => {
       populateSearchHistory();
@@ -94,17 +96,21 @@ function searchNewZip(zipInputTest) {
   console.log(fiveDayView.childNodes)
   console.log("zipInput not empty")
   console.log("zipInput:", zipInput)
-  console.log(weatherCard.length)
+  console.log("weatherCard.length", weatherCard.length)
   console.log("getState", getState())
 }
 
 // Display Current Weather
-function displayCurrentWeather(zipInput) {
+function displayCurrentWeather(searchHistoryZip) {
 // function displayCurrentWeather(zipHistorySearch) {
-  console.log("ZipInput", zipInput)
+  console.log("Passed Search History Zip Value:", searchHistoryZip)
 
+  // if(zipInput == null) {
+  //   console.log("undefined")
+  // } 
+ 
 
-  // let zipInput = $("#zip-input").val().trim();
+  let zipInputBar = $("#zip-input").val().trim();
 
   // let zipInput;  
 
@@ -121,24 +127,38 @@ function displayCurrentWeather(zipInput) {
   // }
 
   // console.log("Zip Input Length", zipInput.length)
-  
-  if (defaultLocation.length === 0) {
-    console.log("Default Location Empty: Set as 10001")
-    defaultLocation = "10001"
-    zipSearch = defaultLocation
-  } else {
-  if(zipInput === 'undefined'){
-      zipInput = "10001"
-      console.log("Fired")
-    } else {
-      zipInput = $("#zip-input").val().trim();
+  console.log($("#zip-input").val().trim())
+  // If no default location is saved
+  // if (defaultLocation.length === 0) {
+  //   console.log("Default Location Empty: Set as 10001")
+  //   defaultLocation = "10001"
+  //   zipSearch = defaultLocation
+  // } 
+  // else {
+    // If the zip input bar is empty
+    if(zipInputBar.length === 0) {
+      // If the function isn't being invoked by search history link or pageload
+      if(searchHistoryZip == null) {
+        zipSearch = "10001"
+        console.log("Not Search History Link")
+      } 
+      else {
+        zipSearch = searchHistoryZip
+      }
+      console.log("No Zip Bar Value")
+    } 
+    else {
+      zipSearch = zipInputBar
     }
-    zipSearch = zipInput
-  }
+  //}
   console.log(zipSearch)
 
   // API call: Current Weather 
+  // var theQueryURL = "https://api.openweathermap.org/data/2.5/weather?zip=" + zipSearch + ",us&appid=cee88101192942cc1ddef8fb37f11635";
   var queryURL = "https://api.openweathermap.org/data/2.5/weather?zip=" + zipSearch + ",us&appid=cee88101192942cc1ddef8fb37f11635";
+
+
+  // console.log("THEQUERYURL", theQueryURL)
   // Creating an AJAX call for the current weather 
   $.ajax({
     url: queryURL,
@@ -471,7 +491,7 @@ $(document).keypress(function (e) {
     e.preventDefault()
 
     searchNewZip();
-    // displayCurrentWeather(); 
+    displayCurrentWeather(); 
     // fiveDayForecast();
   }
 });
@@ -504,8 +524,8 @@ $(document).ready(function () {
   // console.log( "Default Zip Location:", defaultLocation );
   // console.log("getState", getState())
 
-  // displayCurrentWeather();
-  // fiveDayForecast();
+  displayCurrentWeather();
+  fiveDayForecast();
   getState();
 
   populateSearchHistory()
@@ -545,7 +565,7 @@ async function populateSearchHistory() {
     searchHistoryItem.addEventListener("click", () => {console.log("clicked", searchHistoryItem.value)})
 
 
-    searchHistoryItem.addEventListener("click",testSearchHistory(searchHistoryItem.value))
+    // searchHistoryItem.addEventListener("click",testSearchHistory(searchHistoryItem.value))
 
 
     searchHistoryDiv.append(searchHistoryItem)
@@ -556,48 +576,33 @@ async function populateSearchHistory() {
   // End for loop 
   }
 
-  // searchHistoryItems.forEach(item => {
-  //   console.log(item)
-  // })
-  console.log(searchHistoryItems)
+  // Make links out of each search history item. Add event listeners to trigger page refresh with mapped location.
+  let searchHistoryLinks = [... searchHistoryItems] 
+    searchHistoryLinks.forEach( link => {
+      // console.log("Link Value", link.value)
+      // link.addEventListener("click", testSearchHistory(link.value))
 
-  let arry = [... searchHistoryItems] 
-  console.log("arry", arry)
-  // console.log(searchHistoryItems)
-  // searchHistoryItems.forEach(item => {
-  //   item.addEventListener("click", testSearchHistory(searchHistoryFiltered[i].zip))
-
-  // })
-
-  // if(searchHistoryItems) {
-  //   console.log("searcHhistoryHitems")
-  // }
-
-  // let searchHistoryItem = $("<div class='searchHistoryItem'>");
-
-    // let objects = JSON.stringify(searchHistoryFiltered)
-
-    // console.log("objects", objects)
-
-  // searchHistoryFiltered.forEach( item => {
-
-  //   console.log(searchHistoryFiltered)
-
-  //     //   // let searchHistoryText = $("<p>").text(searchHistoryFiltered[i].city + " " + searchHistoryFiltered[i].state);
-  //       //   searchHistoryItem.append(searchHistoryText)
-  // //   searchHistoryContainer.append(searchHistoryItem)
-  // })
+      link.addEventListener('click', function (event) {  
+        // prevent browser's default action
+        event.preventDefault();
     
+        // call your awesome function here
+        searchNewZip(link.value); // 'this' refers to the current button on for loop
+    }, false);
+  })
+  //End populateSearchHistory(); 
 }
-function testSearchHistory(zipInput) {
-  console.log("TestSearchHistoryZipInput", zipInput)
-}
+// function testSearchHistory(zipInput) {
+//   console.log("TestSearchHistoryZipInput", zipInput)
+// }
 // Determine the state of the searched zip code
 function getState() {
 
   /* Ensure param is a string to prevent unpredictable parsing results */
   if (typeof zipSearch !== 'string') {
     console.log('Must pass the zipcode as a string.');
+    console.log('Passed zipcode as type:', typeof zipSearch);
+    console.log(zipSearch.length)
     return;
   }
 
