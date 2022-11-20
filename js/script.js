@@ -68,8 +68,11 @@ function searchNewZip(searchHistoryLink) {
   // console.log("searchHistoryLink", searchHistoryLink)
   // console.log("searchHistoryLink.length", searchHistoryLink.length)
 
-  // If zip search bar is emptya nd 
-  if (!(zipInput.length === 5) && (searchHistoryLink == null)) {
+  // If zip search bar is empty and no search history link has been passed
+
+  // Add function to check event target, if searchBar change conditions
+  // if(event.target === hourglass button) 
+  if (!(zipInput.length === 5) && (searchHistoryLink == null)) {  // && (event.target === hourglass button) {
     console.log("5")
     // zipCodeMessage.append(zipCodeFailure);
     // zipCodeMessage.innertext = "Must Enter Valid Zip Code!"
