@@ -1,7 +1,10 @@
 // Weather Application
 // Technologies Used: OpenWeather API/Icon Pack, BootStrap, jQuery
+
 // Set variable for zip-location input 
 const zipInputBar = document.querySelector("#zip-input")
+
+// let storedDefaultLocation = localStorage.getItem("defaultLocation")
 // const globalDay = new Number;
 // const globalMonth = new Number;
 
@@ -83,7 +86,7 @@ function searchNewZip() {
     getState();
     setTimeout(() => {
       populateSearchHistory();
-    }, 1000)
+    }, 1200)
   }
 
   console.log(fiveDayView.childNodes)
@@ -94,11 +97,11 @@ function searchNewZip() {
 }
 
 // Display Current Weather
-function displayCurrentWeather() {
+function displayCurrentWeather(zipInput) {
 // function displayCurrentWeather(zipHistorySearch) {
 
 
-  let zipInput = $("#zip-input").val().trim();
+  // let zipInput = $("#zip-input").val().trim();
 
   // let zipInput;  
 
@@ -107,12 +110,25 @@ function displayCurrentWeather() {
   // } else {
   //   zipInput = $("#zip-input").val().trim();
   // }
+
+  // if(zipInput === 'undefined'){
+  //   zipInput = "10001"
+  // } else {
+  //   zipInput = $("#zip-input").val().trim();
+  // }
+
+  // console.log("Zip Input Length", zipInput.length)
   
   if (defaultLocation.length === 0) {
     console.log("Default Location Empty: Set as 10001")
     defaultLocation = "10001"
     zipSearch = defaultLocation
   } else {
+    if(zipInput === 'undefined'){
+      zipInput = "10001"
+    } else {
+      zipInput = $("#zip-input").val().trim();
+    }
     zipSearch = zipInput
   }
 
@@ -516,8 +532,10 @@ async function populateSearchHistory() {
     searchHistoryItem.classList.add("searchHistoryItem")
 
     searchHistoryItem.textContent = searchHistoryFiltered[i].city + ", " + searchHistoryFiltered[i].state
+    searchHistoryItem.value = searchHistoryFiltered[i].zip
 
-    searchHistoryItem.addEventListener("click", () => {console.log("clicked")})
+
+    searchHistoryItem.addEventListener("click", () => {console.log("clicked", searchHistoryItem.value)})
 
     // searchHistoryItem.addEventListener("click", displayCurrentWeather(zipInput))
 
