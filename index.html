@@ -45,19 +45,21 @@
     <!-- <a class="navbar-brand">Search Options:</a> -->
     <div id="searchBarWrapper" class="searchBarWrapper">
       <h2 class="currentCityTitle" id="currentCityTitle"></h2>
+
       <form class=" searchBarForm d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0 ">
+        <div class="zipCodeMessage hideZipCodeMessage" id="zipCodeMessage"> <span class="msgSpan"></span></div>
+
         <div class="input-group searchInput">
           <input class="form-control" type="text" id="zip-input" placeholder="Search zip code..." aria-label="Search"
             aria-describedby="basic-addon2" maxlength="5"
             onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-          <div class="input-group-append">
+          <div class="input-group-append" id="searchWeatherButton">
             <button class="btn btn-primary" type="button" id="searchWeather"><i class="fas fa-search"></i></button>
           </div>
           <!-- <div class="zipCodeMessage hideZipCodeMessage" id="zipCodeMessage"> <span class="msgSpan"></span></div>     -->
         </div>
         <!-- <div class="zipCodeMessage hideZipCodeMessage" id="zipCodeMessage"> <span class="msgSpan"></span></div>     -->
       </form>
-      <div class="zipCodeMessage hideZipCodeMessage" id="zipCodeMessage"> <span class="msgSpan"></span></div>
 
     </div>
 
