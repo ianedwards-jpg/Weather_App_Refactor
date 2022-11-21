@@ -153,8 +153,9 @@
 .searchBarWrapper {
     display: inline-flex;
     width: 100%;
-    /* width: 525px; */
+    /* width: calc(100% - 15%); */
     /* margin-left: 39%; */
+    /* width: 81%; */
 
 }
 
@@ -162,18 +163,23 @@
     position: absolute;
     right: 0px;
     height: 100%;
-    width: 15%;
+    width: 225px;
     background-color: black;
 }
 
 .footerClass {
     /* width: calc(100% - 200px); */
-    width: calc(82%);
+    /* width: calc(82%); */
+    width: 100%;
 
+}
+
+.footerContainerRight {
+    padding-right: 225px;
 }
 .searchBarForm {
     /* margin-left: 1rem !important; */
-    padding-right: 15%;
+    padding-right: 225px;
     position: relative;
 }
 
@@ -183,6 +189,8 @@
     position: absolute !important;
     bottom: 0;
     margin-bottom: 10px;
+    right: 205px;
+    width: 225px !important;
 }
 
 .navbar {
@@ -198,5 +206,7 @@
     min-width: 225px;
     /* min-width: calc(225px + 31px); */
 }
+
+
 
 
