@@ -263,3 +263,21 @@
   // function testSearchHistory(zipInput) {
   //   console.log("TestSearchHistoryZipInput", zipInput)
   // }
+
+
+  // for (var i = 0; i < response.list.length; i++) {
+    //   let item = response.list[i]
+    //   let day = new Date(item.dt_txt).getDay()
+    //   let month = new Date(item.dt_txt).getMonth()
+    //   // let date = new Date(item.dt_txt).getUTCDate()
+    //   // console.log("Month", month)
+    //   // console.log("UTC Date", date)
+    //   // console.log("Response.list.length", days[day].length)
+
+    //   if (!days[day]) {
+    //     days[day] = item
+
+    //     // console.log("item", item)
+    //   }
+
+    // }

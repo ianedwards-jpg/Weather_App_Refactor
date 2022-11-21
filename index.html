@@ -21,23 +21,28 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.1/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.1/css/bootstrap-colorpicker.min.css"
+    rel="stylesheet">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.1/js/bootstrap-colorpicker.min.js"></script>  
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.1/js/bootstrap-colorpicker.min.js"></script>
 
-    
+
 </head>
 
 <body class="sb-nav-fixed">
   <!-- Navbar-->
   <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-    <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i
-        class="fas fa-bars"></i></button>
-    <a class="navbar-brand">Search Options:</a>
+    <div class="sideNavWidthContainer">
+      <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i
+          class="fas fa-bars"></i></button>
+    </div>
+
+    <!-- <a class="navbar-brand">Search Options:</a> -->
     <div id="searchBarWrapper" class="searchBarWrapper">
       <h2 class="currentCityTitle" id="currentCityTitle"></h2>
       <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0 searchBarForm">
@@ -86,7 +91,7 @@
 
 
             <div class="sb-sidenav-menu-heading">
-              <h5 class="sideNavTitle" >Options:</h5>
+              <h5 class="sideNavTitle">Options:</h5>
               <div class="messageBar"></div>
             </div>
 
@@ -138,12 +143,12 @@
                   <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate
                     the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine
                     this being filled with some actual content.
-                    <div id="cp2" class="input-group colorpicker colorpicker-component"> 
+                    <div id="cp2" class="input-group colorpicker colorpicker-component">
 
-                      <input type="text" value="#00AABB" class="form-control" /> 
-                
-                      <span class="input-group-addon"><i></i></span> 
-                
+                      <input type="text" value="#00AABB" class="form-control" />
+
+                      <span class="input-group-addon"><i></i></span>
+
                     </div>
                   </div>
                 </div>
@@ -153,31 +158,29 @@
       </nav>
     </div>
     <div id="layoutSidenav_content">
-      <main class="main"
-        <div class="container-fluid">
-          <!-- <h1 class="mt-4 text-center">Weather Dashboard</h1> -->
-          <div class="row" id="todayWeather">
-            <div class="col-6" id="todayWeatherCol">
-              <h2 class="sectiontitles" id="todayWeatherTitle">Today's Weather:</h2>
-            </div>
-            <div class="col-6" id="todayLocationCol"></div>
+      <main class="main" <div class="container-fluid">
+        <!-- <h1 class="mt-4 text-center">Weather Dashboard</h1> -->
+        <div class="row" id="todayWeather">
+          <div class="col-6" id="todayWeatherCol">
+            <h2 class="sectiontitles" id="todayWeatherTitle">Today's Weather:</h2>
           </div>
+          <div class="col-6" id="todayLocationCol"></div>
           <div class="row">
             <!--Current weather will Get Dumped Here -->
             <div class id="weather-view"></div>
           </div>
-          <br>
-          <div class="row" id="fiveDayWeather">
-            <div class="col-12" id="fiveDayWeatherCol">
-              <h2 class="sectiontitles">5 Day Forecast:</h2>
+        </div>
+        
+        <br>
+        <div class="row" id="fiveDayWeather">
+          <div class="col-12" id="fiveDayWeatherCol">
+            <h2 class="sectiontitles">5 Day Forecast:</h2>
+          </div>
+          <div class="col-12" id="fiveDayLocationCol">
+            <div class="row">
+              <div class="fiveDayView" id="fiveDayView"></div>
             </div>
-            <div class="col-12" id="fiveDayLocationCol">
-              <div class="row">
-                <div class="fiveDayView" id="fiveDayView"></div>
-              </div>
-            </div>
-            <!-- <div class="rightBufferBar" id="rightBufferBar"></div> -->
-            
+          </div>
 
       </main>
       <div class="bufferBarRight" id="bufferBarRight"></div>
@@ -196,7 +199,7 @@
           </div>
         </div>
       </footer>
-    <!-- </main> -->
+      <!-- </main> -->
 
       <!-- <div class="bufferBarRight" id="bufferBarRight"></div> -->
 
@@ -207,7 +210,7 @@
   <script type="text/javascript">
 
     $('.colorpicker').colorpicker({});
-  
+
   </script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
@@ -215,7 +218,7 @@
   <script src="js/scripts.js"></script>
   <!--Added JS-->
   <script src="./js/script.js"></script>
-  
+
   <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script> 
     <script src="assets/demo/chart-area-demo.js"></script>
     <script src="assets/demo/chart-bar-demo.js"></script>

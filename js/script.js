@@ -314,31 +314,35 @@ function fiveDayForecast() {
   }).then(function (response) {
     // Iterate over response 5 times for 5-day forecast
 
-    // console.log("fiveDayResponse", response)
+    console.log("fiveDayResponse", response)
     // const days = {}
 
     const days = {}
 
+    const testArray = {}
 
-    // console.log("Days", days)
+    console.log("TestArray", testArray)
 
 
-    for (var i = 0; i < response.list.length; i++) {
+    console.log("Days", days)
+    
+    for (var i = 3; i < response.list.length; i+= 8) {  
       let item = response.list[i]
       let day = new Date(item.dt_txt).getDay()
-      let month = new Date(item.dt_txt).getMonth()
-      // let date = new Date(item.dt_txt).getUTCDate()
-      // console.log("Month", month)
-      // console.log("UTC Date", date)
-      // console.log("Response.list.length", days[day].length)
+
 
       if (!days[day]) {
         days[day] = item
+
+        // console.log("item", item)
       }
 
+      // console.log("item", item)
     }
 
     let sortedDays = Object.values(days) //.sort((a, b) => (a.day > b.day) ? 1 : -1);
+
+    // console.log("sortedDays", sortedDays)
 
     sortedDays.forEach(day => {
       sortedDays.sort((a, b) => (a.dt_txt > b.dt_txt) ? 1 : -1)
@@ -348,6 +352,8 @@ function fiveDayForecast() {
     // console.log("Sorted Days", sortedDays)
 
     sortedDays.forEach(day => {
+
+      // console.log(day)
 
       // sortedDays.reverse( sortedDays.sort((a, b) => (a.dt_txt > b.dt_txt) ? 1 : -1) )
       sortedDays.sort((a, b) => (a.dt_txt > b.dt_txt) ? 1 : -1)
