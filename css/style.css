@@ -154,6 +154,7 @@
 .searchBarWrapper {
     display: inline-flex;
     width: 100%;
+    position: relative;
     /* width: calc(100% - 15%); */
     /* margin-left: 39%; */
     /* width: 81%; */
@@ -207,6 +208,22 @@
 .sideNavWidthContainer {
     min-width: 225px;
     /* min-width: calc(225px + 31px); */
+}
+
+.navLocationSwitchContainer {
+    width: fit-content;
+    display: inline-flex;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 10px;
+    left: 290px;
+}
+
+.navLocationSwitch {
+    height: 2em;
+    width: 4em !important;
+    bottom: 27px;
+
 }
 
 

@@ -65,6 +65,11 @@ function searchNewZip(searchHistoryLink) {
   let fiveDayView = document.querySelector("#fiveDayView")
   let zipCodeMessage = "Must Enter Valid Zip Code!"
 
+  let defaultLocationSwitch = document.querySelector("#defaultLocationSwitch")
+
+
+
+
   console.log("searchHistoryLink", searchHistoryLink)
   // console.log("searchHistoryLink.length", searchHistoryLink.length)
   // console.log(e.target)
@@ -85,6 +90,7 @@ function searchNewZip(searchHistoryLink) {
       currentWeatherView.innerHTML = '';
       fiveDayView.innerHTML = '';
     }
+    defaultLocationSwitch.removeAttribute("checked")
     document.querySelector('.zipCodeMessage').innerText = '';
     document.querySelector('#zipCodeMessage').classList.add('hideZipCodeMessage');
     displayCurrentWeather(searchHistoryLink);
@@ -105,6 +111,14 @@ function searchNewZip(searchHistoryLink) {
 // Display Current Weather
 function displayCurrentWeather(searchHistoryZip) {
   let zipInputBar = $("#zip-input").val().trim();
+  let defaultLocationSwitch = document.querySelector("#defaultLocationSwitch")
+  // let saveLocationNavSwitch = document.querySelector("#saveLocationNavSwitch")
+
+  defaultLocationSearched = JSON.parse(localStorage.getItem('defaultLocationValue')) || "10001"
+
+
+  // let switchLocationValue = zipSearch
+
 
   // if(zipInput == null) {
   //   console.log("searchHistoryZip: undefined")
@@ -125,7 +139,9 @@ function displayCurrentWeather(searchHistoryZip) {
     if(zipInputBar.length === 0) {
       // If the function isn't being invoked by search history link or pageload
       if(searchHistoryZip == null) {
-        zipSearch = "10001"
+        // zipSearch = JSON.parse(localStorage.getItem('defaultLocationValue')) || "10001";
+        zipSearch = defaultLocationSearched;
+
         console.log("Not Search History Link")
       } 
       else {
@@ -138,6 +154,24 @@ function displayCurrentWeather(searchHistoryZip) {
     }
   //}
   console.log("ZipSearch", zipSearch)
+  console.log("Default Location Searched", defaultLocationSearched)
+
+
+  // if(defaultLocationSearched === zipSearch) {
+  //   // console.log("Default Location Checked")
+  //   console.log("Default Location Checked Value", defaultLocationSwitch.checked)
+  //   defaultLocationSwitch.setAttribute('checked', 'checked');
+
+  // }
+  // else {
+  //   // console.log("Default Location Not Checked")
+  //   console.log("Default Location Checked Value", defaultLocationSwitch.checked)
+  //   // defaultLocationSwitch.removeAttribute('checked');
+
+  // }
+
+
+  
 
   // API call: Current Weather 
   // var theQueryURL = "https://api.openweathermap.org/data/2.5/weather?zip=" + zipSearch + ",us&appid=cee88101192942cc1ddef8fb37f11635";
@@ -155,8 +189,9 @@ function displayCurrentWeather(searchHistoryZip) {
 
     let todayWeatherTitle = document.querySelector('#todayWeatherTitle')
     let currentCityTitle = document.querySelector(".currentCityTitle")
+    let defaultLocationSwitchContainer = document.querySelector("#defaultLocationDiv")
     let currentCity = response.name;
-    let currentState = getState();
+    let currentState = getState(zipSearch);
 
     // Get day, month, date to render for Current Weather
     // let getLocalDateAndTime = new Date(response.dt * 1000).toLocaleString();
@@ -189,6 +224,18 @@ function displayCurrentWeather(searchHistoryZip) {
     todayWeatherTitle.innerText = dateTitle + ", " + monthTitle + " " + currentDate + currentDateAffix;
 
     currentCityTitle.innerText = currentCity + ", " + currentState;
+
+   // '<input class="form-check-input saveLocationNavSwitch navLocationSwitch" type="checkbox" role="switch" id="saveLocationNavSwitch">'
+   // '<label class="form-check-label saveLocationNavSwitchLabel" for="saveLocationNavSwitch" id ="saveLocationNavSwitchLabel">Add to saved locations</label>'
+
+    // let defaultLocationZipInnerHTML = document.createElement('<input class="form-check-input defaultLocationSwitch navLocationSwitch" type="checkbox" role="switch" id="defaultLocationSwitch"> <label class="form-check-label defaultLocationSwitchLabel" for="defaultLocationSwitch" id ="defaultLocationSwitchLabel">Set as default location</label>')
+
+    //  defaultLocationSwitchContainer.append(defaultLocationZipInnerHTML) 
+    defaultLocationSwitchContainer.innerHTML = '<input class="form-check-input defaultLocationSwitch navLocationSwitch" type="checkbox" role="switch" id="defaultLocationSwitch"> <label class="form-check-label defaultLocationSwitchLabel" for="defaultLocationSwitch" id ="defaultLocationSwitchLabel">Set as default location</label>'
+
+
+
+
 
 
     // console.log("Get Local Date and Time", getLocalDateAndTime)
@@ -326,7 +373,7 @@ function fiveDayForecast() {
 
     console.log("Days", days)
     
-    for (var i = 3; i < response.list.length; i+= 8) {  
+    for (var i = 4; i < response.list.length; i+= 8) {  
       let item = response.list[i]
       let day = new Date(item.dt_txt).getDay()
 
@@ -334,7 +381,7 @@ function fiveDayForecast() {
       if (!days[day]) {
         days[day] = item
 
-        // console.log("item", item)
+        console.log("item", item)
       }
 
       // console.log("item", item)
@@ -503,22 +550,7 @@ function fiveDayForecast() {
 
 
 // Do this when the document loads. 
-$(document).ready(function () {
-  // Reset zipInputBar to '' to eliminate any characters leftover from previous searches. 
-  zipInputBar.value = '';
 
-  // Assign global search history variable as localStorage instance of 'searchHistory' or empty array and parse into JSON. 
-  // searchHistory is set by newZipSearch as it only concerns locations manually searched by the user. 
-  searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
-
-
-  displayCurrentWeather();
-  fiveDayForecast();
-  getState();
-
-  populateSearchHistory()
-
-});
 
 async function populateSearchHistory() { 
   // await displayCurrentWeather()
@@ -589,6 +621,7 @@ $(document).on("click", "#searchWeatherButton", (e) => {
 
   }
 });
+
 $(document).keypress(function (e) {
   if (e.which == 13) {
     // console.log("enter")
@@ -598,6 +631,69 @@ $(document).keypress(function (e) {
     // displayCurrentWeather(); 
     // fiveDayForecast();
   }
+});
+
+
+
+$(document).on("click", "#defaultLocationSwitch", (e) => {
+  // if(e.currentTarget.id === "searchWeatherButton"){
+    // console.log(e.target.id)
+    // console.log("works")
+
+    if(defaultLocationSwitch.checked) {
+      console.log("checked")
+    //   console.log("switchLocationValue", zipSearch)
+      localStorage.setItem('defaultLocationValue', JSON.stringify( zipSearch ) )
+    } 
+    else {
+      console.log("notChecked")
+      localStorage.removeItem('defaultLocationValue')
+    }
+
+    // console.log("LocalStorage", JSON.parse(localStorage.getItem('defaultLocationValue')))
+
+
+
+  // }
+});
+
+$(document).on("click", "#saveLocationNavSwitch", (e) => {
+  // if(e.currentTarget.id === "searchWeatherButton"){
+    // console.log(e.target.id)
+    // console.log("works")
+
+    if(defaultLocationSwitch.checked) {
+      // console.log("checked")
+    //   console.log("switchLocationValue", zipSearch)
+      localStorage.setItem('defaultLocationValue', JSON.stringify( zipSearch ) )
+    } 
+    else {
+      // console.log("notChecked")
+      localStorage.removeItem('defaultLocationValue')
+    }
+
+    console.log("Default Location Click", defaultLocationSearched)
+
+  // }
+});
+
+$(document).ready(function () {
+  // Reset zipInputBar to '' to eliminate any characters leftover from previous searches. 
+  zipInputBar.value = '';
+
+  // Assign global search history variable as localStorage instance of 'searchHistory' or empty array and parse into JSON. 
+  // searchHistory is set by newZipSearch as it only concerns locations manually searched by the user. 
+  searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+
+
+  displayCurrentWeather();
+  fiveDayForecast();
+  getState(defaultLocationSearched);
+
+  // console.log("getState", getState())
+
+  populateSearchHistory()
+
 });
 
 // document.querySelector("#searchWeatherButton").addEventListener("click", (e) => {
@@ -613,7 +709,19 @@ $(document).keypress(function (e) {
 //  } )
 
 // Determine the state of the searched zip code
-function getState() {
+function getState(passedZip) {
+
+  let zipcode;
+
+  if(!(passedZip == null) ){
+    console.log('passedZip', passedZip)
+    zipcode = parseInt(passedZip, 10);
+  } else {
+    zipcode = parseInt(zipSearch, 10);
+
+  }
+
+  console.log("getState Zipcode", zipcode)
 
   /* Ensure param is a string to prevent unpredictable parsing results */
   if (typeof zipSearch !== 'string') {
@@ -630,7 +738,7 @@ function getState() {
   }
 
   /* Ensure we don't parse strings starting with 0 as octal values */
-  const zipcode = parseInt(zipSearch, 10);
+  // const zipcode = parseInt(zipSearch, 10);
 
   let st;
   let state;
