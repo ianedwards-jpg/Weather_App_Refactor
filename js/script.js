@@ -70,7 +70,7 @@ function searchNewZip(searchHistoryLink) {
 
 
 
-  console.log("searchHistoryLink", searchHistoryLink)
+  console.log("searchHistoryLink searchNewZip()", searchHistoryLink)
   // console.log("searchHistoryLink.length", searchHistoryLink.length)
   // console.log(e.target)
   // If zip search bar is empty and no search history link has been passed
@@ -143,27 +143,27 @@ function displayCurrentWeather(searchHistoryZip) {
         if(searchHistoryZip == null) {
           // zipSearch = JSON.parse(localStorage.getItem('defaultLocationValue')) || "10001";
           zipSearch = defaultLocationSearched;
-          console.log("zipSearch = defaultLocationSearched; Zipsearch:", zipSearch)
+          // console.log("zipSearch = defaultLocationSearched; Zipsearch:", zipSearch)
   
   
-          console.log("Not Search History Link", zipSearch)
+          // console.log("Not Search History Link", zipSearch)
         } 
         else {
-          console.log("zipSearch = searchHistoryZip")
+          // console.log("zipSearch = searchHistoryZip")
   
           zipSearch = searchHistoryZip
         }
-        console.log("No Zip Bar Value")
+        // console.log("No Zip Bar Value")
       } 
       else {
-        console.log("zipSearch = zipInputBar")
+        // console.log("zipSearch = zipInputBar")
   
         zipSearch = zipInputBar
       }
       return zipSearch
     }
 
-    console.log("Determine Zip Search Before Ajax", determineZipSearch())
+    // console.log("Determine Zip Search Before Ajax", determineZipSearch())
     // if(zipInputBar.length === 0) {
     //   // If the function isn't being invoked by search history link or pageload
     //   if(searchHistoryZip == null) {
@@ -187,8 +187,8 @@ function displayCurrentWeather(searchHistoryZip) {
     //   zipSearch = zipInputBar
     // }
   //}
-  console.log("ZipSearch", zipSearch)
-  console.log("Default Location Searched Before Ajax", defaultLocationSearched)
+  // console.log("ZipSearch", zipSearch)
+  // console.log("Default Location Searched Before Ajax", defaultLocationSearched)
 
 
   // if(defaultLocationSearched === zipSearch) {
@@ -219,13 +219,13 @@ console.log("Zipsearch Before Ajax", getState(zipSearch))
     method: "GET"
   }).then(function (response) {
 
-    console.log("Determine Zip Search After Ajax", determineZipSearch())
+    // console.log("Determine Zip Search After Ajax", determineZipSearch())
 
     // console.log(response);
     // console.log("Response.name", response.name)
 
-    console.log("getState Zipsearch After Ajax", zipSearch)
-    console.log("Default Location Searched After Ajax", defaultLocationSearched)
+    // console.log("getState Zipsearch After Ajax", zipSearch)
+    // console.log("Default Location Searched After Ajax", defaultLocationSearched)
 
 
 
@@ -271,13 +271,22 @@ console.log("Zipsearch Before Ajax", getState(zipSearch))
 
     currentCityTitle.innerText = currentCity + ", " + currentState;
 
+    if(determineZipSearch() == defaultLocationSearched) { 
+      defaultLocationSwitchContainer.innerHTML = '<input class="form-check-input defaultLocationSwitch navLocationSwitch" type="checkbox" role="switch" id="defaultLocationSwitch" checked> <label class="form-check-label defaultLocationSwitchLabel" for="defaultLocationSwitch" id ="defaultLocationSwitchLabel">Set as default location</label>'
+
+    } 
+    else {
+      defaultLocationSwitchContainer.innerHTML = '<input class="form-check-input defaultLocationSwitch navLocationSwitch" type="checkbox" role="switch" id="defaultLocationSwitch"> <label class="form-check-label defaultLocationSwitchLabel" for="defaultLocationSwitch" id ="defaultLocationSwitchLabel">Set as default location</label>'
+
+    }
+
+
    // '<input class="form-check-input saveLocationNavSwitch navLocationSwitch" type="checkbox" role="switch" id="saveLocationNavSwitch">'
    // '<label class="form-check-label saveLocationNavSwitchLabel" for="saveLocationNavSwitch" id ="saveLocationNavSwitchLabel">Add to saved locations</label>'
 
     // let defaultLocationZipInnerHTML = document.createElement('<input class="form-check-input defaultLocationSwitch navLocationSwitch" type="checkbox" role="switch" id="defaultLocationSwitch"> <label class="form-check-label defaultLocationSwitchLabel" for="defaultLocationSwitch" id ="defaultLocationSwitchLabel">Set as default location</label>')
 
     //  defaultLocationSwitchContainer.append(defaultLocationZipInnerHTML) 
-    defaultLocationSwitchContainer.innerHTML = '<input class="form-check-input defaultLocationSwitch navLocationSwitch" type="checkbox" role="switch" id="defaultLocationSwitch"> <label class="form-check-label defaultLocationSwitchLabel" for="defaultLocationSwitch" id ="defaultLocationSwitchLabel">Set as default location</label>'
 
 
 
@@ -407,17 +416,17 @@ function fiveDayForecast() {
   }).then(function (response) {
     // Iterate over response 5 times for 5-day forecast
 
-    console.log("fiveDayResponse", response)
+    // console.log("fiveDayResponse", response)
     // const days = {}
 
     const days = {}
 
-    const testArray = {}
+    // const testArray = {}
 
-    console.log("TestArray", testArray)
+    // console.log("TestArray", testArray)
 
 
-    console.log("Days", days)
+    // console.log("Days", days)
     
     for (var i = 4; i < response.list.length; i+= 8) {  
       let item = response.list[i]
