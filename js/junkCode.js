@@ -353,7 +353,41 @@
      //  defaultLocationSwitchContainer.append(defaultLocationZipInnerHTML) 
  
  
- 
+ // function validateSearchBar() {
+
+//   let zipInput = $("#zip-input").val().trim();
+//   // let weatherCard = document.querySelector(".weatherCard")
+//   let weatherCard = document.getElementsByClassName("weatherCard")
+  
+//   let currentWeatherView = document.querySelector("#weather-view")
+//   let fiveDayView = document.querySelector("#fiveDayView")
+//   let zipCodeMessage = "Must Enter Valid Zip Code!"
+
+//   // console.log("searchHistoryLink", searchHistoryLink)
+//   // console.log("searchHistoryLink.length", searchHistoryLink.length)
+
+//   // If zip search bar is empty and no search history link has been passed
+
+//   // Add function to check event target, if searchBar change conditions
+//   // if(event.target === hourglass button) 
+//   if (!(zipInput.length === 5) && (searchHistoryLink == null)) {  // && (event.target === hourglass button) {
+//     console.log("5")
+//     // zipCodeMessage.append(zipCodeFailure);
+//     // zipCodeMessage.innertext = "Must Enter Valid Zip Code!"
+//     document.querySelector('.zipCodeMessage').innerText = zipCodeMessage;
+//     document.querySelector('#zipCodeMessage').classList.remove('hideZipCodeMessage');
+//     return
+//   }
+
+// }
+
+// Adding a click event listener to hourglass button on search bar and mapping "Enter" key event to searchNewZip();
+// $(document).on("click", "#searchWeather", searchNewZip);
+
+
+// Do this when the document loads. 
+
+
  
  
  
