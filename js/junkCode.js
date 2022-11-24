@@ -281,3 +281,79 @@
     //   }
 
     // }
+
+
+
+    // console.log("Determine Zip Search Before Ajax", determineZipSearch())
+    // if(zipInputBar.length === 0) {
+    //   // If the function isn't being invoked by search history link or pageload
+    //   if(searchHistoryZip == null) {
+    //     // zipSearch = JSON.parse(localStorage.getItem('defaultLocationValue')) || "10001";
+    //     zipSearch = defaultLocationSearched;
+    //     console.log("zipSearch = defaultLocationSearched; Zipsearch:", zipSearch)
+
+
+    //     console.log("Not Search History Link", zipSearch)
+    //   } 
+    //   else {
+    //     console.log("zipSearch = searchHistoryZip")
+
+    //     zipSearch = searchHistoryZip
+    //   }
+    //   console.log("No Zip Bar Value")
+    // } 
+    // else {
+    //   console.log("zipSearch = zipInputBar")
+
+    //   zipSearch = zipInputBar
+    // }
+  //}
+  // console.log("ZipSearch", zipSearch)
+  // console.log("Default Location Searched Before Ajax", defaultLocationSearched)
+
+
+  // if(defaultLocationSearched === zipSearch) {
+  //   // console.log("Default Location Checked")
+  //   console.log("Default Location Checked Value", defaultLocationSwitch.checked)
+  //   defaultLocationSwitch.setAttribute('checked', 'checked');
+
+  // }
+  // else {
+  //   // console.log("Default Location Not Checked")
+  //   console.log("Default Location Checked Value", defaultLocationSwitch.checked)
+  //   // defaultLocationSwitch.removeAttribute('checked');
+
+  // }
+
+
+   // let switchLocationValue = zipSearch
+
+
+  // if(zipInput == null) {
+  //   console.log("searchHistoryZip: undefined")
+  // } 
+  // else {
+  //   console.log("Passed Search History Zip Value:", searchHistoryZip)
+  // }
+ 
+
+  // If no default location is saved
+  // if (defaultLocation.length === 0) {
+  //   console.log("Default Location Empty: Set as 10001")
+  //   defaultLocation = "10001"
+  //   zipSearch = defaultLocation
+  // } 
+  // else {
+
+    // '<input class="form-check-input saveLocationNavSwitch navLocationSwitch" type="checkbox" role="switch" id="saveLocationNavSwitch">'
+    // '<label class="form-check-label saveLocationNavSwitchLabel" for="saveLocationNavSwitch" id ="saveLocationNavSwitchLabel">Add to saved locations</label>'
+ 
+     // let defaultLocationZipInnerHTML = document.createElement('<input class="form-check-input defaultLocationSwitch navLocationSwitch" type="checkbox" role="switch" id="defaultLocationSwitch"> <label class="form-check-label defaultLocationSwitchLabel" for="defaultLocationSwitch" id ="defaultLocationSwitchLabel">Set as default location</label>')
+ 
+     //  defaultLocationSwitchContainer.append(defaultLocationZipInnerHTML) 
+ 
+ 
+ 
+ 
+ 
+ 
