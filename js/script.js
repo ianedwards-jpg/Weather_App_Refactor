@@ -136,25 +136,59 @@ function displayCurrentWeather(searchHistoryZip) {
   // } 
   // else {
     // If the zip input bar is empty
-    if(zipInputBar.length === 0) {
-      // If the function isn't being invoked by search history link or pageload
-      if(searchHistoryZip == null) {
-        // zipSearch = JSON.parse(localStorage.getItem('defaultLocationValue')) || "10001";
-        zipSearch = defaultLocationSearched;
 
-        console.log("Not Search History Link")
+    const determineZipSearch = () => {
+      if(zipInputBar.length === 0) {
+        // If the function isn't being invoked by search history link or pageload
+        if(searchHistoryZip == null) {
+          // zipSearch = JSON.parse(localStorage.getItem('defaultLocationValue')) || "10001";
+          zipSearch = defaultLocationSearched;
+          console.log("zipSearch = defaultLocationSearched; Zipsearch:", zipSearch)
+  
+  
+          console.log("Not Search History Link", zipSearch)
+        } 
+        else {
+          console.log("zipSearch = searchHistoryZip")
+  
+          zipSearch = searchHistoryZip
+        }
+        console.log("No Zip Bar Value")
       } 
       else {
-        zipSearch = searchHistoryZip
+        console.log("zipSearch = zipInputBar")
+  
+        zipSearch = zipInputBar
       }
-      console.log("No Zip Bar Value")
-    } 
-    else {
-      zipSearch = zipInputBar
+      return zipSearch
     }
+
+    console.log("Determine Zip Search Before Ajax", determineZipSearch())
+    // if(zipInputBar.length === 0) {
+    //   // If the function isn't being invoked by search history link or pageload
+    //   if(searchHistoryZip == null) {
+    //     // zipSearch = JSON.parse(localStorage.getItem('defaultLocationValue')) || "10001";
+    //     zipSearch = defaultLocationSearched;
+    //     console.log("zipSearch = defaultLocationSearched; Zipsearch:", zipSearch)
+
+
+    //     console.log("Not Search History Link", zipSearch)
+    //   } 
+    //   else {
+    //     console.log("zipSearch = searchHistoryZip")
+
+    //     zipSearch = searchHistoryZip
+    //   }
+    //   console.log("No Zip Bar Value")
+    // } 
+    // else {
+    //   console.log("zipSearch = zipInputBar")
+
+    //   zipSearch = zipInputBar
+    // }
   //}
   console.log("ZipSearch", zipSearch)
-  console.log("Default Location Searched", defaultLocationSearched)
+  console.log("Default Location Searched Before Ajax", defaultLocationSearched)
 
 
   // if(defaultLocationSearched === zipSearch) {
@@ -172,10 +206,10 @@ function displayCurrentWeather(searchHistoryZip) {
 
 
   
-
+console.log("Zipsearch Before Ajax", getState(zipSearch))
   // API call: Current Weather 
   // var theQueryURL = "https://api.openweathermap.org/data/2.5/weather?zip=" + zipSearch + ",us&appid=cee88101192942cc1ddef8fb37f11635";
-  var queryURL = "https://api.openweathermap.org/data/2.5/weather?zip=" + zipSearch + ",us&appid=cee88101192942cc1ddef8fb37f11635";
+  var queryURL = "https://api.openweathermap.org/data/2.5/weather?zip=" + determineZipSearch() + ",us&appid=cee88101192942cc1ddef8fb37f11635";
 
 
   // console.log("THEQUERYURL", theQueryURL)
@@ -184,14 +218,26 @@ function displayCurrentWeather(searchHistoryZip) {
     url: queryURL,
     method: "GET"
   }).then(function (response) {
+
+    console.log("Determine Zip Search After Ajax", determineZipSearch())
+
     // console.log(response);
     // console.log("Response.name", response.name)
+
+    console.log("getState Zipsearch After Ajax", zipSearch)
+    console.log("Default Location Searched After Ajax", defaultLocationSearched)
+
+
 
     let todayWeatherTitle = document.querySelector('#todayWeatherTitle')
     let currentCityTitle = document.querySelector(".currentCityTitle")
     let defaultLocationSwitchContainer = document.querySelector("#defaultLocationDiv")
     let currentCity = response.name;
-    let currentState = getState(zipSearch);
+    let currentState = getState(determineZipSearch());
+
+    // console.log(getState(zipSearch))
+
+    // console.log("currentState", currentState)
 
     // Get day, month, date to render for Current Weather
     // let getLocalDateAndTime = new Date(response.dt * 1000).toLocaleString();
@@ -663,13 +709,13 @@ $(document).on("click", "#saveLocationNavSwitch", (e) => {
     // console.log("works")
 
     if(defaultLocationSwitch.checked) {
-      // console.log("checked")
-    //   console.log("switchLocationValue", zipSearch)
-      localStorage.setItem('defaultLocationValue', JSON.stringify( zipSearch ) )
+      console.log("checked")
+      console.log("Default Location Localstorage  ", localStorage.getItem("defaultLocationValue") )
+      // localStorage.setItem('defaultLocationValue', JSON.stringify( zipSearch ) )
     } 
     else {
-      // console.log("notChecked")
-      localStorage.removeItem('defaultLocationValue')
+      console.log("notChecked")
+      // localStorage.removeItem('defaultLocationValue')
     }
 
     console.log("Default Location Click", defaultLocationSearched)
@@ -686,9 +732,12 @@ $(document).ready(function () {
   searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
 
 
+  // console.log(defaultLocationSearched)
+
   displayCurrentWeather();
   fiveDayForecast();
   getState(defaultLocationSearched);
+  console.log("onload", defaultLocationSearched)
 
   // console.log("getState", getState())
 
