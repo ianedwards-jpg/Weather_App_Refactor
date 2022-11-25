@@ -212,12 +212,15 @@
 
 .navLocationSwitchContainer {
     width: fit-content;
-    display: inline-flex;
-    position: absolute;
-    bottom: 0;
+    display: flex;
+    flex-direction: column;
     margin-bottom: 10px;
-    left: 290px;
  } 
+
+ .defaultLocationSwitchLabel, .savedLocationSwitchLabel {
+    font-size: 18px;
+    font-weight: 500;
+ }
 
 /* .navLocationSwitch {
     height: 2em;

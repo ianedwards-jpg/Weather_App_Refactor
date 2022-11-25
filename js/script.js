@@ -192,6 +192,7 @@ function displayCurrentWeather(searchHistoryZip) {
     let todayWeatherTitle = document.querySelector('#todayWeatherTitle')
     let currentCityTitle = document.querySelector(".currentCityTitle")
     let defaultLocationSwitchContainer = document.querySelector("#defaultLocationDiv")
+    let savedLocationSwitchContainer = document.querySelector("#saveLocationNavDiv")
     let currentCity = response.name;
     let currentState = getState(determineZipSearch());
 
@@ -239,6 +240,9 @@ function displayCurrentWeather(searchHistoryZip) {
       defaultLocationSwitchContainer.innerHTML = '<input class="form-check-input defaultLocationSwitch navLocationSwitch" type="checkbox" role="switch" id="defaultLocationSwitch"> <label class="form-check-label defaultLocationSwitchLabel" for="defaultLocationSwitch" id ="defaultLocationSwitchLabel">Default Location</label>'
 
     }
+
+    savedLocationSwitchContainer.innerHTML = '<input class="form-check-input savedLocationSwitch navLocationSwitch" type="checkbox" role="switch" id="savedLocationSwitch"> <label class="form-check-label savedLocationSwitchLabel" for="savedLocationSwitch" id ="savedLocationSwitchLabel">Favorites</label>'
+
 
         // if(defaultLocationSwitch.checked) console.log("Checked") 
 
@@ -328,7 +332,11 @@ function displayCurrentWeather(searchHistoryZip) {
     // Putting the entire movie above the previous movies
     $("#weather-view").prepend(weatherDiv);
 
-    if( zipSearch != defaultLocation) {
+    if( zipSearch != defaultLocationSearched) {
+      console.log("displayCurrentWeather() zipSearch", zipSearch)
+      console.log("displayCurrentWeather() defaultLocation", defaultLocation)
+      console.log("displayCurrentWeather() defaultLocationSearched", defaultLocationSearched)
+
       searchHistory.push({city: currentCity, state: currentState, zip: zipSearch})
       localStorage.setItem('searchHistory', JSON.stringify(searchHistory ))
 
@@ -629,10 +637,10 @@ $(document).on("click", "#defaultLocationSwitch", (e) => {
     // console.log(e.target.id)
     // console.log("works")
 
-    if (!(localStorage.getItem("defaultLocationValue" === null || "10001") )){
-      console.log("not Null")
+    // if (!(localStorage.getItem("defaultLocationValue" === null || "10001") )){
+    //   console.log("not Null")
 
-    }
+    // }
 
 
     if(defaultLocationSwitch.checked) {
@@ -644,6 +652,7 @@ $(document).on("click", "#defaultLocationSwitch", (e) => {
       console.log("notChecked")
       localStorage.removeItem('defaultLocationValue')
     }
+    
 
     // console.log("LocalStorage", JSON.parse(localStorage.getItem('defaultLocationValue')))
 
@@ -652,14 +661,20 @@ $(document).on("click", "#defaultLocationSwitch", (e) => {
   // }
 });
 
-$(document).on("click", "#saveLocationNavSwitch", (e) => {
+$(document).on("click", "#savedLocationSwitch", (e) => {
   // if(e.currentTarget.id === "searchWeatherButton"){
+
+    let saveLocationSwitch = document.querySelector("#savedLocationSwitch")
+
+    // console.log("clicked")
+
+
     // console.log(e.target.id)
     // console.log("works")
 
-    if(defaultLocationSwitch.checked) {
+    if(saveLocationSwitch.checked) {
       console.log("checked")
-      console.log("Default Location Localstorage  ", localStorage.getItem("defaultLocationValue") )
+      // console.log("Default Location Localstorage  ", localStorage.getItem("defaultLocationValue") )
       // localStorage.setItem('defaultLocationValue', JSON.stringify( zipSearch ) )
     } 
     else {
@@ -667,7 +682,7 @@ $(document).on("click", "#saveLocationNavSwitch", (e) => {
       // localStorage.removeItem('defaultLocationValue')
     }
 
-    console.log("Default Location Click", defaultLocationSearched)
+    // console.log("Default Location Click", defaultLocationSearched)
 
   // }
 });
