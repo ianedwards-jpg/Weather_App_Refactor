@@ -41,7 +41,8 @@
     color: red;
     text-align: center;
     position: absolute;
-    top: 17px;
+    top: 27px;
+    font-size: 17px;
         /* margin-top: 10px; */
 }
 
@@ -133,7 +134,7 @@
     filter: invert(99%) sepia(5%) saturate(18%) hue-rotate(144deg) brightness(104%) contrast(100%);
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !important;
 }
-.fiveDayCards {
+.currentWeatherView,.fiveDayCards {
     width: 200px;
 
 }
@@ -146,15 +147,17 @@
     /* font-size: 15px; */
     font-weight: bold;
 }
-.fiveDayCards:last-child {
+/* .fiveDayCards:first-child {
     display: none !important;
-}
+} */
 
 .searchBarWrapper {
     display: inline-flex;
     width: 100%;
-    /* width: 525px; */
+    position: relative;
+    /* width: calc(100% - 15%); */
     /* margin-left: 39%; */
+    /* width: 81%; */
 
 }
 
@@ -162,25 +165,70 @@
     position: absolute;
     right: 0px;
     height: 100%;
-    width: 200px;
+    width: 225px;
     background-color: black;
 }
 
 .footerClass {
-    width: calc(100% - 200px);
+    /* width: calc(100% - 200px); */
+    /* width: calc(82%); */
+    width: 100%;
+
+}
+
+.footerContainerRight {
+    padding-right: 225px;
 }
 .searchBarForm {
     /* margin-left: 1rem !important; */
-    padding-right: 235px;
+    padding-right: 225px;
+    position: relative;
+    width: 45%;
 }
 
 .searchInput {
     display: flex !important;
     flex-wrap: nowrap !important;
+    position: absolute !important;
+    bottom: 0;
+    margin-bottom: 10px;
+    right: 205px;
+    width: 225px !important;
 }
 
 .navbar {
     border-radius: 0px !important;
 }
+
+.main {
+    width: 81%;
+    padding-left: 10px;
+}
+
+.sideNavWidthContainer {
+    min-width: 225px;
+    /* min-width: calc(225px + 31px); */
+}
+
+.navLocationSwitchContainer {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+ } 
+
+ .defaultLocationSwitchLabel, .savedLocationSwitchLabel {
+    font-size: 18px;
+    font-weight: 500;
+ }
+
+/* .navLocationSwitch {
+    height: 2em;
+    width: 4em !important;
+    bottom: 27px;
+
+} */
+
+
 
 
