@@ -204,23 +204,40 @@
     width: 81%;
     padding-left: 10px;
 }
-
+/* fit-content */
 .sideNavWidthContainer {
     min-width: 225px;
     /* min-width: calc(225px + 31px); */
+    display: flex;
+    color: white;
 }
 
 .navLocationSwitchContainer {
-    width: fit-content;
+    /* width: fit-content; */
+    width: 100%;
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
  } 
 
  .defaultLocationSwitchLabel, .savedLocationSwitchLabel {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 500;
+    padding-left: 15px;
+
  }
+
+
+ .defaultLocationSwitch, .savedLocationSwitch {
+    height: 2em;
+    width: 4em !important;
+    margin-top: 3px;
+ }
+
+ .defaultLocationDiv, .savedLocationDiv {
+    width: inherit;
+ }
+
 
 /* .navLocationSwitch {
     height: 2em;
