@@ -111,7 +111,7 @@ function searchNewZip(searchHistoryLink) {
     }
     setTimeout(() => {
       populateSearchHistory();
-    }, 1200)
+    }, 800)
   }
 
   // console.log(fiveDayView.childNodes)
@@ -338,12 +338,14 @@ function displayCurrentWeather(searchHistoryZip) {
       console.log("displayCurrentWeather() defaultLocationSearched", defaultLocationSearched)
 
       searchHistory.push({city: currentCity, state: currentState, zip: zipSearch})
-      let searchHistoryFiltered = searchHistory.filter(
+
+      searchHistory = searchHistory.filter(
         (person, index) => index === searchHistory.findIndex(
           other => person.city === other.city
             && person.state === other.state
         ));
-      localStorage.setItem('searchHistory', JSON.stringify( searchHistoryFiltered ))
+
+      localStorage.setItem('searchHistory', JSON.stringify( searchHistory ))
 
     }
 
@@ -604,7 +606,10 @@ async function populateSearchHistory() {
   //       && person.state === other.state
   //   ));
 
-  for(i = 0; i < searchHistory.length; i++) {
+  let searchHistoryFiltered = searchHistory
+
+
+  for(i = 0; i < searchHistoryFiltered.length; i++) {
     let searchHistoryDiv = document.createElement("div");
     let searchHistoryItem = document.createElement("a");
 
@@ -614,8 +619,8 @@ async function populateSearchHistory() {
     searchHistoryItem.classList.add("searchHistoryItem")
 
 
-    searchHistoryItem.textContent = searchHistory[i].city + ", " + searchHistory[i].state
-    searchHistoryItem.value = searchHistory[i].zip
+    searchHistoryItem.textContent = searchHistoryFiltered[i].city + ", " + searchHistoryFiltered[i].state
+    searchHistoryItem.value = searchHistoryFiltered[i].zip
 
 
     // searchHistoryItem.addEventListener("click", () => {console.log("clicked", searchHistoryItem.value)})
@@ -627,7 +632,7 @@ async function populateSearchHistory() {
     searchHistoryDiv.append(searchHistoryItem)
     searchHistoryContainer.append(searchHistoryDiv)
 
-    // console.log("Search History Filtered", searchHistory);
+    // console.log("Search History Filtered", searchHistoryFiltered);
 
   // End for loop 
   }
