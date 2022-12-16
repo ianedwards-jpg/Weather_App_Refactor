@@ -338,9 +338,53 @@ function displayCurrentWeather(searchHistoryZip) {
       console.log("displayCurrentWeather() defaultLocationSearched", defaultLocationSearched)
 
       searchHistory.push({city: currentCity, state: currentState, zip: zipSearch})
-      localStorage.setItem('searchHistory', JSON.stringify(searchHistory ))
+      let searchHistoryFiltered = searchHistory.filter(
+        (person, index) => index === searchHistory.findIndex(
+          other => person.city === other.city
+            && person.state === other.state
+        ));
+      localStorage.setItem('searchHistory', JSON.stringify( searchHistoryFiltered ))
 
     }
+
+  // Add event listener to Favorites button to push 
+    $(document).on("click", "#savedLocationSwitch", (e) => {
+      // if(e.currentTarget.id === "searchWeatherButton"){
+    
+        let saveLocationSwitch = document.querySelector("#savedLocationSwitch")
+    
+        // console.log("clicked")
+    
+    
+        // console.log(e.target.id)
+        // console.log("works")
+    
+        if(saveLocationSwitch.checked) {
+          console.log("checked")
+
+          savedLocations.push({city: currentCity, state: currentState, zip: zipSearch})
+          localStorage.setItem('savedLocations', JSON.stringify(savedLocations ))
+
+          // console.log("Default Location Localstorage  ", localStorage.getItem("defaultLocationValue") )
+          // localStorage.setItem('defaultLocationValue', JSON.stringify( zipSearch ) )
+          console.log("response", {city: currentCity, state: currentState, zip: zipSearch})
+        } 
+        else {
+          console.log("notChecked")
+          // localStorage.removeItem('defaultLocationValue')
+        }
+
+        const i = savedLocations.findIndex(e => e.zip === zipSearch);
+          if (i > -1) {
+            console.log('i', )
+          }
+    
+        // console.log("Default Location Click", defaultLocationSearched)
+    
+      // }
+    });
+
+
 
     // console.log("Search History", searchHistory)
     // console.log("Search History Length Function End", searchHistory.length)
@@ -554,6 +598,72 @@ async function populateSearchHistory() {
 
 
   // console.log("searchHistory", searchHistory)
+  // let searchHistoryFiltered = searchHistory.filter(
+  //   (person, index) => index === searchHistory.findIndex(
+  //     other => person.city === other.city
+  //       && person.state === other.state
+  //   ));
+
+  for(i = 0; i < searchHistory.length; i++) {
+    let searchHistoryDiv = document.createElement("div");
+    let searchHistoryItem = document.createElement("a");
+
+    searchHistoryItem.href = "#";
+
+    searchHistoryDiv.classList.add("searchHistoryDiv")
+    searchHistoryItem.classList.add("searchHistoryItem")
+
+
+    searchHistoryItem.textContent = searchHistory[i].city + ", " + searchHistory[i].state
+    searchHistoryItem.value = searchHistory[i].zip
+
+
+    // searchHistoryItem.addEventListener("click", () => {console.log("clicked", searchHistoryItem.value)})
+
+
+    // searchHistoryItem.addEventListener("click",testSearchHistory(searchHistoryItem.value))
+
+
+    searchHistoryDiv.append(searchHistoryItem)
+    searchHistoryContainer.append(searchHistoryDiv)
+
+    // console.log("Search History Filtered", searchHistory);
+
+  // End for loop 
+  }
+
+  // Make links out of each search history item. Add event listeners to trigger page refresh with mapped location.
+  let searchHistoryLinks = [... searchHistoryItems] 
+  // let zipInputBar = document.querySelector("#zip")
+    searchHistoryLinks.forEach( link => {
+      // console.log("Link Value", link.value)
+      // link.addEventListener("click", testSearchHistory(link.value))
+
+      link.addEventListener('click', function (event) {  
+        // prevent browser's default action
+        event.preventDefault();
+
+        // clear zipInputBar if there is a value in there
+        zipInputBar.value = '';
+
+    
+        // call your awesome function here
+        searchNewZip(link.value); // 'this' refers to the current button on for loop
+    }, false);
+  })
+  //End populateSearchHistory(); 
+}
+
+async function populateFavorites() { 
+  // await displayCurrentWeather()
+  // console.log("populateSearchHistory")
+
+  let favoritesItems = document.getElementsByClassName("favoritesItem")
+  let favoritesContainer = document.querySelector("#favoritesContainer")
+  favoritesContainer.innerHTML = '';
+
+
+  // console.log("favorites", favorites)
   let searchHistoryFiltered = searchHistory.filter(
     (person, index) => index === searchHistory.findIndex(
       other => person.city === other.city
@@ -661,31 +771,31 @@ $(document).on("click", "#defaultLocationSwitch", (e) => {
   // }
 });
 
-$(document).on("click", "#savedLocationSwitch", (e) => {
-  // if(e.currentTarget.id === "searchWeatherButton"){
+// $(document).on("click", "#savedLocationSwitch", (e) => {
+//   // if(e.currentTarget.id === "searchWeatherButton"){
 
-    let saveLocationSwitch = document.querySelector("#savedLocationSwitch")
+//     let saveLocationSwitch = document.querySelector("#savedLocationSwitch")
 
-    // console.log("clicked")
+//     // console.log("clicked")
 
 
-    // console.log(e.target.id)
-    // console.log("works")
+//     // console.log(e.target.id)
+//     // console.log("works")
 
-    if(saveLocationSwitch.checked) {
-      console.log("checked")
-      // console.log("Default Location Localstorage  ", localStorage.getItem("defaultLocationValue") )
-      // localStorage.setItem('defaultLocationValue', JSON.stringify( zipSearch ) )
-    } 
-    else {
-      console.log("notChecked")
-      // localStorage.removeItem('defaultLocationValue')
-    }
+//     if(saveLocationSwitch.checked) {
+//       console.log("checked")
+//       // console.log("Default Location Localstorage  ", localStorage.getItem("defaultLocationValue") )
+//       // localStorage.setItem('defaultLocationValue', JSON.stringify( zipSearch ) )
+//     } 
+//     else {
+//       console.log("notChecked")
+//       // localStorage.removeItem('defaultLocationValue')
+//     }
 
-    // console.log("Default Location Click", defaultLocationSearched)
+//     // console.log("Default Location Click", defaultLocationSearched)
 
-  // }
-});
+//   // }
+// });
 
 $(document).ready(function () {
   // Reset zipInputBar to '' to eliminate any characters leftover from previous searches. 
@@ -693,7 +803,11 @@ $(document).ready(function () {
 
   // Assign global search history variable as localStorage instance of 'searchHistory' or empty array and parse into JSON. 
   // searchHistory is set by newZipSearch as it only concerns locations manually searched by the user. 
+  
   searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+
+  savedLocations = JSON.parse(localStorage.getItem('savedLocations')) || [];
+
 
 
   // console.log(defaultLocationSearched)
