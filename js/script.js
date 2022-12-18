@@ -111,6 +111,8 @@ function searchNewZip(searchHistoryLink) {
     }
     setTimeout(() => {
       populateSearchHistory();
+      // populateFavorites();
+
     }, 800)
   }
 
@@ -176,6 +178,7 @@ function displayCurrentWeather(searchHistoryZip) {
   // Creating an AJAX call for the current weather 
   $.ajax({
     url: queryURL,
+    async: false, 
     method: "GET"
   }).then(function (response) {
 
@@ -195,10 +198,26 @@ function displayCurrentWeather(searchHistoryZip) {
     let savedLocationSwitchContainer = document.querySelector("#saveLocationNavDiv")
     let currentCity = response.name;
     let currentState = getState(determineZipSearch());
+    let currentZip = determineZipSearch();
+
 
     // console.log(getState(zipSearch))
 
-    // console.log("currentState", currentState)
+    console.log("currentCity", currentCity)
+
+    console.log("currentState", currentState)
+
+    console.log("currentZip", currentZip)
+
+
+    returnSavedInfo = () => { 
+
+      return {city: currentCity, state: currentState, zip: currentZip}
+
+    }
+
+
+
 
     // Get day, month, date to render for Current Weather
     // let getLocalDateAndTime = new Date(response.dt * 1000).toLocaleString();
@@ -349,45 +368,9 @@ function displayCurrentWeather(searchHistoryZip) {
 
     }
 
+    
   // Add event listener to Favorites button to push 
-    $(document).on("click", "#savedLocationSwitch", (e) => {
-      // if(e.currentTarget.id === "searchWeatherButton"){
     
-        let saveLocationSwitch = document.querySelector("#savedLocationSwitch")
-    
-        // console.log("clicked")
-    
-    
-        // console.log(e.target.id)
-        // console.log("works")
-    
-        if(saveLocationSwitch.checked) {
-          console.log("checked")
-
-          savedLocations.push({city: currentCity, state: currentState, zip: zipSearch})
-          localStorage.setItem('savedLocations', JSON.stringify(savedLocations ))
-
-          // console.log("Default Location Localstorage  ", localStorage.getItem("defaultLocationValue") )
-          // localStorage.setItem('defaultLocationValue', JSON.stringify( zipSearch ) )
-          console.log("response", {city: currentCity, state: currentState, zip: zipSearch})
-        } 
-        else {
-          console.log("notChecked")
-          // localStorage.removeItem('defaultLocationValue')
-        }
-
-        const i = savedLocations.findIndex(e => e.zip === zipSearch);
-          if (i > -1) {
-            console.log('i', )
-          }
-    
-        // console.log("Default Location Click", defaultLocationSearched)
-    
-      // }
-    });
-
-
-
     // console.log("Search History", searchHistory)
     // console.log("Search History Length Function End", searchHistory.length)
   });
@@ -772,6 +755,70 @@ $(document).on("click", "#defaultLocationSwitch", (e) => {
     // console.log("LocalStorage", JSON.parse(localStorage.getItem('defaultLocationValue')))
 
 
+
+  // }
+});
+
+$(document).on("click", "#savedLocationSwitch", (e) => {
+  // if(e.currentTarget.id === "searchWeatherButton"){
+
+  let saveLocationSwitch = document.querySelector("#savedLocationSwitch")
+  let savedLocation = returnSavedInfo()
+
+
+    // console.log("Response.name", response)
+    
+    // console.log("currentState", currentState)
+
+    // console.log("currentCity", currentCity)
+
+
+    // console.log("clicked")
+
+
+    // console.log(e.target.id)
+    // console.log("works")
+
+    if(saveLocationSwitch.checked) {
+      console.log("checked")
+
+      // let chowder = returnSavedInfo()
+
+
+      savedLocations.push(savedLocation)
+
+      savedLocations = savedLocations.filter(
+        (person, index) => index === savedLocations.findIndex(
+          other => person.city === other.city
+            && person.state === other.state
+        ));
+
+
+        console.log("savedLocation", savedLocation)
+
+        console.log("savedLocationsChecked", savedLocations)
+
+      // console.log("Default Location Localstorage  ", localStorage.getItem("defaultLocationValue") )
+      // localStorage.setItem('defaultLocationValue', JSON.stringify( zipSearch ) )
+      // console.log("response", {city: currentCity, state: currentState, zip: zipSearch})
+      // console.log("savedLocations", currentCity)
+    } 
+    else {
+      console.log("notChecked")
+      let i = savedLocations.findIndex(e => e.zip === savedLocation.zip);
+      if (i > -1) {
+        console.log('i', i)
+        savedLocations.splice(i, 1);
+      }
+
+      console.log("savedLocationsNotChecked", savedLocations)
+
+      // localStorage.removeItem('defaultLocationValue')
+    }
+
+    localStorage.setItem('savedLocations', JSON.stringify(savedLocations ))
+ 
+    // console.log("Default Location Click", defaultLocationSearched)
 
   // }
 });
