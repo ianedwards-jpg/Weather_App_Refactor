@@ -304,12 +304,27 @@ function displayCurrentWeather(searchHistoryZip) {
     weatherDiv.append(weatherValue);
 
     // Temperature Section 
+    let responseTemp = response.main.temp
     // var temperature = ((response.main.temp * 1.8) - 459.67);
+
+    // If statement to determine which temperature to render 
+
+    // console.log("temp test", convertTemp(response.main.temp) )
+
+    
 
     var temperature = Math.round(((response.main.temp * 1.8) - 459.67));
 
 
     // Creating an element to hold the plot
+    // let tempDisplayC = $("<p>").text(convertTemp(response.main.temp).cel + " °C");
+    // let tempDisplayF = $("<p>").text(convertTemp(response.main.temp).far + " °F");
+
+    console.log("tempDisplayC", convertTemp(responseTemp).cel + " °C" )
+    console.log("tempDisplayF", convertTemp(responseTemp).far + " °F")
+
+
+
     var tempDisplay = $("<p>").text(temperature + " °F");
     tempDisplay.attr('class', 'currentWeatherTemp');
 
@@ -570,6 +585,8 @@ function fiveDayForecast() {
 
 }
 
+///////////////////Support Functions/////////////////////////////////////////////////////////////////
+
 async function populateSearchHistory() { 
   // await displayCurrentWeather()
   // console.log("populateSearchHistory")
@@ -620,7 +637,6 @@ async function populateSearchHistory() {
         // clear zipInputBar if there is a value in there
         zipInputBar.value = '';
 
-    
         // call your awesome function here
         searchNewZip(link.value); // 'this' refers to the current button on for loop
     }, false);
@@ -680,6 +696,25 @@ async function populateFavorites() {
   //End populateSearchHistory(); 
 }
 
+// Loads user-set background for .main div when app loads
+const loadBackground = () => {
+  let backgroundSelector = document.querySelector('.main')
+  let backgroundColor = JSON.parse(localStorage.getItem('mainBackgroundColor')) || "#00aabb"
+
+  backgroundSelector.style.backgroundColor = backgroundColor
+}
+
+// Convert temperature values from JSON response to far and cel values then return result  
+const convertTemp = (temp) => {
+  let far = Math.round(((temp * 1.8) - 459.67));
+  let cel = Math.round(temp - 273.15);
+
+  return {far: far, cel: cel}
+}
+
+/////////////Event Listeners//////////////////////////////////////////////////////////////////////////////
+
+// Search weather button (hourglass button next to input form)
 $(document).on("click", "#searchWeatherButton", (e) => {
   if(e.currentTarget.id === "searchWeatherButton"){
     // console.log(e.target.id)
@@ -689,6 +724,12 @@ $(document).on("click", "#searchWeatherButton", (e) => {
   }
 });
 
+// Home Button 
+$(document).on("click", "#sidebarHome", (e) => {
+  searchNewZip(defaultLocationSearched);
+});
+
+// Change background color, delete old value and save new background color value in localStorage
 document.querySelector("#colorForm").onchange = e => {
   let backgroundSelector = document.querySelector('.main')
   let backgroundColor = JSON.parse(localStorage.getItem('mainBackgroundColor')) || "#00aabb"
@@ -705,32 +746,7 @@ document.querySelector("#colorForm").onchange = e => {
   console.log(e.target.value)
 }
 
-const loadBackground = () => {
-  let backgroundSelector = document.querySelector('.main')
-  let backgroundColor = JSON.parse(localStorage.getItem('mainBackgroundColor')) || "#00aabb"
-
-  backgroundSelector.style.backgroundColor = backgroundColor
-}
-
-
-
-$(document).on("click", "#sidebarHome", (e) => {
-  // let colorFormValue = document.querySelector('#colorForm')
-  // if(e.currentTarget.id === "searchWeatherButton"){
-  //   // console.log(e.target.id)
-  //   // console.log("works")
-  //   searchNewZip();
-  // e.preventDefault()
-  searchNewZip(defaultLocationSearched);
-
-
-  // }
-
-
-  // console.log("ColorForm Value", colorpicker.getValue())
-});
-
-
+// Enter key functionality, runs searchNewZip()
 $(document).keypress(function (e) {
   if (e.which == 13) {
     // console.log("enter")
@@ -742,8 +758,7 @@ $(document).keypress(function (e) {
   }
 });
 
-
-
+// Default Location Toggle 
 $(document).on("click", "#defaultLocationSwitch", (e) => {
 
     if(defaultLocationSwitch.checked) {
@@ -758,6 +773,7 @@ $(document).on("click", "#defaultLocationSwitch", (e) => {
 
 });
 
+// Favorites Location Toggle 
 $(document).on("click", "#savedLocationSwitch", (e) => {
 
   let saveLocationSwitch = document.querySelector("#savedLocationSwitch")
@@ -788,32 +804,7 @@ $(document).on("click", "#savedLocationSwitch", (e) => {
  
 });
 
-// $(document).on("click", "#savedLocationSwitch", (e) => {
-//   // if(e.currentTarget.id === "searchWeatherButton"){
-
-//     let saveLocationSwitch = document.querySelector("#savedLocationSwitch")
-
-//     // console.log("clicked")
-
-
-//     // console.log(e.target.id)
-//     // console.log("works")
-
-//     if(saveLocationSwitch.checked) {
-//       console.log("checked")
-//       // console.log("Default Location Localstorage  ", localStorage.getItem("defaultLocationValue") )
-//       // localStorage.setItem('defaultLocationValue', JSON.stringify( zipSearch ) )
-//     } 
-//     else {
-//       console.log("notChecked")
-//       // localStorage.removeItem('defaultLocationValue')
-//     }
-
-//     // console.log("Default Location Click", defaultLocationSearched)
-
-//   // }
-// });
-// Onload, this should be last function other than getState()
+// Onload functions, this should be last function in script.js other than getState()
 $(document).ready(function () {
   // Reset zipInputBar to '' to eliminate any characters leftover from previous searches. 
   zipInputBar.value = '';
@@ -842,18 +833,6 @@ $(document).ready(function () {
   populateFavorites();
 
 });
-
-// document.querySelector("#searchWeatherButton").addEventListener("click", (e) => {
-
-//   if(e.currentTarget.id === "searchWeatherButton"){
-//     // console.log(target.id)
-//     console.log("e.currentTarget", e.currentTarget.id)
-//     // console.log("works")
-//     // searchNewZip();
-
-//   }
-
-//  } )
 
 // Determine the state of the searched zip code
 function getState(passedZip) {
