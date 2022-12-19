@@ -714,15 +714,20 @@ const loadBackground = () => {
 
 
 
-$(document).on("changeColor", "colorForm", (e) => {
-  let colorFormValue = document.querySelector('#colorForm')
+$(document).on("click", "#sidebarHome", (e) => {
+  // let colorFormValue = document.querySelector('#colorForm')
   // if(e.currentTarget.id === "searchWeatherButton"){
   //   // console.log(e.target.id)
   //   // console.log("works")
   //   searchNewZip();
+  // e.preventDefault()
+  searchNewZip(defaultLocationSearched);
+
 
   // }
-  console.log("ColorForm Value", colorpicker.getValue())
+
+
+  // console.log("ColorForm Value", colorpicker.getValue())
 });
 
 
