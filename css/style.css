@@ -201,7 +201,8 @@
 }
 
 .main {
-    width: 81%;
+    /* width: 81%; */
+    overflow-x: hidden;
     padding-left: 10px;
 }
 /* fit-content */
@@ -238,6 +239,12 @@
     width: inherit;
  }
 
+ .colorpicker {
+    padding-left: 0px;
+ }
+ .colorpicker::after {
+    display: none;
+ }
 
 /* .navLocationSwitch {
     height: 2em;

@@ -163,12 +163,15 @@
                 </h2>
                 <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
                   data-bs-parent="#accordionFlushExample">
-                  <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate
+                  <div class="accordion-body">
+                    <!-- Placeholder content for this accordion, which is intended to demonstrate
                     the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine
-                    this being filled with some actual content.
+                    this being filled with some actual content. -->
+                    <h4> Background Color:</h2>
+
                     <div id="cp2" class="input-group colorpicker colorpicker-component">
 
-                      <input type="text" value="#00AABB" class="form-control" />
+                      <input type="text" value="#00AABB" class="form-control colorForm" id="colorForm" />
 
                       <span class="input-group-addon"><i></i></span>
 
@@ -233,6 +236,13 @@
   <script type="text/javascript">
 
     $('.colorpicker').colorpicker({});
+
+    // $('.colorpicker').colorpicker();
+	  // $('.colorForm').colorpicker().on(
+		// 	'changeColor',
+		// 	function() {
+		// 		console.log("this", this.value)
+		// 	});
 
   </script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
