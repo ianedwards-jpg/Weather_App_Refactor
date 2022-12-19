@@ -238,6 +238,12 @@
     width: inherit;
  }
 
+ .colorpicker {
+    padding-left: 0px;
+ }
+ .colorpicker::after {
+    display: none;
+ }
 
 /* .navLocationSwitch {
     height: 2em;

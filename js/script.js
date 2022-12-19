@@ -184,7 +184,7 @@ function displayCurrentWeather(searchHistoryZip) {
 
     // console.log("Determine Zip Search After Ajax", determineZipSearch())
 
-    // console.log(response);
+    console.log("Current Weather Response", response);
     // console.log("Response.name", response.name)
 
     // console.log("getState Zipsearch After Ajax", zipSearch)
