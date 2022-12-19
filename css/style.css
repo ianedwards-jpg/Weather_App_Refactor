@@ -201,7 +201,8 @@
 }
 
 .main {
-    width: 81%;
+    /* width: 81%; */
+    overflow-x: hidden;
     padding-left: 10px;
 }
 /* fit-content */

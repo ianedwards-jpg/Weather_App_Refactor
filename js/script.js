@@ -164,11 +164,6 @@ function displayCurrentWeather(searchHistoryZip) {
       return zipSearch
     }
 
-    
-
-
-  
-// console.log("Zipsearch Before Ajax", getState(zipSearch))
   // API call: Current Weather 
   // var theQueryURL = "https://api.openweathermap.org/data/2.5/weather?zip=" + zipSearch + ",us&appid=cee88101192942cc1ddef8fb37f11635";
   var queryURL = "https://api.openweathermap.org/data/2.5/weather?zip=" + determineZipSearch() + ",us&appid=cee88101192942cc1ddef8fb37f11635";
@@ -182,15 +177,8 @@ function displayCurrentWeather(searchHistoryZip) {
     method: "GET"
   }).then(function (response) {
 
-    // console.log("Determine Zip Search After Ajax", determineZipSearch())
 
-    console.log("Current Weather Response", response);
-    // console.log("Response.name", response.name)
-
-    // console.log("getState Zipsearch After Ajax", zipSearch)
-    // console.log("Default Location Searched After Ajax", defaultLocationSearched)
-
-
+    // console.log("Current Weather Response", response);
 
     let todayWeatherTitle = document.querySelector('#todayWeatherTitle')
     let currentCityTitle = document.querySelector(".currentCityTitle")
@@ -201,13 +189,13 @@ function displayCurrentWeather(searchHistoryZip) {
     let currentZip = determineZipSearch();
 
 
-    // console.log(getState(zipSearch))
+    // console.log("getState()", getState(zipSearch))
 
-    console.log("currentCity", currentCity)
+    // console.log("currentCity", currentCity)
 
-    console.log("currentState", currentState)
+    // console.log("currentState", currentState)
 
-    console.log("currentZip", currentZip)
+    // console.log("currentZip", currentZip)
 
 
     returnSavedInfo = () => { 
@@ -446,13 +434,8 @@ function fiveDayForecast() {
       if (!days[day]) {
         days[day] = item
 
-        console.log("item", item)
+        // console.log("item", item)
       }
-
-      // if(hour ) {
-        console.log("Current Hour", hour)
-
-      // }
 
       // console.log("item", item)
     }
@@ -595,14 +578,6 @@ async function populateSearchHistory() {
   let searchHistoryContainer = document.querySelector("#searchHistoryContainer")
   searchHistoryContainer.innerHTML = '';
 
-
-  // console.log("searchHistory", searchHistory)
-  // let searchHistoryFiltered = searchHistory.filter(
-  //   (person, index) => index === searchHistory.findIndex(
-  //     other => person.city === other.city
-  //       && person.state === other.state
-  //   ));
-
   let searchHistoryFiltered = searchHistory
 
 
@@ -622,16 +597,6 @@ async function populateSearchHistory() {
       searchHistoryItem.textContent = searchHistoryFiltered[i].city + ", " + searchHistoryFiltered[i].state
       searchHistoryItem.value = searchHistoryFiltered[i].zip
     }
-
-
-    
-
-
-    // searchHistoryItem.addEventListener("click", () => {console.log("clicked", searchHistoryItem.value)})
-
-
-    // searchHistoryItem.addEventListener("click",testSearchHistory(searchHistoryItem.value))
-
 
     searchHistoryDiv.append(searchHistoryItem)
     searchHistoryContainer.append(searchHistoryDiv)
@@ -672,13 +637,6 @@ async function populateFavorites() {
   favoritesContainer.innerHTML = '';
 
 
-  // console.log("favorites", favorites)
-  // let searchHistoryFiltered = searchHistory.filter(
-  //   (person, index) => index === searchHistory.findIndex(
-  //     other => person.city === other.city
-  //       && person.state === other.state
-  //   ));
-
   for(i = 0; i < savedLocations.length; i++) {
     let favoritesDiv = document.createElement("div");
     let favoritesItem = document.createElement("a");
@@ -691,13 +649,6 @@ async function populateFavorites() {
     
     favoritesItem.textContent = savedLocations[i].city + ", " + savedLocations[i].state
     favoritesItem.value = savedLocations[i].zip
-
-
-    // favoritesItem.addEventListener("click", () => {console.log("clicked", favoritesItem.value)})
-
-
-    // favoritesItem.addEventListener("click",testfavorites(favoritesItem.value))
-
 
     favoritesDiv.append(favoritesItem)
     favoritesContainer.append(favoritesDiv)
@@ -738,6 +689,43 @@ $(document).on("click", "#searchWeatherButton", (e) => {
   }
 });
 
+document.querySelector("#colorForm").onchange = e => {
+  let backgroundSelector = document.querySelector('.main')
+  let backgroundColor = JSON.parse(localStorage.getItem('mainBackgroundColor')) || "#00aabb"
+
+  let value = e.target.value
+
+  
+  localStorage.removeItem('defaultLocationValue')
+
+  localStorage.setItem('mainBackgroundColor', JSON.stringify( value ))
+
+
+  backgroundSelector.style.backgroundColor = backgroundColor
+  console.log(e.target.value)
+}
+
+const loadBackground = () => {
+  let backgroundSelector = document.querySelector('.main')
+  let backgroundColor = JSON.parse(localStorage.getItem('mainBackgroundColor')) || "#00aabb"
+
+  backgroundSelector.style.backgroundColor = backgroundColor
+}
+
+
+
+$(document).on("changeColor", "colorForm", (e) => {
+  let colorFormValue = document.querySelector('#colorForm')
+  // if(e.currentTarget.id === "searchWeatherButton"){
+  //   // console.log(e.target.id)
+  //   // console.log("works")
+  //   searchNewZip();
+
+  // }
+  console.log("ColorForm Value", colorpicker.getValue())
+});
+
+
 $(document).keypress(function (e) {
   if (e.which == 13) {
     // console.log("enter")
@@ -752,15 +740,6 @@ $(document).keypress(function (e) {
 
 
 $(document).on("click", "#defaultLocationSwitch", (e) => {
-  // if(e.currentTarget.id === "searchWeatherButton"){
-    // console.log(e.target.id)
-    // console.log("works")
-
-    // if (!(localStorage.getItem("defaultLocationValue" === null || "10001") )){
-    //   console.log("not Null")
-
-    // }
-
 
     if(defaultLocationSwitch.checked) {
       console.log("checked")
@@ -771,40 +750,15 @@ $(document).on("click", "#defaultLocationSwitch", (e) => {
       console.log("notChecked")
       localStorage.removeItem('defaultLocationValue')
     }
-    
 
-    // console.log("LocalStorage", JSON.parse(localStorage.getItem('defaultLocationValue')))
-
-
-
-  // }
 });
 
 $(document).on("click", "#savedLocationSwitch", (e) => {
-  // if(e.currentTarget.id === "searchWeatherButton"){
 
   let saveLocationSwitch = document.querySelector("#savedLocationSwitch")
   let savedLocation = returnSavedInfo()
 
-
-    // console.log("Response.name", response)
-    
-    // console.log("currentState", currentState)
-
-    // console.log("currentCity", currentCity)
-
-
-    // console.log("clicked")
-
-
-    // console.log(e.target.id)
-    // console.log("works")
-
     if(saveLocationSwitch.checked) {
-      console.log("checked")
-
-      // let chowder = returnSavedInfo()
-
 
       savedLocations.push(savedLocation)
 
@@ -814,35 +768,19 @@ $(document).on("click", "#savedLocationSwitch", (e) => {
             && person.state === other.state
         ));
 
-
-        console.log("savedLocation", savedLocation)
-
-        console.log("savedLocationsChecked", savedLocations)
-
-      // console.log("Default Location Localstorage  ", localStorage.getItem("defaultLocationValue") )
-      // localStorage.setItem('defaultLocationValue', JSON.stringify( zipSearch ) )
-      // console.log("response", {city: currentCity, state: currentState, zip: zipSearch})
-      // console.log("savedLocations", currentCity)
     } 
     else {
-      console.log("notChecked")
       let i = savedLocations.findIndex(e => e.zip === savedLocation.zip);
       if (i > -1) {
         console.log('i', i)
         savedLocations.splice(i, 1);
       }
 
-      console.log("savedLocationsNotChecked", savedLocations)
-
-      // localStorage.removeItem('defaultLocationValue')
     }
 
     localStorage.setItem('savedLocations', JSON.stringify(savedLocations ))
     populateFavorites(); 
  
-    // console.log("Default Location Click", defaultLocationSearched)
-
-  // }
 });
 
 // $(document).on("click", "#savedLocationSwitch", (e) => {
@@ -870,7 +808,7 @@ $(document).on("click", "#savedLocationSwitch", (e) => {
 
 //   // }
 // });
-
+// Onload, this should be last function other than getState()
 $(document).ready(function () {
   // Reset zipInputBar to '' to eliminate any characters leftover from previous searches. 
   zipInputBar.value = '';
@@ -885,6 +823,8 @@ $(document).ready(function () {
 
 
   // console.log(defaultLocationSearched)
+
+  loadBackground(); 
 
   displayCurrentWeather();
   fiveDayForecast();

@@ -171,7 +171,7 @@
 
                     <div id="cp2" class="input-group colorpicker colorpicker-component">
 
-                      <input type="text" value="#00AABB" class="form-control" />
+                      <input type="text" value="#00AABB" class="form-control colorForm" id="colorForm" />
 
                       <span class="input-group-addon"><i></i></span>
 
@@ -236,6 +236,13 @@
   <script type="text/javascript">
 
     $('.colorpicker').colorpicker({});
+
+    // $('.colorpicker').colorpicker();
+	  // $('.colorForm').colorpicker().on(
+		// 	'changeColor',
+		// 	function() {
+		// 		console.log("this", this.value)
+		// 	});
 
   </script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
