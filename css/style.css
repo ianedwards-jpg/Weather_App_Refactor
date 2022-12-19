@@ -246,6 +246,19 @@
     display: none;
  }
 
+ .sideBarHomeImg {
+    color: white;
+ }
+
+ #sidebarHome:focus {
+    box-shadow: none;
+    outline: none;
+ }
+
+ #sidebarHome:active {
+	box-shadow: -1px 2px 20px -6px rgba(255,255,255,0.75);
+	border-radius: 7px;
+}
 /* .navLocationSwitch {
     height: 2em;
     width: 4em !important;
