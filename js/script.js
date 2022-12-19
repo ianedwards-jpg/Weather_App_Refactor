@@ -724,9 +724,67 @@ $(document).on("click", "#searchWeatherButton", (e) => {
   }
 });
 
+// Default Location Toggle 
+$(document).on("click", "#defaultLocationSwitch", (e) => {
+
+  if(defaultLocationSwitch.checked) {
+    console.log("checked")
+  //   console.log("switchLocationValue", zipSearch)
+    localStorage.setItem('defaultLocationValue', JSON.stringify( zipSearch ) )
+  } 
+  else {
+    console.log("notChecked")
+    localStorage.removeItem('defaultLocationValue')
+  }
+
+});
+
+// Favorites Location Toggle 
+$(document).on("click", "#savedLocationSwitch", (e) => {
+
+let saveLocationSwitch = document.querySelector("#savedLocationSwitch")
+let savedLocation = returnSavedInfo()
+
+  if(saveLocationSwitch.checked) {
+
+    savedLocations.push(savedLocation)
+
+    savedLocations = savedLocations.filter(
+      (person, index) => index === savedLocations.findIndex(
+        other => person.city === other.city
+          && person.state === other.state
+      ));
+
+  } 
+  else {
+    let i = savedLocations.findIndex(e => e.zip === savedLocation.zip);
+    if (i > -1) {
+      console.log('i', i)
+      savedLocations.splice(i, 1);
+    }
+
+  }
+
+  localStorage.setItem('savedLocations', JSON.stringify(savedLocations ))
+  populateFavorites(); 
+
+});
+
 // Home Button 
 $(document).on("click", "#sidebarHome", (e) => {
   searchNewZip(defaultLocationSearched);
+});
+
+// Enter key functionality, runs searchNewZip()
+$(document).keypress(function (e) {
+  if (e.which == 13) {
+    // console.log("enter")
+    e.preventDefault()
+
+    searchNewZip();
+    // displayCurrentWeather(); 
+    // fiveDayForecast();
+  }
 });
 
 // Change background color, delete old value and save new background color value in localStorage
@@ -745,64 +803,6 @@ document.querySelector("#colorForm").onchange = e => {
   backgroundSelector.style.backgroundColor = backgroundColor
   console.log(e.target.value)
 }
-
-// Enter key functionality, runs searchNewZip()
-$(document).keypress(function (e) {
-  if (e.which == 13) {
-    // console.log("enter")
-    e.preventDefault()
-
-    searchNewZip();
-    // displayCurrentWeather(); 
-    // fiveDayForecast();
-  }
-});
-
-// Default Location Toggle 
-$(document).on("click", "#defaultLocationSwitch", (e) => {
-
-    if(defaultLocationSwitch.checked) {
-      console.log("checked")
-    //   console.log("switchLocationValue", zipSearch)
-      localStorage.setItem('defaultLocationValue', JSON.stringify( zipSearch ) )
-    } 
-    else {
-      console.log("notChecked")
-      localStorage.removeItem('defaultLocationValue')
-    }
-
-});
-
-// Favorites Location Toggle 
-$(document).on("click", "#savedLocationSwitch", (e) => {
-
-  let saveLocationSwitch = document.querySelector("#savedLocationSwitch")
-  let savedLocation = returnSavedInfo()
-
-    if(saveLocationSwitch.checked) {
-
-      savedLocations.push(savedLocation)
-
-      savedLocations = savedLocations.filter(
-        (person, index) => index === savedLocations.findIndex(
-          other => person.city === other.city
-            && person.state === other.state
-        ));
-
-    } 
-    else {
-      let i = savedLocations.findIndex(e => e.zip === savedLocation.zip);
-      if (i > -1) {
-        console.log('i', i)
-        savedLocations.splice(i, 1);
-      }
-
-    }
-
-    localStorage.setItem('savedLocations', JSON.stringify(savedLocations ))
-    populateFavorites(); 
- 
-});
 
 // Onload functions, this should be last function in script.js other than getState()
 $(document).ready(function () {
