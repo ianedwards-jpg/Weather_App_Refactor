@@ -4,6 +4,9 @@
 // Set variable for zip-location input 
 const zipInputBar = document.querySelector("#zip-input")
 
+tempFormat = JSON.parse(localStorage.getItem('tempFormat')) || {tempformat: 'far'};
+
+
 // let storedDefaultLocation = localStorage.getItem("defaultLocation")
 // const globalDay = new Number;
 // const globalMonth = new Number;
@@ -184,6 +187,7 @@ function displayCurrentWeather(searchHistoryZip) {
     let currentCityTitle = document.querySelector(".currentCityTitle")
     let defaultLocationSwitchContainer = document.querySelector("#defaultLocationDiv")
     let savedLocationSwitchContainer = document.querySelector("#saveLocationNavDiv")
+    let tempFormatSwitchContainer = document.querySelector("#tempFormatSwitchContainer")
     let currentCity = response.name;
     let currentState = getState(determineZipSearch());
     let currentZip = determineZipSearch();
@@ -265,6 +269,24 @@ function displayCurrentWeather(searchHistoryZip) {
 
     }
 
+    // if(savedLocations.find(element => element.zip === currentZip)) { 
+
+    // tempFormat = JSON.parse(localStorage.getItem('tempFormat')) || {tempformat: 'far'};
+
+    // console.log(tempFormat)
+
+    // if(tempFormat.tempformat == 'far') { 
+
+    //   tempFormatSwitchContainer.innerHTML = '<input class="form-check-input tempFormatDivSwitch navLocationSwitch" type="checkbox" role="switch" id="tempFormatDivSwitch" checked> <label class="form-check-label tempFormatDivSwitchLabel" for="tempFormatDivSwitch" id ="tempFormatDivSwitchLabel">°F</label>'
+
+    // } 
+    // else {
+    //   tempFormatSwitchContainer.innerHTML = '<input class="form-check-input tempFormatDivSwitch navLocationSwitch" type="checkbox" role="switch" id="tempFormatDivSwitch"> <label class="form-check-label tempFormatDivSwitchLabel" for="tempFormatDivSwitch" id ="tempFormatDivSwitchLabel">°C</label>'
+
+    // }
+
+    // console.log("tempformat", tempformat)
+
         // if(defaultLocationSwitch.checked) console.log("Checked") 
 
 
@@ -304,7 +326,7 @@ function displayCurrentWeather(searchHistoryZip) {
     weatherDiv.append(weatherValue);
 
     // Temperature Section 
-    let responseTemp = response.main.temp
+    responseTemp = response.main.temp
     // var temperature = ((response.main.temp * 1.8) - 459.67);
 
     // If statement to determine which temperature to render 
@@ -328,7 +350,18 @@ function displayCurrentWeather(searchHistoryZip) {
     var tempDisplay = $("<p>").text(temperature + " °F");
     tempDisplay.attr('class', 'currentWeatherTemp');
 
+    var tempDisplayC = $("<p>").text(convertTemp(responseTemp).cel + " °C");
+    tempDisplayC.attr('class', 'currentWeatherTemp');
+    tempDisplayC.attr('class', 'cwtC'); 
 
+    var tempDisplayF = $("<p>").text(convertTemp(responseTemp).far + " °F");
+    tempDisplayF.attr('class', 'currentWeatherTemp'); 
+    tempDisplayF.attr('class', 'cwtF'); 
+
+
+    
+
+    
     // Appending the plot
     weatherDiv.append(tempDisplay);
 
@@ -587,6 +620,24 @@ function fiveDayForecast() {
 
 ///////////////////Support Functions/////////////////////////////////////////////////////////////////
 
+function renderTempSwitch() {
+
+  let tempFormatSwitchContainer = document.querySelector("#tempFormatSwitchContainer")
+
+
+
+  if(tempFormat.tempformat == 'far') { 
+
+    tempFormatSwitchContainer.innerHTML = '<input class="form-check-input tempFormatDivSwitch navLocationSwitch" type="checkbox" role="switch" id="tempFormatDivSwitch" checked> <label class="form-check-label tempFormatDivSwitchLabel" for="tempFormatDivSwitch" id ="tempFormatDivSwitchLabel">°F</label>'
+
+  } 
+  else {
+    tempFormatSwitchContainer.innerHTML = '<input class="form-check-input tempFormatDivSwitch navLocationSwitch" type="checkbox" role="switch" id="tempFormatDivSwitch"> <label class="form-check-label tempFormatDivSwitchLabel" for="tempFormatDivSwitch" id ="tempFormatDivSwitchLabel">°C</label>'
+
+  }
+
+}
+
 async function populateSearchHistory() { 
   // await displayCurrentWeather()
   // console.log("populateSearchHistory")
@@ -739,6 +790,47 @@ $(document).on("click", "#defaultLocationSwitch", (e) => {
 
 });
 
+// Temperature Format Toggle 
+$(document).on("click", "#tempFormatDivSwitch", (e) => {
+
+  let tempFormatSwitch = document.querySelector("#tempFormatDivSwitch")
+  let tempFormatSwitchContainer = document.querySelector("#tempFormatSwitchContainer")
+
+
+  if(tempFormatSwitch.checked) {
+    console.log("checked")
+  //   console.log("switchLocationValue", zipSearch)
+    // localStorage.setItem('defaultLocationValue', JSON.stringify( zipSearch ) )
+    // console.log("Far", convertTemp(responseTemp).far)
+
+    // localStorage.removeItem('tempFormat')
+
+    localStorage.setItem('tempFormat', JSON.stringify( {tempformat: 'far'} ))
+    console.log("hdhd", JSON.parse(localStorage.getItem('tempFormat')) )
+
+    tempFormatSwitchContainer.innerHTML = '<input class="form-check-input tempFormatDivSwitch navLocationSwitch" type="checkbox" role="switch" id="tempFormatDivSwitch" checked> <label class="form-check-label tempFormatDivSwitchLabel" for="tempFormatDivSwitch" id ="tempFormatDivSwitchLabel">°F</label>'
+
+
+  } 
+  else {
+    console.log("notChecked")
+    // localStorage.removeItem('defaultLocationValue')
+    // console.log("Cel", convertTemp(responseTemp).cel)
+
+    // localStorage.removeItem('tempFormat')
+
+    localStorage.setItem('tempFormat', JSON.stringify( {tempformat: 'cel'} ))
+    console.log("hdhd", JSON.parse(localStorage.getItem('tempFormat')) )
+
+    tempFormatSwitchContainer.innerHTML = '<input class="form-check-input tempFormatDivSwitch navLocationSwitch" type="checkbox" role="switch" id="tempFormatDivSwitch"> <label class="form-check-label tempFormatDivSwitchLabel" for="tempFormatDivSwitch" id ="tempFormatDivSwitchLabel">°C</label>'
+
+
+  }
+
+  // renderTempSwitch();
+
+});
+
 // Favorites Location Toggle 
 $(document).on("click", "#savedLocationSwitch", (e) => {
 
@@ -816,11 +908,12 @@ $(document).ready(function () {
 
   savedLocations = JSON.parse(localStorage.getItem('savedLocations')) || [];
 
-
+  // tempFormat = JSON.parse(localStorage.getItem('tempFormat')) || {tempformat: 'far'};
 
   // console.log(defaultLocationSearched)
 
   loadBackground(); 
+  renderTempSwitch()
 
   displayCurrentWeather();
   fiveDayForecast();
