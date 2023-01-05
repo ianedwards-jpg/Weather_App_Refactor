@@ -188,6 +188,7 @@ function displayCurrentWeather(searchHistoryZip) {
     let defaultLocationSwitchContainer = document.querySelector("#defaultLocationDiv")
     let savedLocationSwitchContainer = document.querySelector("#saveLocationNavDiv")
     let tempFormatSwitchContainer = document.querySelector("#tempFormatSwitchContainer")
+    let tempFormatSwitch = document.querySelector("#tempFormatDivSwitch")
     let currentCity = response.name;
     let currentState = getState(determineZipSearch());
     let currentZip = determineZipSearch();
@@ -350,20 +351,36 @@ function displayCurrentWeather(searchHistoryZip) {
     var tempDisplay = $("<p>").text(temperature + " °F");
     tempDisplay.attr('class', 'currentWeatherTemp');
 
+
+
+
+    if(tempFormatSwitch.checked) {
+      console.log("Checked")
+    }
+
+
     var tempDisplayC = $("<p>").text(convertTemp(responseTemp).cel + " °C");
-    tempDisplayC.attr('class', 'currentWeatherTemp');
-    tempDisplayC.attr('class', 'cwtC'); 
+    // tempDisplayC.attr({'class':'currentWeatherTemp', 'class':'currentWeatherTempNone', 'class':'cwtF' });
+    // tempDisplayC.attr('class', 'currentWeatherTempNone'); 
+    // tempDisplayC.attr('class', 'cwtC'); :
+    tempDisplayC
+
 
     var tempDisplayF = $("<p>").text(convertTemp(responseTemp).far + " °F");
-    tempDisplayF.attr('class', 'currentWeatherTemp'); 
-    tempDisplayF.attr('class', 'cwtF'); 
+    tempDisplayF.attr({'class':'currentWeatherTemp', 'class': 'cwtF'}); 
+    // tempDisplayF.attr(); 
 
 
     
 
     
     // Appending the plot
-    weatherDiv.append(tempDisplay);
+    // weatherDiv.append(tempDisplay);
+
+    weatherDiv.append(tempDisplayF);
+    weatherDiv.append(tempDisplayC);
+
+
 
 
     // Humidity Section 
@@ -796,9 +813,21 @@ $(document).on("click", "#tempFormatDivSwitch", (e) => {
   let tempFormatSwitch = document.querySelector("#tempFormatDivSwitch")
   let tempFormatSwitchContainer = document.querySelector("#tempFormatSwitchContainer")
 
+  let tempDisplayC = document.querySelector('.cwtC')
+  let tempDisplayF = document.querySelector('.cwtF')
+
 
   if(tempFormatSwitch.checked) {
     console.log("checked")
+
+    tempDisplayF.classList.add('currentWeatherTemp'); 
+    tempDisplayF.classList.remove('currentWeatherTempNone'); 
+
+
+    tempDisplayC.classList.remove('currentWeatherTemp'); 
+    tempDisplayC.classList.add('currentWeatherTempNone'); 
+
+    // tempDisplayF.attr('class', 'cwtF'); 
   //   console.log("switchLocationValue", zipSearch)
     // localStorage.setItem('defaultLocationValue', JSON.stringify( zipSearch ) )
     // console.log("Far", convertTemp(responseTemp).far)
@@ -814,6 +843,13 @@ $(document).on("click", "#tempFormatDivSwitch", (e) => {
   } 
   else {
     console.log("notChecked")
+
+    tempDisplayF.classList.remove('currentWeatherTemp'); 
+    tempDisplayF.classList.add('currentWeatherTempNone'); 
+
+
+    tempDisplayC.classList.add('currentWeatherTemp'); 
+    tempDisplayC.classList.remove('currentWeatherTempNone'); 
     // localStorage.removeItem('defaultLocationValue')
     // console.log("Cel", convertTemp(responseTemp).cel)
 
