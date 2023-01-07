@@ -348,11 +348,9 @@ function displayCurrentWeather(searchHistoryZip) {
 
 
 
-    var tempDisplay = $("<p>").text(temperature + " °F");
+    var tempDisplay = $("<p>").text(null);
     tempDisplay.attr('class', 'currentWeatherTemp');
-
-
-
+    
 
     if(tempFormatSwitch.checked) {
       console.log("Checked")
@@ -361,21 +359,29 @@ function displayCurrentWeather(searchHistoryZip) {
 
     var tempDisplayC = $("<p>").text(convertTemp(responseTemp).cel + " °C");
     // tempDisplayC.attr({'class':'currentWeatherTemp', 'class':'currentWeatherTempNone', 'class':'cwtF' });
-    // tempDisplayC.attr('class', 'currentWeatherTempNone'); 
-    // tempDisplayC.attr('class', 'cwtC'); :
-    tempDisplayC
+    tempDisplayC.attr('class', 'currentWeatherTemp cwtC currentWeatherTempNone'); 
+    // tempDisplayC.attr('class', ''); 
+
+    // tempDisplayC.attr('class', '');
+
+
 
 
     var tempDisplayF = $("<p>").text(convertTemp(responseTemp).far + " °F");
-    tempDisplayF.attr({'class':'currentWeatherTemp', 'class': 'cwtF'}); 
+    // tempDisplayF.attr({'class':'currentWeatherTemp', 'class': 'cwtF'}); 
     // tempDisplayF.attr(); 
+
+    // tempDisplayF.attr('class', 'currentWeatherTempNone'); 
+    tempDisplayF.attr('class', 'cwtF currentWeatherTemp'); 
+    // tempDisplayF.attr('class', ''); 
+
 
 
     
 
     
     // Appending the plot
-    // weatherDiv.append(tempDisplay);
+    weatherDiv.append(tempDisplay);
 
     weatherDiv.append(tempDisplayF);
     weatherDiv.append(tempDisplayC);
