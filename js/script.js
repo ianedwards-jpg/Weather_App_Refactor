@@ -587,7 +587,35 @@ function fiveDayForecast() {
       let tempDisplay = $("<p>").text(" " + temperature + "°F");
       tempDisplay.attr('class', 'fiveDayForecastValue');
 
-      var temperatureIcon = $('<img />', {
+
+
+    var tempDisplayC = $("<p>").text(convertTemp(responseTemp).cel + " °C");
+    // tempDisplayC.attr({'class':'currentWeatherTemp', 'class':'currentWeatherTempNone', 'class':'cwtF' });
+    tempDisplayC.attr('class', 'fiveDayForecastValue cwtC fiveDayForecastValueNone'); 
+    // tempDisplayC.attr('class', ''); 
+
+    // tempDisplayC.attr('class', '');
+
+
+
+
+    var tempDisplayF = $("<p>").text(convertTemp(responseTemp).far + " °F");
+    // tempDisplayF.attr({'class':'fiveDayForecastValue', 'class': 'cwtF'}); 
+    // tempDisplayF.attr(); 
+
+    // tempDisplayF.attr('class', 'fiveDayForecastValueNone'); 
+    tempDisplayF.attr('class', 'cwtF fiveDayForecastValue'); 
+    // tempDisplayF.attr('class', ''); 
+      
+
+      var temperatureIconF = $('<img />', {
+        id: 'fiveDayTemperatureIcon',
+        class: 'fiveDayTemperatureIcon',
+        src: 'assets/icons/thermometer-half.svg',
+        alt: 'Alt text'
+      });
+
+      var temperatureIconC = $('<img />', {
         id: 'fiveDayTemperatureIcon',
         class: 'fiveDayTemperatureIcon',
         src: 'assets/icons/thermometer-half.svg',
@@ -596,11 +624,22 @@ function fiveDayForecast() {
 
       // $(document.createElement(humidityIcon));
       // humidityIcon.attr('src', './assets/icons/humidity.svg');
-      tempDisplay.prepend(temperatureIcon);
+      // tempDisplay.prepend(temperatureIcon);
+
+      tempDisplayF.prepend(temperatureIconF);
+      tempDisplayC.prepend(temperatureIconC);
+
+     
 
 
       // Appending the plot
-      weatherCard.append(tempDisplay);
+      // weatherCard.append(tempDisplay);
+
+      // Appending the plot
+    // weatherCard.append(tempDisplay);
+
+    weatherCard.append(tempDisplayF);
+    weatherCard.append(tempDisplayC);
 
       // Storing the humidity value
       var humidity = day.main.humidity;
@@ -819,19 +858,30 @@ $(document).on("click", "#tempFormatDivSwitch", (e) => {
   let tempFormatSwitch = document.querySelector("#tempFormatDivSwitch")
   let tempFormatSwitchContainer = document.querySelector("#tempFormatSwitchContainer")
 
-  let tempDisplayC = document.querySelector('.cwtC')
-  let tempDisplayF = document.querySelector('.cwtF')
+  let currentWeatherTemp = document.querySelector('.currentWeatherTemp')
+  let fiveDayForcastValues = document.getElementsByClassName('.fiveDayForecastValue')
 
+  let tempDisplayC = document.getElementsByClassName('.cwtC')
+  let tempDisplayF = document.getElementsByClassName('.cwtF')
+
+
+
+  let tempDisplayCItems = [...tempDisplayC]
+
+  let tempDisplayFItems = [...tempDisplayF]
+
+  let fiveDayForecastValueItems = [...fiveDayForcastValues]
+  
 
   if(tempFormatSwitch.checked) {
     console.log("checked")
 
-    tempDisplayF.classList.add('currentWeatherTemp'); 
-    tempDisplayF.classList.remove('currentWeatherTempNone'); 
+    // tempDisplayF.classList.add('currentWeatherTemp'); 
+    tempDisplayF.classList.remove('weatherTempNone'); 
 
 
-    tempDisplayC.classList.remove('currentWeatherTemp'); 
-    tempDisplayC.classList.add('currentWeatherTempNone'); 
+    // tempDisplayC.classList.remove('currentWeatherTemp'); 
+    tempDisplayC.classList.add('weatherTempNone'); 
 
     // tempDisplayF.attr('class', 'cwtF'); 
   //   console.log("switchLocationValue", zipSearch)
