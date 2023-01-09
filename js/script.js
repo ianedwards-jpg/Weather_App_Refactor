@@ -253,12 +253,6 @@ function displayCurrentWeather(searchHistoryZip) {
 
     }
 
-    // savedLocationSwitchContainer.innerHTML = '<input class="form-check-input savedLocationSwitch navLocationSwitch" type="checkbox" role="switch" id="savedLocationSwitch"> <label class="form-check-label savedLocationSwitchLabel" for="savedLocationSwitch" id ="savedLocationSwitchLabel">Favorites</label>'
-
-
-    // if(savedLocations.find(element => element.zip === currentZip)) { 
-    //   console.log("FIred")
-    // }
 
     // if(array1.find(element => element === 12))
     if(savedLocations.find(element => element.zip === currentZip)) { 
@@ -269,27 +263,6 @@ function displayCurrentWeather(searchHistoryZip) {
       savedLocationSwitchContainer.innerHTML = '<input class="form-check-input savedLocationSwitch navLocationSwitch" type="checkbox" role="switch" id="savedLocationSwitch"> <label class="form-check-label savedLocationSwitchLabel" for="savedLocationSwitch" id ="savedLocationSwitchLabel">Favorites</label>'
 
     }
-
-    // if(savedLocations.find(element => element.zip === currentZip)) { 
-
-    // tempFormat = JSON.parse(localStorage.getItem('tempFormat')) || {tempformat: 'far'};
-
-    // console.log(tempFormat)
-
-    // if(tempFormat.tempformat == 'far') { 
-
-    //   tempFormatSwitchContainer.innerHTML = '<input class="form-check-input tempFormatDivSwitch navLocationSwitch" type="checkbox" role="switch" id="tempFormatDivSwitch" checked> <label class="form-check-label tempFormatDivSwitchLabel" for="tempFormatDivSwitch" id ="tempFormatDivSwitchLabel">°F</label>'
-
-    // } 
-    // else {
-    //   tempFormatSwitchContainer.innerHTML = '<input class="form-check-input tempFormatDivSwitch navLocationSwitch" type="checkbox" role="switch" id="tempFormatDivSwitch"> <label class="form-check-label tempFormatDivSwitchLabel" for="tempFormatDivSwitch" id ="tempFormatDivSwitchLabel">°C</label>'
-
-    // }
-
-    // console.log("tempformat", tempformat)
-
-        // if(defaultLocationSwitch.checked) console.log("Checked") 
-
 
     // console.log("Get Local Date and Time", getLocalDateAndTime)
     // console.log("Current Month", currentMonth)
@@ -348,67 +321,31 @@ function displayCurrentWeather(searchHistoryZip) {
 
 
 
-    var tempDisplay = $("<p>").text(null);
+    var tempDisplay = $("<div>")
     tempDisplay.attr('class', 'currentWeatherTemp');
     
 
     if(tempFormatSwitch.checked) {
-      console.log("Checked")
-    }
-
-
-    if(tempFormatSwitch.checked) {
       // console.log("checked")
 
-    var tempDisplayC = $("<p>").text(convertTemp(responseTemp).cel + " °C");
-    // tempDisplayC.attr({'class':'currentWeatherTemp', 'class':'currentWeatherTempNone', 'class':'cwtF' });
-    tempDisplayC.attr('class', 'currentWeatherTemp cwtC weatherTempNone'); 
-    // tempDisplayC.attr('class', ''); 
+      var tempDisplayC = $("<p>").text(convertTemp(responseTemp).cel + " °C");
+      tempDisplayC.attr('class', 'currentWeatherTemp cwtC weatherTempNone'); 
 
-    // tempDisplayC.attr('class', '');
-
-
-
-
-    var tempDisplayF = $("<p>").text(convertTemp(responseTemp).far + " °F");
-    // tempDisplayF.attr({'class':'currentWeatherTemp', 'class': 'cwtF'}); 
-    // tempDisplayF.attr(); 
-
-    // tempDisplayF.attr('class', 'currentWeatherTempNone'); 
-    tempDisplayF.attr('class', 'cwtF currentWeatherTemp'); 
-    // tempDisplayF.attr('class', ''); 
+      var tempDisplayF = $("<p>").text(convertTemp(responseTemp).far + " °F");
+      tempDisplayF.attr('class', 'cwtF currentWeatherTemp'); 
     }
     else {
       var tempDisplayC = $("<p>").text(convertTemp(responseTemp).cel + " °C");
-    // tempDisplayC.attr({'class':'currentWeatherTemp', 'class':'currentWeatherTempNone', 'class':'cwtF' });
-    tempDisplayC.attr('class', 'currentWeatherTemp cwtC '); 
-    // tempDisplayC.attr('class', ''); 
-
-    // tempDisplayC.attr('class', '');
-
-
-
-
-    var tempDisplayF = $("<p>").text(convertTemp(responseTemp).far + " °F");
-    // tempDisplayF.attr({'class':'currentWeatherTemp', 'class': 'cwtF'}); 
-    // tempDisplayF.attr(); 
-
-    // tempDisplayF.attr('class', 'currentWeatherTempNone'); 
-    tempDisplayF.attr('class', 'cwtF currentWeatherTemp weatherTempNone'); 
+      tempDisplayC.attr('class', 'currentWeatherTemp cwtC '); 
+    
+      var tempDisplayF = $("<p>").text(convertTemp(responseTemp).far + " °F");
+      tempDisplayF.attr('class', 'cwtF currentWeatherTemp weatherTempNone'); 
     }
-
-
-    
-
-    
     // Appending the plot
     weatherDiv.append(tempDisplay);
 
     weatherDiv.append(tempDisplayF);
     weatherDiv.append(tempDisplayC);
-
-
-
 
     // Humidity Section 
     // Initalize variable for current weather humidity and set data from API call
