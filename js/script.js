@@ -357,9 +357,12 @@ function displayCurrentWeather(searchHistoryZip) {
     }
 
 
+    if(tempFormatSwitch.checked) {
+      // console.log("checked")
+
     var tempDisplayC = $("<p>").text(convertTemp(responseTemp).cel + " °C");
     // tempDisplayC.attr({'class':'currentWeatherTemp', 'class':'currentWeatherTempNone', 'class':'cwtF' });
-    tempDisplayC.attr('class', 'currentWeatherTemp cwtC currentWeatherTempNone'); 
+    tempDisplayC.attr('class', 'currentWeatherTemp cwtC weatherTempNone'); 
     // tempDisplayC.attr('class', ''); 
 
     // tempDisplayC.attr('class', '');
@@ -374,7 +377,25 @@ function displayCurrentWeather(searchHistoryZip) {
     // tempDisplayF.attr('class', 'currentWeatherTempNone'); 
     tempDisplayF.attr('class', 'cwtF currentWeatherTemp'); 
     // tempDisplayF.attr('class', ''); 
+    }
+    else {
+      var tempDisplayC = $("<p>").text(convertTemp(responseTemp).cel + " °C");
+    // tempDisplayC.attr({'class':'currentWeatherTemp', 'class':'currentWeatherTempNone', 'class':'cwtF' });
+    tempDisplayC.attr('class', 'currentWeatherTemp cwtC '); 
+    // tempDisplayC.attr('class', ''); 
 
+    // tempDisplayC.attr('class', '');
+
+
+
+
+    var tempDisplayF = $("<p>").text(convertTemp(responseTemp).far + " °F");
+    // tempDisplayF.attr({'class':'currentWeatherTemp', 'class': 'cwtF'}); 
+    // tempDisplayF.attr(); 
+
+    // tempDisplayF.attr('class', 'currentWeatherTempNone'); 
+    tempDisplayF.attr('class', 'cwtF currentWeatherTemp weatherTempNone'); 
+    }
 
 
     
@@ -579,6 +600,9 @@ function fiveDayForecast() {
       // Storing the plot
       // var temperature = ((day.main.temp * 1.8) - 459.67);
 
+      let tempFormatSwitch = document.querySelector("#tempFormatDivSwitch")
+
+
       var temperature = Math.round(((day.main.temp * 1.8) - 459.67));
 
 
@@ -588,25 +612,24 @@ function fiveDayForecast() {
       tempDisplay.attr('class', 'fiveDayForecastValue');
 
 
+      if(tempFormatSwitch.checked) {
 
-    var tempDisplayC = $("<p>").text(convertTemp(responseTemp).cel + " °C");
-    // tempDisplayC.attr({'class':'currentWeatherTemp', 'class':'currentWeatherTempNone', 'class':'cwtF' });
-    tempDisplayC.attr('class', 'fiveDayForecastValue cwtC fiveDayForecastValueNone'); 
-    // tempDisplayC.attr('class', ''); 
-
-    // tempDisplayC.attr('class', '');
-
-
-
-
-    var tempDisplayF = $("<p>").text(convertTemp(responseTemp).far + " °F");
-    // tempDisplayF.attr({'class':'fiveDayForecastValue', 'class': 'cwtF'}); 
-    // tempDisplayF.attr(); 
-
-    // tempDisplayF.attr('class', 'fiveDayForecastValueNone'); 
-    tempDisplayF.attr('class', 'cwtF fiveDayForecastValue'); 
-    // tempDisplayF.attr('class', ''); 
-      
+        var tempDisplayC = $("<p>").text(convertTemp(responseTemp).cel + " °C");
+        tempDisplayC.attr('class', 'fiveDayForecastValue cwtC weatherTempNone'); 
+        
+        var tempDisplayF = $("<p>").text(convertTemp(responseTemp).far + " °F");
+        // tempDisplayF.attr('class', 'fiveDayForecastValueNone'); 
+        tempDisplayF.attr('class', 'cwtF fiveDayForecastValue'); 
+        // tempDisplayF.attr('class', ''); 
+      } 
+      else {
+        var tempDisplayC = $("<p>").text(convertTemp(responseTemp).cel + " °C");
+        tempDisplayC.attr('class', 'fiveDayForecastValue cwtC'); 
+        
+        var tempDisplayF = $("<p>").text(convertTemp(responseTemp).far + " °F");
+        // tempDisplayF.attr('class', 'fiveDayForecastValueNone'); 
+        tempDisplayF.attr('class', 'cwtF fiveDayForecastValue weatherTempNone'); 
+      }
 
       var temperatureIconF = $('<img />', {
         id: 'fiveDayTemperatureIcon',
@@ -861,8 +884,8 @@ $(document).on("click", "#tempFormatDivSwitch", (e) => {
   let currentWeatherTemp = document.querySelector('.currentWeatherTemp')
   let fiveDayForcastValues = document.getElementsByClassName('.fiveDayForecastValue')
 
-  let tempDisplayC = document.getElementsByClassName('.cwtC')
-  let tempDisplayF = document.getElementsByClassName('.cwtF')
+  let tempDisplayC = document.getElementsByClassName('cwtC')
+  let tempDisplayF = document.getElementsByClassName('cwtF')
 
 
 
@@ -871,17 +894,33 @@ $(document).on("click", "#tempFormatDivSwitch", (e) => {
   let tempDisplayFItems = [...tempDisplayF]
 
   let fiveDayForecastValueItems = [...fiveDayForcastValues]
+
+  console.log(tempDisplayCItems)
+    console.log(tempDisplayFItems)
   
 
   if(tempFormatSwitch.checked) {
     console.log("checked")
 
     // tempDisplayF.classList.add('currentWeatherTemp'); 
-    tempDisplayF.classList.remove('weatherTempNone'); 
+    // tempDisplayFItems.classList.remove('weatherTempNone'); 
 
 
     // tempDisplayC.classList.remove('currentWeatherTemp'); 
-    tempDisplayC.classList.add('weatherTempNone'); 
+    // tempDisplayCItems.classList.add('weatherTempNone'); 
+    
+
+
+    tempDisplayFItems.forEach(item => {
+      item.classList.remove('weatherTempNone'); 
+      console.log("F", item )
+    })
+
+    tempDisplayCItems.forEach(item => {
+      item.classList.add('weatherTempNone'); 
+      console.log("C", item )
+
+    })
 
     // tempDisplayF.attr('class', 'cwtF'); 
   //   console.log("switchLocationValue", zipSearch)
@@ -900,13 +939,22 @@ $(document).on("click", "#tempFormatDivSwitch", (e) => {
   else {
     console.log("notChecked")
 
-    tempDisplayF.classList.remove('currentWeatherTemp'); 
-    tempDisplayF.classList.add('currentWeatherTempNone'); 
+    // tempDisplayCItems.classList.remove('eatherTempNone'); 
+    // tempDisplayFItems.classList.add('weatherTempNone'); 
 
 
-    tempDisplayC.classList.add('currentWeatherTemp'); 
-    tempDisplayC.classList.remove('currentWeatherTempNone'); 
+    // tempDisplayC.classList.add('currentWeatherTemp'); 
+    // tempDisplayC.classList.remove('currentWeatherTempNone'); 
     // localStorage.removeItem('defaultLocationValue')
+
+    tempDisplayCItems.forEach(item => {
+      item.classList.remove('weatherTempNone'); 
+    })
+
+    tempDisplayFItems.forEach(item => {
+      item.classList.add('weatherTempNone'); 
+    })
+
     // console.log("Cel", convertTemp(responseTemp).cel)
 
     // localStorage.removeItem('tempFormat')
