@@ -4,6 +4,9 @@
 // Set variable for zip-location input 
 const zipInputBar = document.querySelector("#zip-input")
 
+tempFormat = JSON.parse(localStorage.getItem('tempFormat')) || {tempformat: 'far'};
+
+
 // let storedDefaultLocation = localStorage.getItem("defaultLocation")
 // const globalDay = new Number;
 // const globalMonth = new Number;
@@ -184,6 +187,8 @@ function displayCurrentWeather(searchHistoryZip) {
     let currentCityTitle = document.querySelector(".currentCityTitle")
     let defaultLocationSwitchContainer = document.querySelector("#defaultLocationDiv")
     let savedLocationSwitchContainer = document.querySelector("#saveLocationNavDiv")
+    let tempFormatSwitchContainer = document.querySelector("#tempFormatSwitchContainer")
+    let tempFormatSwitch = document.querySelector("#tempFormatDivSwitch")
     let currentCity = response.name;
     let currentState = getState(determineZipSearch());
     let currentZip = determineZipSearch();
@@ -248,12 +253,6 @@ function displayCurrentWeather(searchHistoryZip) {
 
     }
 
-    // savedLocationSwitchContainer.innerHTML = '<input class="form-check-input savedLocationSwitch navLocationSwitch" type="checkbox" role="switch" id="savedLocationSwitch"> <label class="form-check-label savedLocationSwitchLabel" for="savedLocationSwitch" id ="savedLocationSwitchLabel">Favorites</label>'
-
-
-    // if(savedLocations.find(element => element.zip === currentZip)) { 
-    //   console.log("FIred")
-    // }
 
     // if(array1.find(element => element === 12))
     if(savedLocations.find(element => element.zip === currentZip)) { 
@@ -264,9 +263,6 @@ function displayCurrentWeather(searchHistoryZip) {
       savedLocationSwitchContainer.innerHTML = '<input class="form-check-input savedLocationSwitch navLocationSwitch" type="checkbox" role="switch" id="savedLocationSwitch"> <label class="form-check-label savedLocationSwitchLabel" for="savedLocationSwitch" id ="savedLocationSwitchLabel">Favorites</label>'
 
     }
-
-        // if(defaultLocationSwitch.checked) console.log("Checked") 
-
 
     // console.log("Get Local Date and Time", getLocalDateAndTime)
     // console.log("Current Month", currentMonth)
@@ -304,19 +300,52 @@ function displayCurrentWeather(searchHistoryZip) {
     weatherDiv.append(weatherValue);
 
     // Temperature Section 
+    responseTemp = response.main.temp
     // var temperature = ((response.main.temp * 1.8) - 459.67);
+
+    // If statement to determine which temperature to render 
+
+    // console.log("temp test", convertTemp(response.main.temp) )
+
+    
 
     var temperature = Math.round(((response.main.temp * 1.8) - 459.67));
 
 
     // Creating an element to hold the plot
-    var tempDisplay = $("<p>").text(temperature + " °F");
+    // let tempDisplayC = $("<p>").text(convertTemp(response.main.temp).cel + " °C");
+    // let tempDisplayF = $("<p>").text(convertTemp(response.main.temp).far + " °F");
+
+    console.log("tempDisplayC", convertTemp(responseTemp).cel + " °C" )
+    console.log("tempDisplayF", convertTemp(responseTemp).far + " °F")
+
+
+
+    var tempDisplay = $("<div>")
     tempDisplay.attr('class', 'currentWeatherTemp');
+    
 
+    if(tempFormatSwitch.checked) {
+      // console.log("checked")
 
+      var tempDisplayC = $("<p>").text(convertTemp(responseTemp).cel + " °C");
+      tempDisplayC.attr('class', 'currentWeatherTemp cwtC weatherTempNone'); 
+
+      var tempDisplayF = $("<p>").text(convertTemp(responseTemp).far + " °F");
+      tempDisplayF.attr('class', 'cwtF currentWeatherTemp'); 
+    }
+    else {
+      var tempDisplayC = $("<p>").text(convertTemp(responseTemp).cel + " °C");
+      tempDisplayC.attr('class', 'currentWeatherTemp cwtC '); 
+    
+      var tempDisplayF = $("<p>").text(convertTemp(responseTemp).far + " °F");
+      tempDisplayF.attr('class', 'cwtF currentWeatherTemp weatherTempNone'); 
+    }
     // Appending the plot
     weatherDiv.append(tempDisplay);
 
+    weatherDiv.append(tempDisplayF);
+    weatherDiv.append(tempDisplayC);
 
     // Humidity Section 
     // Initalize variable for current weather humidity and set data from API call
@@ -437,7 +466,6 @@ function fiveDayForecast() {
         // console.log("item", item)
       }
 
-      // console.log("item", item)
     }
 
     let sortedDays = Object.values(days) //.sort((a, b) => (a.day > b.day) ? 1 : -1);
@@ -492,13 +520,11 @@ function fiveDayForecast() {
       let fiveDayDateContainer = $("<div class='fiveDayDateContainer'>");
 
       let fiveDayDay = $("<p>").text(daysMap[forecastDays].value);
-      let fiveDayDate = $("<p>").text(fiveDayDateResponse.slice(0, 5));
+      let fiveDayDate = $("<p>").text(fiveDayDateResponse.slice(0, 4));
       fiveDayDateContainer.append(fiveDayDay)
       fiveDayDateContainer.append(fiveDayDate)
 
       // console.log("Five Day Date Test", (fiveDayDay + " " + fiveDayDate ))
-
-      // console.log(weatherValue)
 
       // Displaying the weather
       weatherCard.append(fiveDayDateContainer)
@@ -508,6 +534,9 @@ function fiveDayForecast() {
       // Storing the plot
       // var temperature = ((day.main.temp * 1.8) - 459.67);
 
+      let tempFormatSwitch = document.querySelector("#tempFormatDivSwitch")
+
+
       var temperature = Math.round(((day.main.temp * 1.8) - 459.67));
 
 
@@ -516,7 +545,34 @@ function fiveDayForecast() {
       let tempDisplay = $("<p>").text(" " + temperature + "°F");
       tempDisplay.attr('class', 'fiveDayForecastValue');
 
-      var temperatureIcon = $('<img />', {
+
+      if(tempFormatSwitch.checked) {
+
+        var tempDisplayC = $("<p>").text(convertTemp(responseTemp).cel + " °C");
+        tempDisplayC.attr('class', 'fiveDayForecastValue cwtC weatherTempNone'); 
+        
+        var tempDisplayF = $("<p>").text(convertTemp(responseTemp).far + " °F");
+        // tempDisplayF.attr('class', 'fiveDayForecastValueNone'); 
+        tempDisplayF.attr('class', 'cwtF fiveDayForecastValue'); 
+        // tempDisplayF.attr('class', ''); 
+      } 
+      else {
+        var tempDisplayC = $("<p>").text(convertTemp(responseTemp).cel + " °C");
+        tempDisplayC.attr('class', 'fiveDayForecastValue cwtC'); 
+        
+        var tempDisplayF = $("<p>").text(convertTemp(responseTemp).far + " °F");
+        // tempDisplayF.attr('class', 'fiveDayForecastValueNone'); 
+        tempDisplayF.attr('class', 'cwtF fiveDayForecastValue weatherTempNone'); 
+      }
+
+      var temperatureIconF = $('<img />', {
+        id: 'fiveDayTemperatureIcon',
+        class: 'fiveDayTemperatureIcon',
+        src: 'assets/icons/thermometer-half.svg',
+        alt: 'Alt text'
+      });
+
+      var temperatureIconC = $('<img />', {
         id: 'fiveDayTemperatureIcon',
         class: 'fiveDayTemperatureIcon',
         src: 'assets/icons/thermometer-half.svg',
@@ -525,11 +581,22 @@ function fiveDayForecast() {
 
       // $(document.createElement(humidityIcon));
       // humidityIcon.attr('src', './assets/icons/humidity.svg');
-      tempDisplay.prepend(temperatureIcon);
+      // tempDisplay.prepend(temperatureIcon);
+
+      tempDisplayF.prepend(temperatureIconF);
+      tempDisplayC.prepend(temperatureIconC);
+
+     
 
 
       // Appending the plot
-      weatherCard.append(tempDisplay);
+      // weatherCard.append(tempDisplay);
+
+      // Appending the plot
+    // weatherCard.append(tempDisplay);
+
+    weatherCard.append(tempDisplayF);
+    weatherCard.append(tempDisplayC);
 
       // Storing the humidity value
       var humidity = day.main.humidity;
@@ -567,6 +634,26 @@ function fiveDayForecast() {
       $("#fiveDayView").prepend(weatherCard);
     })
   });
+
+}
+
+///////////////////Support Functions/////////////////////////////////////////////////////////////////
+
+function renderTempSwitch() {
+
+  let tempFormatSwitchContainer = document.querySelector("#tempFormatSwitchContainer")
+
+
+
+  if(tempFormat.tempformat == 'far') { 
+
+    tempFormatSwitchContainer.innerHTML = '<input class="form-check-input tempFormatDivSwitch navLocationSwitch" type="checkbox" role="switch" id="tempFormatDivSwitch" checked> <label class="form-check-label tempFormatDivSwitchLabel" for="tempFormatDivSwitch" id ="tempFormatDivSwitchLabel">°F</label>'
+
+  } 
+  else {
+    tempFormatSwitchContainer.innerHTML = '<input class="form-check-input tempFormatDivSwitch navLocationSwitch" type="checkbox" role="switch" id="tempFormatDivSwitch"> <label class="form-check-label tempFormatDivSwitchLabel" for="tempFormatDivSwitch" id ="tempFormatDivSwitchLabel">°C</label>'
+
+  }
 
 }
 
@@ -620,7 +707,6 @@ async function populateSearchHistory() {
         // clear zipInputBar if there is a value in there
         zipInputBar.value = '';
 
-    
         // call your awesome function here
         searchNewZip(link.value); // 'this' refers to the current button on for loop
     }, false);
@@ -680,6 +766,25 @@ async function populateFavorites() {
   //End populateSearchHistory(); 
 }
 
+// Loads user-set background for .main div when app loads
+const loadBackground = () => {
+  let backgroundSelector = document.querySelector('.main')
+  let backgroundColor = JSON.parse(localStorage.getItem('mainBackgroundColor')) || "#00aabb"
+
+  backgroundSelector.style.backgroundColor = backgroundColor
+}
+
+// Convert temperature values from JSON response to far and cel values then return result  
+const convertTemp = (temp) => {
+  let far = Math.round(((temp * 1.8) - 459.67));
+  let cel = Math.round(temp - 273.15);
+
+  return {far: far, cel: cel}
+}
+
+/////////////Event Listeners//////////////////////////////////////////////////////////////////////////////
+
+// Search weather button (hourglass button next to input form)
 $(document).on("click", "#searchWeatherButton", (e) => {
   if(e.currentTarget.id === "searchWeatherButton"){
     // console.log(e.target.id)
@@ -689,6 +794,166 @@ $(document).on("click", "#searchWeatherButton", (e) => {
   }
 });
 
+// Default Location Toggle 
+$(document).on("click", "#defaultLocationSwitch", (e) => {
+
+  if(defaultLocationSwitch.checked) {
+    console.log("checked")
+  //   console.log("switchLocationValue", zipSearch)
+    localStorage.setItem('defaultLocationValue', JSON.stringify( zipSearch ) )
+  } 
+  else {
+    console.log("notChecked")
+    localStorage.removeItem('defaultLocationValue')
+  }
+
+});
+
+// Temperature Format Toggle 
+$(document).on("click", "#tempFormatDivSwitch", (e) => {
+
+  let tempFormatSwitch = document.querySelector("#tempFormatDivSwitch")
+  let tempFormatSwitchContainer = document.querySelector("#tempFormatSwitchContainer")
+
+  let currentWeatherTemp = document.querySelector('.currentWeatherTemp')
+  let fiveDayForcastValues = document.getElementsByClassName('.fiveDayForecastValue')
+
+  let tempDisplayC = document.getElementsByClassName('cwtC')
+  let tempDisplayF = document.getElementsByClassName('cwtF')
+
+
+
+  let tempDisplayCItems = [...tempDisplayC]
+
+  let tempDisplayFItems = [...tempDisplayF]
+
+  let fiveDayForecastValueItems = [...fiveDayForcastValues]
+
+  console.log(tempDisplayCItems)
+    console.log(tempDisplayFItems)
+  
+
+  if(tempFormatSwitch.checked) {
+    console.log("checked")
+
+    // tempDisplayF.classList.add('currentWeatherTemp'); 
+    // tempDisplayFItems.classList.remove('weatherTempNone'); 
+
+
+    // tempDisplayC.classList.remove('currentWeatherTemp'); 
+    // tempDisplayCItems.classList.add('weatherTempNone'); 
+    
+
+
+    tempDisplayFItems.forEach(item => {
+      item.classList.remove('weatherTempNone'); 
+      console.log("F", item )
+    })
+
+    tempDisplayCItems.forEach(item => {
+      item.classList.add('weatherTempNone'); 
+      console.log("C", item )
+
+    })
+
+    // tempDisplayF.attr('class', 'cwtF'); 
+  //   console.log("switchLocationValue", zipSearch)
+    // localStorage.setItem('defaultLocationValue', JSON.stringify( zipSearch ) )
+    // console.log("Far", convertTemp(responseTemp).far)
+
+    // localStorage.removeItem('tempFormat')
+
+    localStorage.setItem('tempFormat', JSON.stringify( {tempformat: 'far'} ))
+    console.log("hdhd", JSON.parse(localStorage.getItem('tempFormat')) )
+
+    tempFormatSwitchContainer.innerHTML = '<input class="form-check-input tempFormatDivSwitch navLocationSwitch" type="checkbox" role="switch" id="tempFormatDivSwitch" checked> <label class="form-check-label tempFormatDivSwitchLabel" for="tempFormatDivSwitch" id ="tempFormatDivSwitchLabel">°F</label>'
+
+
+  } 
+  else {
+    console.log("notChecked")
+
+    // tempDisplayCItems.classList.remove('eatherTempNone'); 
+    // tempDisplayFItems.classList.add('weatherTempNone'); 
+
+
+    // tempDisplayC.classList.add('currentWeatherTemp'); 
+    // tempDisplayC.classList.remove('currentWeatherTempNone'); 
+    // localStorage.removeItem('defaultLocationValue')
+
+    tempDisplayCItems.forEach(item => {
+      item.classList.remove('weatherTempNone'); 
+    })
+
+    tempDisplayFItems.forEach(item => {
+      item.classList.add('weatherTempNone'); 
+    })
+
+    // console.log("Cel", convertTemp(responseTemp).cel)
+
+    // localStorage.removeItem('tempFormat')
+
+    localStorage.setItem('tempFormat', JSON.stringify( {tempformat: 'cel'} ))
+    console.log("hdhd", JSON.parse(localStorage.getItem('tempFormat')) )
+
+    tempFormatSwitchContainer.innerHTML = '<input class="form-check-input tempFormatDivSwitch navLocationSwitch" type="checkbox" role="switch" id="tempFormatDivSwitch"> <label class="form-check-label tempFormatDivSwitchLabel" for="tempFormatDivSwitch" id ="tempFormatDivSwitchLabel">°C</label>'
+
+
+  }
+
+  // renderTempSwitch();
+
+});
+
+// Favorites Location Toggle 
+$(document).on("click", "#savedLocationSwitch", (e) => {
+
+let saveLocationSwitch = document.querySelector("#savedLocationSwitch")
+let savedLocation = returnSavedInfo()
+
+  if(saveLocationSwitch.checked) {
+
+    savedLocations.push(savedLocation)
+
+    savedLocations = savedLocations.filter(
+      (person, index) => index === savedLocations.findIndex(
+        other => person.city === other.city
+          && person.state === other.state
+      ));
+
+  } 
+  else {
+    let i = savedLocations.findIndex(e => e.zip === savedLocation.zip);
+    if (i > -1) {
+      console.log('i', i)
+      savedLocations.splice(i, 1);
+    }
+
+  }
+
+  localStorage.setItem('savedLocations', JSON.stringify(savedLocations ))
+  populateFavorites(); 
+
+});
+
+// Home Button 
+$(document).on("click", "#sidebarHome", (e) => {
+  searchNewZip(defaultLocationSearched);
+});
+
+// Enter key functionality, runs searchNewZip()
+$(document).keypress(function (e) {
+  if (e.which == 13) {
+    // console.log("enter")
+    e.preventDefault()
+
+    searchNewZip();
+    // displayCurrentWeather(); 
+    // fiveDayForecast();
+  }
+});
+
+// Change background color, delete old value and save new background color value in localStorage
 document.querySelector("#colorForm").onchange = e => {
   let backgroundSelector = document.querySelector('.main')
   let backgroundColor = JSON.parse(localStorage.getItem('mainBackgroundColor')) || "#00aabb"
@@ -705,115 +970,7 @@ document.querySelector("#colorForm").onchange = e => {
   console.log(e.target.value)
 }
 
-const loadBackground = () => {
-  let backgroundSelector = document.querySelector('.main')
-  let backgroundColor = JSON.parse(localStorage.getItem('mainBackgroundColor')) || "#00aabb"
-
-  backgroundSelector.style.backgroundColor = backgroundColor
-}
-
-
-
-$(document).on("click", "#sidebarHome", (e) => {
-  // let colorFormValue = document.querySelector('#colorForm')
-  // if(e.currentTarget.id === "searchWeatherButton"){
-  //   // console.log(e.target.id)
-  //   // console.log("works")
-  //   searchNewZip();
-  // e.preventDefault()
-  searchNewZip(defaultLocationSearched);
-
-
-  // }
-
-
-  // console.log("ColorForm Value", colorpicker.getValue())
-});
-
-
-$(document).keypress(function (e) {
-  if (e.which == 13) {
-    // console.log("enter")
-    e.preventDefault()
-
-    searchNewZip();
-    // displayCurrentWeather(); 
-    // fiveDayForecast();
-  }
-});
-
-
-
-$(document).on("click", "#defaultLocationSwitch", (e) => {
-
-    if(defaultLocationSwitch.checked) {
-      console.log("checked")
-    //   console.log("switchLocationValue", zipSearch)
-      localStorage.setItem('defaultLocationValue', JSON.stringify( zipSearch ) )
-    } 
-    else {
-      console.log("notChecked")
-      localStorage.removeItem('defaultLocationValue')
-    }
-
-});
-
-$(document).on("click", "#savedLocationSwitch", (e) => {
-
-  let saveLocationSwitch = document.querySelector("#savedLocationSwitch")
-  let savedLocation = returnSavedInfo()
-
-    if(saveLocationSwitch.checked) {
-
-      savedLocations.push(savedLocation)
-
-      savedLocations = savedLocations.filter(
-        (person, index) => index === savedLocations.findIndex(
-          other => person.city === other.city
-            && person.state === other.state
-        ));
-
-    } 
-    else {
-      let i = savedLocations.findIndex(e => e.zip === savedLocation.zip);
-      if (i > -1) {
-        console.log('i', i)
-        savedLocations.splice(i, 1);
-      }
-
-    }
-
-    localStorage.setItem('savedLocations', JSON.stringify(savedLocations ))
-    populateFavorites(); 
- 
-});
-
-// $(document).on("click", "#savedLocationSwitch", (e) => {
-//   // if(e.currentTarget.id === "searchWeatherButton"){
-
-//     let saveLocationSwitch = document.querySelector("#savedLocationSwitch")
-
-//     // console.log("clicked")
-
-
-//     // console.log(e.target.id)
-//     // console.log("works")
-
-//     if(saveLocationSwitch.checked) {
-//       console.log("checked")
-//       // console.log("Default Location Localstorage  ", localStorage.getItem("defaultLocationValue") )
-//       // localStorage.setItem('defaultLocationValue', JSON.stringify( zipSearch ) )
-//     } 
-//     else {
-//       console.log("notChecked")
-//       // localStorage.removeItem('defaultLocationValue')
-//     }
-
-//     // console.log("Default Location Click", defaultLocationSearched)
-
-//   // }
-// });
-// Onload, this should be last function other than getState()
+// Onload functions, this should be last function in script.js other than getState()
 $(document).ready(function () {
   // Reset zipInputBar to '' to eliminate any characters leftover from previous searches. 
   zipInputBar.value = '';
@@ -825,11 +982,12 @@ $(document).ready(function () {
 
   savedLocations = JSON.parse(localStorage.getItem('savedLocations')) || [];
 
-
+  // tempFormat = JSON.parse(localStorage.getItem('tempFormat')) || {tempformat: 'far'};
 
   // console.log(defaultLocationSearched)
 
   loadBackground(); 
+  renderTempSwitch()
 
   displayCurrentWeather();
   fiveDayForecast();
@@ -842,18 +1000,6 @@ $(document).ready(function () {
   populateFavorites();
 
 });
-
-// document.querySelector("#searchWeatherButton").addEventListener("click", (e) => {
-
-//   if(e.currentTarget.id === "searchWeatherButton"){
-//     // console.log(target.id)
-//     console.log("e.currentTarget", e.currentTarget.id)
-//     // console.log("works")
-//     // searchNewZip();
-
-//   }
-
-//  } )
 
 // Determine the state of the searched zip code
 function getState(passedZip) {
