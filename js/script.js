@@ -466,7 +466,6 @@ function fiveDayForecast() {
         // console.log("item", item)
       }
 
-      // console.log("item", item)
     }
 
     let sortedDays = Object.values(days) //.sort((a, b) => (a.day > b.day) ? 1 : -1);
@@ -521,13 +520,11 @@ function fiveDayForecast() {
       let fiveDayDateContainer = $("<div class='fiveDayDateContainer'>");
 
       let fiveDayDay = $("<p>").text(daysMap[forecastDays].value);
-      let fiveDayDate = $("<p>").text(fiveDayDateResponse.slice(0, 5));
+      let fiveDayDate = $("<p>").text(fiveDayDateResponse.slice(0, 4));
       fiveDayDateContainer.append(fiveDayDay)
       fiveDayDateContainer.append(fiveDayDate)
 
       // console.log("Five Day Date Test", (fiveDayDay + " " + fiveDayDate ))
-
-      // console.log(weatherValue)
 
       // Displaying the weather
       weatherCard.append(fiveDayDateContainer)
