@@ -130,6 +130,7 @@ function searchNewZip(searchHistoryLink) {
 function displayCurrentWeather(searchHistoryZip) {
   let zipInputBar = $("#zip-input").val().trim();
   let defaultLocationSwitch = document.querySelector("#defaultLocationSwitch")
+  let homeButton = document.querySelector("#sideBarHome")
   // let saveLocationNavSwitch = document.querySelector("#saveLocationNavSwitch")
 
   // console.log("displayCurrentWeather() searchHistoryZip", searchHistoryZip)
@@ -139,6 +140,8 @@ function displayCurrentWeather(searchHistoryZip) {
 
     // if(defaultLocationSwitch.checked) console.log("Checked") 
 
+    // Determine which button on the DOMcalled the function 
+   
 
     // If the zip input bar is empty
     const determineZipSearch = () => {
@@ -147,20 +150,32 @@ function displayCurrentWeather(searchHistoryZip) {
         if(searchHistoryZip == null) {
           // zipSearch = JSON.parse(localStorage.getItem('defaultLocationValue')) || "10001";
           zipSearch = defaultLocationSearched;
-          // console.log("zipSearch = defaultLocationSearched; Zipsearch:", zipSearch)
+          console.log("zipSearch = defaultLocationSearched; Zipsearch:", zipSearch)
   
   
           // console.log("Not Search History Link", zipSearch)
         } 
         else {
-          // console.log("zipSearch = searchHistoryZip")
+          console.log("zipSearch = searchHistoryZip")
   
           zipSearch = searchHistoryZip
         }
         // console.log("No Zip Bar Value")
       } 
       else {
-        // console.log("zipSearch = zipInputBar")
+        
+        // if(origin == "homebutton") {
+        //   console.log("origin", origin)
+        //   console.log("zipSearch = origin")
+
+
+        // }
+        // else {
+          console.log("zipSearch = zipInputBar")
+
+        // }
+
+        // console.log("determineRequestOrigin", determineRequestOrigin())
   
         zipSearch = zipInputBar
       }
@@ -938,6 +953,16 @@ let savedLocation = returnSavedInfo()
 
 // Home Button 
 $(document).on("click", "#sidebarHome", (e) => {
+  console.log("defaultLocationSearchedHome", defaultLocationSearched)
+  // let sideBarHome = document.querySelector("#sidebarHome")
+  let zipInputBar = document.querySelector("#zip-input")
+
+  if(!(zipInputBar == null) ) {
+    console.log("ZipInputNotNull")
+    zipInputBar.value = ''
+  }
+  // console.log(determineRequestOrigin())
+  // console.log("determineRequestOrigin", determineRequestOrigin("homeButton"))
   searchNewZip(defaultLocationSearched);
 });
 
