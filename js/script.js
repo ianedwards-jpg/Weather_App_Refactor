@@ -315,7 +315,7 @@ function displayCurrentWeather(searchHistoryZip) {
     weatherDiv.append(weatherValue);
 
     // Temperature Section 
-    responseTemp = response.main.temp
+    let responseTemp = response.main.temp
     // var temperature = ((response.main.temp * 1.8) - 459.67);
 
     // If statement to determine which temperature to render 
@@ -550,9 +550,12 @@ function fiveDayForecast() {
       // var temperature = ((day.main.temp * 1.8) - 459.67);
 
       let tempFormatSwitch = document.querySelector("#tempFormatDivSwitch")
+      let responseTemp = day.main.temp
 
 
       var temperature = Math.round(((day.main.temp * 1.8) - 459.67));
+
+      console.log("Temperature5Day", responseTemp)
 
 
       // Creating an element to hold the plot
