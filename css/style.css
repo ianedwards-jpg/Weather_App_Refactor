@@ -275,6 +275,15 @@
 
 } */
 
+@media (max-width: 500px) {
+    .bufferBarRight {
+        display: none;
+    }
+    .currentWeatherView, .fiveDayCards {
+        margin: auto;
+    }
+}
+
 
 
 
