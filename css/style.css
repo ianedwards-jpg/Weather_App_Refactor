@@ -275,6 +275,55 @@
 
 } */
 
+@media (max-width: 500px) {
+    .main {
+        padding-left: 0px;
+    }
+    .bufferBarRight {
+        display: none;
+    }
+    .footerContainerRight {
+        padding-right: 0px;
+    }
+    .noPad {
+        padding-right: 0px;
+        padding-left: 15px;
+    }
+    .searchBarWrapper {
+        justify-content: flex-end;
+    }
+    .searchBarWrapper h2 {
+        font-size: 25px;
+    }
+    .sectiontitles {
+        text-align: center;
+    }
+    .sideNavWidthContainer {
+        min-width: fit-content;
+    }
+    #weather-view, #fiveDayView {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        width: 100%;
+    }
+    #fiveDayLocationCol {
+        padding-left: 10px;
+    }
+
+    .currentWeatherView, .fiveDayCards {
+        /* margin: auto; */
+        width: 25rem;
+        max-width: 100%;
+    }
+
+    .currentWeatherIcon, .fiveDayWeatherIcon {
+        max-width: 18rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
 
 
 
