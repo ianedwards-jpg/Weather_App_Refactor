@@ -224,9 +224,6 @@ function displayCurrentWeather(searchHistoryZip) {
 
     }
 
-
-
-
     // Get day, month, date to render for Current Weather
     // let getLocalDateAndTime = new Date(response.dt * 1000).toLocaleString();
     let currentMonth = new Date(response.dt * 1000).getMonth()
@@ -244,15 +241,13 @@ function displayCurrentWeather(searchHistoryZip) {
 
     // Slice month value to last digit and assign suffix depending on value
     
-      if (currentDateAffixNumber = affixMap.day) {
+      if (currentDateAffixNumber = affixMap[currentDateAffixNumber - 1].day) {
         currentDateAffix = affixMap[currentDateAffixNumber - 1].value 
       }
       else {
         // console.log("th")
         currentDateAffix = "th"
       }
-
-    // console.log("CurrentDateAffix", currentDateAffix)
 
     // Grab the current weather title element and assign the date
     todayWeatherTitle.innerText = dateTitle + ", " + monthTitle + " " + currentDate + currentDateAffix;
@@ -487,11 +482,11 @@ function fiveDayForecast() {
 
     // console.log("sortedDays", sortedDays)
 
-    sortedDays.forEach(day => {
-      sortedDays.sort((a, b) => (a.dt_txt > b.dt_txt) ? 1 : -1)
+    // sortedDays.forEach(day => {
+    //   sortedDays.sort((a, b) => (a.dt_txt > b.dt_txt) ? 1 : -1)
 
-    }
-    )
+    // }
+    // )
     // console.log("Sorted Days", sortedDays)
 
     sortedDays.forEach(day => {
