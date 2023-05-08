@@ -39,8 +39,8 @@ const daysMap = [
 const affixMap = [
   { day: 1, value: "st" },
   { day: 2, value: "nd" },
-  { day: 3, value: "rd" }
-  // {day: 4, value: "th"}
+  { day: 3, value: "rd" },
+  { day: 4, value: "th" }
 ]
 
 // const searchHistory = []
@@ -229,8 +229,8 @@ function displayCurrentWeather(searchHistoryZip) {
     let currentMonth = new Date(response.dt * 1000).getMonth()
     let currentDay = new Date(response.dt * 1000).getDay()
     let currentDate = new Date(response.dt * 1000).getUTCDate()
-    let currentDateAffixString = String(currentDate).slice(-1)
-    let currentDateAffixNumber = Number(currentDateAffixString)
+    // let currentDateAffixString = String(currentDate).slice(-1)
+    let currentDateAffixNumber = Number(currentDate)
     let monthTitle, dateTitle, currentDateAffix;
 
     // Get Month for current date
@@ -240,13 +240,17 @@ function displayCurrentWeather(searchHistoryZip) {
     dateTitle = daysMap[currentDay].value
 
     // Slice month value to last digit and assign suffix depending on value
-    
-      if (currentDateAffixNumber = affixMap[currentDateAffixNumber - 1].day) {
+     if (currentDateAffixNumber < 4) {
+      // if (currentDateAffixNumber = affixMap[currentDateAffixNumber - 1].day) {
         currentDateAffix = affixMap[currentDateAffixNumber - 1].value 
+    //  }
       }
       else {
         // console.log("th")
-        currentDateAffix = "th"
+
+        // console.log(affixMap[currentDateAffixNumber - 1].day)
+        // currentDateAffix = "th"
+        currentDateAffix = affixMap[3].value
       }
 
     // Grab the current weather title element and assign the date
